@@ -399,9 +399,6 @@ DEPENDENCIES:
   - cloud_firestore_web (from `.symlinks/plugins/cloud_firestore_web/ios`)
   - cloud_functions (from `.symlinks/plugins/cloud_functions/ios`)
   - cloud_functions_web (from `.symlinks/plugins/cloud_functions_web/ios`)
-  - Firebase/Analytics
-  - Firebase/Auth
-  - Firebase/Firestore
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_auth_web (from `.symlinks/plugins/firebase_auth_web/ios`)
@@ -590,6 +587,6 @@ SPEC CHECKSUMS:
   video_player: 69c5f029fac4ffe4fc8a85ea7f7b793709661549
   video_player_web: da8cadb8274ed4f8dbee8d7171b420dedd437ce7
 
-PODFILE CHECKSUM: 83cccc293b6e05d86c0164386e4cc4c598f8521b
+PODFILE CHECKSUM: 1b66dae606f75376c5f2135a8290850eeb09ae83
 
 COCOAPODS: 1.8.4
