@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>503467082492-d6ianrtgfa71v1lfdco2n0k20u4e7s5q.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.503467082492-d6ianrtgfa71v1lfdco2n0k20u4e7s5q</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>503467082492-bcnhp37m2d525h92v8eigt2j03u56vhc.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCPDZRL9vktpf8tVu1Lb0w3PzswlmF_550</string>
+	<key>GCM_SENDER_ID</key>
+	<string>503467082492</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.esalonbusiness</string>
+	<key>PROJECT_ID</key>
+	<string>esalonbusiness-d3f3d</string>
+	<key>STORAGE_BUCKET</key>
+	<string>esalonbusiness-d3f3d.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:503467082492:ios:41d57c6cbb10be9e040d79</string>
+	<key>DATABASE_URL</key>
+	<string>https://esalonbusiness-d3f3d.firebaseio.com</string>
+</dict>
+</plist>
