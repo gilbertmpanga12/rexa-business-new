@@ -8,6 +8,50 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:503467082492:android:5ceeaa41b4f1ac79040d79",
+        "android_client_info": {
+          "package_name": "com.business.esalonbusiness"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "503467082492-90gtv6qkm25djcpsmtu35amqf87t2omt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.business.esalonbusiness",
+            "certificate_hash": "d8f317cf942b8c2fd1a5f0563cc0ad6b4426a887"
+          }
+        },
+        {
+          "client_id": "503467082492-lfg9pqevd2g7bjg7dscn4p61u7ime674.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6H9ix5IHjHnKFVYwfGq_JxcOIzzAofvQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "503467082492-lfg9pqevd2g7bjg7dscn4p61u7ime674.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "503467082492-ipag45q6c0do0km8tfe9dak055u5lvl7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.rexa"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:503467082492:android:ac3c0eeb1b536220",
         "android_client_info": {
           "package_name": "com.esalonbusiness.esalonbusiness"
@@ -64,10 +108,10 @@
               "client_type": 3
             },
             {
-              "client_id": "503467082492-d6ianrtgfa71v1lfdco2n0k20u4e7s5q.apps.googleusercontent.com",
+              "client_id": "503467082492-ipag45q6c0do0km8tfe9dak055u5lvl7.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.esalonbusiness"
+                "bundle_id": "com.example.rexa"
               }
             }
           ]
@@ -76,85 +120,33 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:503467082492:android:cf77c7d3b51e4154040d79",
+        "mobilesdk_app_id": "1:503467082492:android:90fd7310da1618e0040d79",
         "android_client_info": {
-          "package_name": "com.example.esalonbusiness"
+          "package_name": "com.user.rexa"
         }
       },
       "oauth_client": [
         {
-          "client_id": "503467082492-eoqltbsihg7h8ug304ln5pe20ps808du.apps.googleusercontent.com",
+          "client_id": "503467082492-p5u9budqsa3la671u6h8dloe12392m3p.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.esalonbusiness",
-            "certificate_hash": "3bb266ad883650fd33182c5b7ee0d90e0a97292c"
-          }
-        },
-        {
-          "client_id": "503467082492-dflcoo9q8ormjm7g2ibs4g27gvddohv2.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.esalonbusiness",
-            "certificate_hash": "d8f317cf942b8c2fd1a5f0563cc0ad6b4426a887"
-          }
-        },
-        {
-          "client_id": "503467082492-lfg9pqevd2g7bjg7dscn4p61u7ime674.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyD6H9ix5IHjHnKFVYwfGq_JxcOIzzAofvQ"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "503467082492-lfg9pqevd2g7bjg7dscn4p61u7ime674.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "503467082492-d6ianrtgfa71v1lfdco2n0k20u4e7s5q.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.esalonbusiness"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:503467082492:android:6973463a8e35bb4d040d79",
-        "android_client_info": {
-          "package_name": "com.example.rexa"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "503467082492-7t488pcbt59oc55eh4l3ebegv7m91v8a.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.rexa",
+            "package_name": "com.user.rexa",
             "certificate_hash": "481db52fb6096ca0b70ee294015991e5280e5359"
           }
         },
         {
-          "client_id": "503467082492-7tseqp3e6h3k8rbpf5slrtqev4qg997l.apps.googleusercontent.com",
+          "client_id": "503467082492-2sk6oe2ut5ubvn4ufbe2ta8g0h37s6ri.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.rexa",
+            "package_name": "com.user.rexa",
             "certificate_hash": "d8f317cf942b8c2fd1a5f0563cc0ad6b4426a887"
           }
         },
         {
-          "client_id": "503467082492-m1kb72rg6s8a2ula4oc7fgovjsib0f48.apps.googleusercontent.com",
+          "client_id": "503467082492-ecv67s4v3pddilsl05i2ila7buadhir1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.rexa",
+            "package_name": "com.user.rexa",
             "certificate_hash": "1e0eda4c5e1d8d795fbed1a59bc6a231cfa02b34"
           }
         },
@@ -176,10 +168,10 @@
               "client_type": 3
             },
             {
-              "client_id": "503467082492-d6ianrtgfa71v1lfdco2n0k20u4e7s5q.apps.googleusercontent.com",
+              "client_id": "503467082492-ipag45q6c0do0km8tfe9dak055u5lvl7.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.esalonbusiness"
+                "bundle_id": "com.example.rexa"
               }
             }
           ]
@@ -236,10 +228,10 @@
               "client_type": 3
             },
             {
-              "client_id": "503467082492-d6ianrtgfa71v1lfdco2n0k20u4e7s5q.apps.googleusercontent.com",
+              "client_id": "503467082492-ipag45q6c0do0km8tfe9dak055u5lvl7.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.esalonbusiness"
+                "bundle_id": "com.example.rexa"
               }
             }
           ]
