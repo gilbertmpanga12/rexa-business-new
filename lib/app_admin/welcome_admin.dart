@@ -279,14 +279,11 @@ dispose(){
                 SizedBox(
                   height: 25.0,
                 ),
-                checkbusiness.value.text.length > 1 ? businessRegistrationNo() : SizedBox.shrink()
-              ],
-            );
-          },
-        ),
+                checkbusiness.value.text.length > 1 ? businessRegistrationNo() : SizedBox.shrink(),
 
-      ) ,
-    ) ,bottomNavigationBar: FlatButton(onPressed: (){
+                Container(
+                  width: 300.0,
+                  child: FlatButton(onPressed: (){
       _submitForm();
 
     }, child: Padding(child: Row(
@@ -298,7 +295,14 @@ dispose(){
       mainAxisAlignment: MainAxisAlignment.center,
     ),
       padding: EdgeInsets.only(top:11.0,bottom: 11.0),),color: Colors.blue[800]
-    )
+    ),)
+              ],
+            );
+          },
+        ),
+
+      ) ,
+    ) 
       ,),onWillPop: (){
       Navigator.popAndPushNamed(context, '/'); // to be fixed;
     },);
