@@ -1,7 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
-// import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import './view_service.dart';
 import './add_service.dart';
 import './admin_profile.dart';
@@ -49,9 +49,9 @@ class AdminHomeState extends State<AdminHome> {
 
   localStorageLoader() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //  var status = await OneSignal.shared.getPermissionSubscriptionState();
-  //  var playerId = status.subscriptionStatus.userId;
-  //    prefs.setString('fcm_token', playerId);
+   var status = await OneSignal.shared.getPermissionSubscriptionState();
+   var playerId = status.subscriptionStatus.userId;
+     prefs.setString('fcm_token', playerId);
     setState(() {
       newPhoto = prefs.getString('profilePicture');
       displayName =  prefs.getString('businessName');
@@ -330,18 +330,18 @@ await flutterLocalNotificationsPlugin.show(
 
   initState() {
    
-//     OneSignal.shared.setNotificationOpenedHandler((OSNotificationOpenedResult result) {
-//      if(result.notification.payload.rawPayload['title'].toString().contains('requested')){
-//        FlutterRingtonePlayer.stop();
-//     Navigator.push(
-//       context,
-//       new MaterialPageRoute(builder: (context) => NotificationsWidget()));
-//  } else {
-//    Navigator.push(
-//       context,
-//       new MaterialPageRoute(builder: (context) => AdminHome()));
-//  }
-// });
+    OneSignal.shared.setNotificationOpenedHandler((OSNotificationOpenedResult result) {
+     if(result.notification.payload.rawPayload['title'].toString().contains('requested')){
+       FlutterRingtonePlayer.stop();
+    Navigator.push(
+      context,
+      new MaterialPageRoute(builder: (context) => NotificationsWidget()));
+ } else {
+   Navigator.push(
+      context,
+      new MaterialPageRoute(builder: (context) => AdminHome()));
+ }
+});
    localStorageLoader();
 
 var initializationSettingsAndroid =
