@@ -81,7 +81,7 @@ String _firebaseUID;
           setState(() {
             profilePicture = service['profilePicture'];
           });
-          http.post('https://viking-250012.appspot.com/api/provider-update-profile-picture',
+          http.post('https://young-tor-95342.herokuapp.com/api/provider-update-profile-picture',
               body: json.encode(service),
               headers: {
                 "accept": "application/json",
