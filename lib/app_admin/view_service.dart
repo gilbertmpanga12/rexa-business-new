@@ -152,13 +152,9 @@ SharedPreferences prefs = await SharedPreferences.getInstance();
     print('${prefs.getString('uid')}');
 
     final response = await http.get(
-        'https://viking-250012.appspot.com/api/fetch-feeds/${prefs.getString('uid')}');
+        'https://young-tor-95342.herokuapp.com/api/fetch-feeds/${prefs.getString('uid')}');
     if (response.statusCode == 200 || response.statusCode == 201) {
-      print('user ID');
-      print(_userId);
-      print(
-          'https://viking-250012.appspot.com/api/fetch-feeds/${prefs.getString('uid')}');
-      print(response.body);
+      
       setState(() {
         resultsFetched = (json.decode(response.body) as List)
             .map((data) => new CategoriesAll.fromJson(data))

@@ -179,7 +179,7 @@ return snapshot.data['isAccountVerified'] ? TabBarView(
   void destroyUserNew() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final response =
-    await http.get('https://viking-250012.appspot.com/api/destroy-new-user/${prefs.getString('isRegistered')}');
+    await http.get('https://young-tor-95342.herokuapp.com/api/destroy-new-user/${prefs.getString('isRegistered')}');
     if(response.statusCode == 200 || response.statusCode == 201){
       return null;
     }else{

@@ -118,7 +118,7 @@ final Map<String, dynamic> service = {
   'userId': servicesFetched.userId
 };
 
- http.post('https://viking-250012.appspot.com/api/stop-transaction',body: json.encode(service),
+ http.post('https://young-tor-95342.herokuapp.com/stop-transaction',body: json.encode(service),
           headers: {
             "accept": "application/json",
             "content-type": "application/json"
@@ -156,7 +156,7 @@ fullName = prefs.get('fullName');
 serviceProviderUid = prefs.get('uid');
 print(serviceProviderUid);
     final response = await http
-        .get('https://viking-250012.appspot.com/api/find-service-request/${prefs.get('uid')}');
+        .get('https://young-tor-95342.herokuapp.com/api/find-service-request/${prefs.get('uid')}');
     if (response.statusCode == 200 || response.statusCode == 201) {
       setState(() {
         servicesFetched =  Orders.fromJson(json.decode(response.body));

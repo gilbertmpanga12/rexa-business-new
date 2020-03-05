@@ -128,7 +128,7 @@ void _settingModalBottomSheet(context) {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try{
       final response = await http
-          .get('https://viking-250012.appspot.com/api/get-provider-total/${prefs.get('uid')}');
+          .get('https://young-tor-95342.herokuapp.com/api/get-provider-total/${prefs.get('uid')}');
       if (response.statusCode == 200 || response.statusCode == 201) {
         var payload = json.decode(response.body);
         if(mounted){
@@ -172,11 +172,7 @@ void _settingModalBottomSheet(context) {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try{
       final response = await http.get(
-          'https://viking-250012.appspot.com/api/get-provider-history/${prefs.getString('uid')}');
-      print('https://viking-250012.appspot.com/api/get-provider-history/${prefs.getString('uid')}');
-
-
-
+          'https://young-tor-95342.herokuapp.com/api/get-provider-history/${prefs.getString('uid')}');
       if (response.statusCode == 200 || response.statusCode == 201) {
         print('response for transaction');
         print(response.body);
