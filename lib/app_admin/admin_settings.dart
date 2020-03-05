@@ -71,7 +71,7 @@ String subCategory;
              subCategory = snapshot.data.documents[index]['categoryName'];
             // Navigator.of(context, rootNavigator: true).pop();
             //  Toast.show('Please wait...', context,duration: 7, backgroundColor: Colors.green);
-            Navigator.of(context, rootNavigator: true).pop();
+            // Navigator.of(context, rootNavigator: true).pop();
             subCat(context, '$subCategory');
             },          
           ),),padding: EdgeInsets.all(6.0),);
@@ -200,7 +200,7 @@ getCurrencyCode(String code) async {
       processing = 'OK';
     });
 
-      Navigator.of(context,rootNavigator: true).pop();
+      // Navigator.of(context,rootNavigator: true).pop();
     }).catchError((onError){
       Fluttertoast.showToast(
         msg: "Oops!, website not listed by service provider.",
