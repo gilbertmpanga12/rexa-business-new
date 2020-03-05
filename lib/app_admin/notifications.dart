@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 // import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
@@ -188,32 +189,32 @@ requestRating(String playerId, String contents, String headings) async {
 
 Firestore.instance.collection('users').document('${servicesFetched.userId}')
 .setData({'ratingCount':1},merge: true).then((onValue){
-//    OneSignal.shared.postNotificationWithJson({
-//   "include_player_ids" : [playerId],
-//   "contents" : {"en" : contents},
-//   "headings": {"en": headings},
-//   "small_icon": "@mipmap/ic_launcher",
-//   "large_icon": "@mipmap/ic_launcher"
-// }).then((onValue){
-//   showDialog(context: context,builder: (BuildContext context){
-//         try{
+   OneSignal.shared.postNotificationWithJson({
+  "include_player_ids" : [playerId],
+  "contents" : {"en" : contents},
+  "headings": {"en": headings},
+  "small_icon": "@mipmap/ic_launcher",
+  "large_icon": "@mipmap/ic_launcher"
+}).then((onValue){
+  showDialog(context: context,builder: (BuildContext context){
+        try{
       
-//           return AlertDialog(
-//             shape: RoundedRectangleBorder(
-//     borderRadius: BorderRadius.all(Radius.circular(20.0))
-//         ),
-//           title: SizedBox(width: 200.0,child: Text('Success'),),
-//           content: Text('Transaction completed successfully.'),actions: <Widget>[
-//           FlatButton(child: Text('OK'),onPressed: (){
-// //            Navigator.of(context).pop();
-//             Navigator.push(context,MaterialPageRoute(builder: (context) => AdminHome()));
-//           },)
-//         ],);
-//         }catch(err){
-//           print(err);
-//         }
-//       });
-// });
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(Radius.circular(20.0))
+        ),
+          title: SizedBox(width: 200.0,child: Text('Success'),),
+          content: Text('Transaction completed successfully.'),actions: <Widget>[
+          FlatButton(child: Text('OK'),onPressed: (){
+//            Navigator.of(context).pop();
+            Navigator.push(context,MaterialPageRoute(builder: (context) => AdminHome()));
+          },)
+        ],);
+        }catch(err){
+          print(err);
+        }
+      });
+});
 });
 }
 
