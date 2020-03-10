@@ -51,22 +51,23 @@ dependencies:
   onesignal_flutter: ^2.3.4
   cloud_functions:  
   flutter_ringtone_player: 
+  apple_sign_in: ^0.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_native_splash: ^0.1.9
-  flutter_launcher_icons: ^0.7.0
+#   flutter_native_splash: ^0.1.9
+#   flutter_launcher_icons: ^0.7.0
 
-flutter_native_splash:
-  image: assets/splash.png
-  color: "ffffff"
+# flutter_native_splash:
+#   image: assets/splash.png
+#   color: "ffffff"
   
-flutter_icons:
-  android: true
-  ios: true
-  image_path_android: "assets/ic_launcher.png"
-  image_path: "assets/ic_launcher.png"
+# flutter_icons:
+#   android: true
+#   ios: true
+#   image_path_android: "assets/ic_launcher.png"
+#   image_path: "assets/ic_launcher.png"
 
 
 # For information on the generic Dart part of this file, see the
