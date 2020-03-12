@@ -88,70 +88,70 @@ setState(() {
 
 
 
-//     googleSignIn() async {
-//     if(mounted){
-//    setState(() {
-//   showSpinner = true;
-//   });
-//   }
+    googleSignIn() async {
+    if(mounted){
+   setState(() {
+  showSpinner = true;
+  });
+  }
                     
-//     try{
-// GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-//     GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-//     SharedPreferences prefs = await SharedPreferences.getInstance();
+    try{
+GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+    GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
-//     final AuthCredential userCreadentialize = GoogleAuthProvider.getCredential(
-//      accessToken: googleAuth.accessToken,
-//      idToken: googleAuth.idToken,
-//    );
+    final AuthCredential userCreadentialize = GoogleAuthProvider.getCredential(
+     accessToken: googleAuth.accessToken,
+     idToken: googleAuth.idToken,
+   );
    
-    // _auth.signInWithCredential(userCreadentialize).then((user){
-    // prefs.setString('token', '${googleAuth.idToken}');
-    // prefs.setString('email', '${user.user.email}');
-    // prefs.setString('uid', '${user.user.uid}');
-    // prefs.setString('profilePicture', '${user.user.photoUrl}');
-    // prefs.setString('fullName', '${user.user.displayName}');
-    // Firestore.instance.collection('saloonServiceProvider').document(user.user.uid).get().then((newuser){
-    //   if(newuser.exists){
-    //     prefs.setBool('isNewUser', false);
-    //     prefs.setBool('isSignedIn', true);
+    _auth.signInWithCredential(userCreadentialize).then((user){
+    prefs.setString('token', '${googleAuth.idToken}');
+    prefs.setString('email', '${user.user.email}');
+    prefs.setString('uid', '${user.user.uid}');
+    prefs.setString('profilePicture', '${user.user.photoUrl}');
+    prefs.setString('fullName', '${user.user.displayName}');
+    Firestore.instance.collection('saloonServiceProvider').document(user.user.uid).get().then((newuser){
+      if(newuser.exists){
+        prefs.setBool('isNewUser', false);
+        prefs.setBool('isSignedIn', true);
 
-    //     prefs.setString('countryCode', newuser.data['countryCode']);
-    //     prefs.setString('currencyCode', newuser.data['countryCode']);
-    //     prefs.setString('fullName', newuser.data['fullName']); // profilePicture
-    //     prefs.setString('profilePicture', newuser.data['ProfilePicture']);
-    //     prefs.setString('location', newuser.data['location']);//location
-    //     prefs.setString('phoneNumber', newuser.data['phoneNumber']); //customNumber
-    //     prefs.setDouble('long', newuser.data['longitude']);
-    //     prefs.setDouble('lat', newuser.data['latitude']);
+        prefs.setString('countryCode', newuser.data['countryCode']);
+        prefs.setString('currencyCode', newuser.data['countryCode']);
+        prefs.setString('fullName', newuser.data['fullName']); // profilePicture
+        prefs.setString('profilePicture', newuser.data['ProfilePicture']);
+        prefs.setString('location', newuser.data['location']);//location
+        prefs.setString('phoneNumber', newuser.data['phoneNumber']); //customNumber
+        prefs.setDouble('long', newuser.data['longitude']);
+        prefs.setDouble('lat', newuser.data['latitude']);
 
-    //     prefs.setString('serviceCategoryName', newuser.data['serviceCategoryName']);
-    //     prefs.setString('subCategory', newuser.data['subCategory']);
-    //     prefs.setString('countryCode', newuser.data['countryCode']);// countryCode
-    //     prefs.setString('currencyCode', newuser.data['currencyCode']);
-    //     prefs.setString('businessName', newuser.data['businessName']);
-    //     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminHome()));
-    //   }else{
-    //     // prefs.setString('fcm_token', _playerId);
-    //     prefs.setBool('isNewUser', true);
-    //     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TermsWid()));
-    //   }
-    // });
+        prefs.setString('serviceCategoryName', newuser.data['serviceCategoryName']);
+        prefs.setString('subCategory', newuser.data['subCategory']);
+        prefs.setString('countryCode', newuser.data['countryCode']);// countryCode
+        prefs.setString('currencyCode', newuser.data['currencyCode']);
+        prefs.setString('businessName', newuser.data['businessName']);
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminHome()));
+      }else{
+        // prefs.setString('fcm_token', _playerId);
+        prefs.setBool('isNewUser', true);
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TermsWid()));
+      }
+    });
 
-//     }).catchError((onError){
-//       if(mounted){
-//        setState(() {
-//       showSpinner = false;
-//       });
-//    }
-//    // dialog to be used here
-//    errorDialog(onError.message);
-//     });
-//     }catch(e){
-// errorDialog('Oops something went wrong. Try again');
-//     }
+    }).catchError((onError){
+      if(mounted){
+       setState(() {
+      showSpinner = false;
+      });
+   }
+   // dialog to be used here
+   errorDialog(onError.message);
+    });
+    }catch(e){
+errorDialog('Oops something went wrong. Try again');
+    }
  
-//   }
+  }
 
 
  Future<void> _signInWithApple(BuildContext context) async {
@@ -161,41 +161,40 @@ setState(() {
     
     final user = await authService.signInWithApple(
         scopes: [Scope.email, Scope.fullName]);
-    // prefs.setString('token', '${user.getIdToken()}');
-    // prefs.setString('email', '${user.email}');
-    // prefs.setString('uid', '${user.uid}');
-    // prefs.setString('profilePicture', '${user.photoUrl}');
-    // prefs.setString('fullName', '${user.displayName}');
-    // Firestore.instance.collection('saloonServiceProvider').document(user.uid).get().then((newuser){
-    //   if(newuser.exists){
-    //     // prefs.setBool('isNewUser', false);
-    //     // prefs.setBool('isSignedIn', true);
-    //     // prefs.setString('countryCode', newuser.data['countryCode']);
-    //     // prefs.setString('currencyCode', newuser.data['countryCode']);
-    //     // prefs.setString('fullName', newuser.data['fullName']); // profilePicture
-    //     // prefs.setString('profilePicture', newuser.data['ProfilePicture']);
-    //     // prefs.setString('location', newuser.data['location']);//location
-    //     // prefs.setString('phoneNumber', newuser.data['phoneNumber']); //customNumber
-    //     // prefs.setDouble('long', newuser.data['longitude']);
-    //     // prefs.setDouble('lat', newuser.data['latitude']);
+    prefs.setString('token', '${user.getIdToken()}');
+    prefs.setString('email', '${user.email}');
+    prefs.setString('uid', '${user.uid}');
+    prefs.setString('profilePicture', '${user.photoUrl}');
+    prefs.setString('fullName', '${user.displayName}');
+    Firestore.instance.collection('saloonServiceProvider').document(user.uid).get().then((newuser){
+      if(newuser.exists){
+        prefs.setBool('isNewUser', false);
+        prefs.setBool('isSignedIn', true);
+        prefs.setString('countryCode', newuser.data['countryCode']);
+        prefs.setString('currencyCode', newuser.data['countryCode']);
+        prefs.setString('fullName', newuser.data['fullName']); // profilePicture
+        prefs.setString('profilePicture', newuser.data['ProfilePicture']);
+        prefs.setString('location', newuser.data['location']);//location
+        prefs.setString('phoneNumber', newuser.data['phoneNumber']); //customNumber
+        prefs.setDouble('long', newuser.data['longitude']);
+        prefs.setDouble('lat', newuser.data['latitude']);
 
-    //     // prefs.setString('serviceCategoryName', newuser.data['serviceCategoryName']);
-    //     // prefs.setString('subCategory', newuser.data['subCategory']);
-    //     // prefs.setString('countryCode', newuser.data['countryCode']);// countryCode
-    //     // prefs.setString('currencyCode', newuser.data['currencyCode']);
-    //     // prefs.setString('businessName', newuser.data['businessName']);
-    //     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminHome()));
-    //   }else {
-    //     // prefs.setString('fcm_token', _playerId);
-    //     prefs.setBool('isNewUser', true);
-    //     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TermsWid()));
-    //   }
+        prefs.setString('serviceCategoryName', newuser.data['serviceCategoryName']);
+        prefs.setString('subCategory', newuser.data['subCategory']);
+        prefs.setString('countryCode', newuser.data['countryCode']);// countryCode
+        prefs.setString('currencyCode', newuser.data['currencyCode']);
+        prefs.setString('businessName', newuser.data['businessName']);
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminHome()));
+      }else {
+        // prefs.setString('fcm_token', _playerId);
+        prefs.setBool('isNewUser', true);
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TermsWid()));
+      }
       
-    //   });
+      });
   
   } catch (e) {
-    print(e);
-    // errorDialog(e.toString());
+    errorDialog(e.toString());
   }
 }
 
@@ -243,6 +242,39 @@ setState(() {
                   );
   }
 
+
+Widget _divider() {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      child: Row(
+        children: <Widget>[
+          SizedBox(
+            width: 20,
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Divider(
+                thickness: 1,
+              ),
+            ),
+          ),
+          Text('or'),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Divider(
+                thickness: 1,
+              ),
+            ),
+          ),
+          SizedBox(
+            width: 20,
+          ),
+        ],
+      ),
+    );
+  }
   
 
   Widget build(BuildContext context) {
@@ -282,25 +314,27 @@ SizedBox(height: 260.0,),
           Column(
             children: <Widget>[
 
-              // Container(
-              //   child: RaisedButton(
-              //     child: defaultButtonText(),
-              //     onPressed: () {
-              //       _signInWithApple(context);
-              //     },
-              //     color: Colors.blue[600],
-              //     padding: EdgeInsets.all(16.6),
-              //     shape: RoundedRectangleBorder(
-              //         borderRadius: new BorderRadius.circular(30.0)),
-              //   ),
-              //   width: 217.0,
-              // ),
-
-    Container(child: AppleSignInButton( 
+              Container(
+                child: RaisedButton(
+                  child: defaultButtonText(),
+                  onPressed: () {
+                   googleSignIn();
+                  },
+                  color: Colors.blue[600],
+                  padding: EdgeInsets.all(16.6),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0)),
+                ),
+                width: 217.0,
+              ),
+SizedBox(height: 3,),
+Theme.of(context).platform == TargetPlatform.iOS ?_divider(): SizedBox.shrink(),
+SizedBox(height: 3,),
+    Theme.of(context).platform == TargetPlatform.iOS ? Container(child: AppleSignInButton( 
   style: ButtonStyle.black,
   type: ButtonType.signIn,
   onPressed: () => _signInWithApple(context),
-),width: 250.0,),
+),width: 250.0,): SizedBox.shrink(),
 
               Container(child: Column(
                 // crossAxisAlignment: CrossAxisAlignment.end,
