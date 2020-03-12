@@ -201,31 +201,10 @@ docID
           'isBusiness': true
    };
   if(val == 1){
-    // Fluttertoast.cancel();
-    
-     Navigator.of(context, rootNavigator: true).pop('dialog');
+    Navigator.of(context, rootNavigator: true).pop('dialog');
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminSuccessWidget()));
-    http.post('http://35.246.43.91/crucken-transcord',
-            body: json.encode(transcoderPayload),
-            headers: {
-              "accept": "application/json",
-              "content-type": "application/json"
-   }).then((onValue){
-sendToUsersSegment();
-            }).catchError((onError){
-print('failed to transcord image');
-            });
   }else if(val == 443){
-    http.post('http://35.246.43.91/crucken-transcord',
-            body: json.encode(transcoderPayload),
-            headers: {
-              "accept": "application/json",
-              "content-type": "application/json"
-   }).then((onValue){
-sendToUsersSegment();
-            }).catchError((onError){
-print('failed to transcord image');
-            });
+  
    Navigator.of(context, rootNavigator: true).pop('dialog');
           showDialog(context: context,builder: (BuildContext context){
                   return AlertDialog(
