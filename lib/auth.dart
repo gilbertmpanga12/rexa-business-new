@@ -313,20 +313,29 @@ SizedBox(height: 260.0,),
 
           Column(
             children: <Widget>[
-
-              Container(
-                child: RaisedButton(
-                  child: defaultButtonText(),
-                  onPressed: () {
-                   googleSignIn();
-                  },
-                  color: Colors.blue[600],
-                  padding: EdgeInsets.all(16.6),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0)),
-                ),
-                width: 217.0,
-              ),
+InkWell(
+      onTap: () {
+       googleSignIn();
+      },
+      child: Container(
+        margin: EdgeInsets.only(top: 20),
+        width: MediaQuery.of(context).size.width -51,
+        padding: EdgeInsets.symmetric(vertical: 13),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(5)),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                  color: Color(0xffffffff).withAlpha(100),
+                  offset: Offset(2, 4),
+                  blurRadius: 8,
+                  spreadRadius: 2)
+            ],
+            color: Colors.blueAccent),
+        child: defaultButtonText(),
+      ),
+    ),
+              
 SizedBox(height: 3,),
 Theme.of(context).platform == TargetPlatform.iOS ?_divider(): SizedBox.shrink(),
 SizedBox(height: 3,),
@@ -334,7 +343,7 @@ SizedBox(height: 3,),
   style: ButtonStyle.black,
   type: ButtonType.signIn,
   onPressed: () => _signInWithApple(context),
-),width: 250.0,): SizedBox.shrink(),
+),width: MediaQuery.of(context).size.width -51,): SizedBox.shrink(),
 
               Container(child: Column(
                 // crossAxisAlignment: CrossAxisAlignment.end,
