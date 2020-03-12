@@ -195,9 +195,7 @@ Firestore.instance.collection('users').document('${servicesFetched.userId}')
   "large_icon": "@mipmap/ic_launcher"
 }).then((onValue){
   showDialog(context: context,builder: (context){
-        try{
-      
-          return AlertDialog(
+   return   AlertDialog(
             shape: RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(20.0))
         ),
@@ -207,10 +205,9 @@ Firestore.instance.collection('users').document('${servicesFetched.userId}')
             Navigator.push(context,MaterialPageRoute(builder: (context) => AdminHome()));
           },)
         ],);
-        }catch(err){
-          print(err);
-        }
       });
+}).catchError((onError){
+ Navigator.push(context,MaterialPageRoute(builder: (context) => AdminHome()));
 });
 });
             });
