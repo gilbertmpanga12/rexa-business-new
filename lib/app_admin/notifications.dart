@@ -14,7 +14,7 @@ import './admin_home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 
-
+// coop
 
 
 
@@ -155,20 +155,15 @@ final Map<String, dynamic> service = {
 SharedPreferences prefs = await SharedPreferences.getInstance();
 fullName = prefs.get('fullName');
 serviceProviderUid = prefs.get('uid');
-print(serviceProviderUid);
     final response = await http
         .get('https://young-tor-95342.herokuapp.com/api/find-service-request/${prefs.get('uid')}');
     if (response.statusCode == 200 || response.statusCode == 201) {
       setState(() {
         servicesFetched =  Orders.fromJson(json.decode(response.body));
-        print('>>>>>>>');
-    print( shouldShow = servicesFetched.phoneNumber == null);
         setState(() {
           renderCard = servicesFetched.transactionPassed == false;
           shouldShow = servicesFetched.phoneNumber == null;
         });
-//        shouldShow = servicesFetched.requesteeName != null;
-//        isAbsent =   servicesFetched.phoneNumber == null;
       });
 
 
@@ -185,8 +180,11 @@ print(serviceProviderUid);
   }
 
 
-requestRating(String playerId, String contents, String headings) async {
-
+requestRating(String playerId, String contents, String headings, BuildContext context) async {
+Firestore.instance.
+            collection('saloonServiceProvider').document('$serviceProviderUid').setData({
+              'status_notifier': false
+            }, merge: true).then((onValue){
 Firestore.instance.collection('users').document('${servicesFetched.userId}')
 .setData({'ratingCount':1},merge: true).then((onValue){
    OneSignal.shared.postNotificationWithJson({
@@ -196,26 +194,24 @@ Firestore.instance.collection('users').document('${servicesFetched.userId}')
   "small_icon": "@mipmap/ic_launcher",
   "large_icon": "@mipmap/ic_launcher"
 }).then((onValue){
-  showDialog(context: context,builder: (BuildContext context){
-        try{
-      
-          return AlertDialog(
+  showDialog(context: context,builder: (context){
+   return   AlertDialog(
             shape: RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(20.0))
         ),
           title: SizedBox(width: 200.0,child: Text('Success'),),
           content: Text('Transaction completed successfully.'),actions: <Widget>[
           FlatButton(child: Text('OK'),onPressed: (){
-//            Navigator.of(context).pop();
             Navigator.push(context,MaterialPageRoute(builder: (context) => AdminHome()));
           },)
         ],);
-        }catch(err){
-          print(err);
-        }
       });
+}).catchError((onError){
+ Navigator.push(context,MaterialPageRoute(builder: (context) => AdminHome()));
 });
 });
+            });
+
 }
 
 
@@ -223,11 +219,11 @@ Firestore.instance.collection('users').document('${servicesFetched.userId}')
   stopAndCharge() async {
     // no db mutation just notifications
     final response = await http
-        .get('https://viking-250012.appspot.com/notify/${servicesFetched.fcm_token}/${servicesFetched.serviceProviderId}/${servicesFetched.transactionalID}/${servicesFetched.requestedSaloonService}/${servicesFetched.priceRequested}/${servicesFetched.userId}/${servicesFetched.requesteeName}');
+        .get('https://young-tor-95342.herokuapp.com/notify/${servicesFetched.fcm_token}/${servicesFetched.serviceProviderId}/${servicesFetched.transactionalID}/${servicesFetched.requestedSaloonService}/${servicesFetched.priceRequested}/${servicesFetched.userId}/${servicesFetched.requesteeName}');
     if (response.statusCode == 200 || response.statusCode == 201) {
       // Navigator.of(context, rootNavigator: true).pop('dialog');
 
-      requestRating(servicesFetched.fcm_token, "Ratings", "Please Rate $fullName");
+      requestRating(servicesFetched.fcm_token, "Ratings", "Please Rate $fullName",context);
 
     }else{
        Fluttertoast.showToast(
