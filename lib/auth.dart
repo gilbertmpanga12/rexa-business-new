@@ -1,3 +1,5 @@
+
+import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:apple_sign_in/apple_sign_in_button.dart';
 import 'package:apple_sign_in/scope.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,6 +16,7 @@ import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 
 import 'app_services/auth_service.dart';
+
 
 
 class UserNew {
@@ -153,37 +156,46 @@ setState(() {
 
  Future<void> _signInWithApple(BuildContext context) async {
    SharedPreferences prefs = await SharedPreferences.getInstance();
+   
   try {
+    
     final user = await authService.signInWithApple(
         scopes: [Scope.email, Scope.fullName]);
-    prefs.setString('token', '${user.getIdToken()}');
-    prefs.setString('email', '${user.email}');
-    prefs.setString('uid', '${user.uid}');
-    prefs.setString('profilePicture', '${user.photoUrl}');
-    prefs.setString('fullName', '${user.displayName}');
-    Firestore.instance.collection('saloonServiceProvider').document(user.uid).get().then((newuser){
-      if(newuser.exists){
-        prefs.setBool('isNewUser', false);
-        prefs.setBool('isSignedIn', true);
-        prefs.setString('countryCode', newuser.data['countryCode']);
-        prefs.setString('currencyCode', newuser.data['countryCode']);
-        prefs.setString('fullName', newuser.data['fullName']); // profilePicture
-        prefs.setString('profilePicture', newuser.data['ProfilePicture']);
-        prefs.setString('location', newuser.data['location']);//location
-        prefs.setString('phoneNumber', newuser.data['phoneNumber']); //customNumber
-        prefs.setDouble('long', newuser.data['longitude']);
-        prefs.setDouble('lat', newuser.data['latitude']);
+    // prefs.setString('token', '${user.getIdToken()}');
+    // prefs.setString('email', '${user.email}');
+    // prefs.setString('uid', '${user.uid}');
+    // prefs.setString('profilePicture', '${user.photoUrl}');
+    // prefs.setString('fullName', '${user.displayName}');
+    // Firestore.instance.collection('saloonServiceProvider').document(user.uid).get().then((newuser){
+    //   if(newuser.exists){
+    //     // prefs.setBool('isNewUser', false);
+    //     // prefs.setBool('isSignedIn', true);
+    //     // prefs.setString('countryCode', newuser.data['countryCode']);
+    //     // prefs.setString('currencyCode', newuser.data['countryCode']);
+    //     // prefs.setString('fullName', newuser.data['fullName']); // profilePicture
+    //     // prefs.setString('profilePicture', newuser.data['ProfilePicture']);
+    //     // prefs.setString('location', newuser.data['location']);//location
+    //     // prefs.setString('phoneNumber', newuser.data['phoneNumber']); //customNumber
+    //     // prefs.setDouble('long', newuser.data['longitude']);
+    //     // prefs.setDouble('lat', newuser.data['latitude']);
 
-        prefs.setString('serviceCategoryName', newuser.data['serviceCategoryName']);
-        prefs.setString('subCategory', newuser.data['subCategory']);
-        prefs.setString('countryCode', newuser.data['countryCode']);// countryCode
-        prefs.setString('currencyCode', newuser.data['currencyCode']);
-        prefs.setString('businessName', newuser.data['businessName']);
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminHome()));
-      }});
+    //     // prefs.setString('serviceCategoryName', newuser.data['serviceCategoryName']);
+    //     // prefs.setString('subCategory', newuser.data['subCategory']);
+    //     // prefs.setString('countryCode', newuser.data['countryCode']);// countryCode
+    //     // prefs.setString('currencyCode', newuser.data['currencyCode']);
+    //     // prefs.setString('businessName', newuser.data['businessName']);
+    //     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminHome()));
+    //   }else {
+    //     // prefs.setString('fcm_token', _playerId);
+    //     prefs.setBool('isNewUser', true);
+    //     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TermsWid()));
+    //   }
+      
+    //   });
   
   } catch (e) {
-    errorDialog(e.message);
+    print(e);
+    // errorDialog(e.toString());
   }
 }
 
@@ -208,6 +220,9 @@ setState(() {
 
 
   void initState(){
+    AppleSignIn.onCredentialRevoked.listen((_) {
+    print("Credentials revoked -------------------------------------------------");
+  });
     _getLocation();
     super.initState();
   }
@@ -281,11 +296,11 @@ SizedBox(height: 260.0,),
               //   width: 217.0,
               // ),
 
-    AppleSignInButton(
+    Container(child: AppleSignInButton( 
   style: ButtonStyle.black,
   type: ButtonType.signIn,
   onPressed: () => _signInWithApple(context),
-),
+),width: 250.0,),
 
               Container(child: Column(
                 // crossAxisAlignment: CrossAxisAlignment.end,

@@ -4,6 +4,16 @@ import 'package:flutter/services.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+class AppleSignInAvailable {
+  AppleSignInAvailable(this.isAvailable);
+  final bool isAvailable;
+
+  static Future<AppleSignInAvailable> check() async {
+    return AppleSignInAvailable(await AppleSignIn.isAvailable());
+  }
+}
+
+
 class AuthService {
   final _firebaseAuth = FirebaseAuth.instance;
   Observable<FirebaseUser> user;
@@ -29,7 +39,11 @@ class AuthService {
 
   Future<FirebaseUser> signInWithApple({List<Scope> scopes = const []}) async {
     // 1. perform the sign-in request
-    final result = await AppleSignIn.performRequests(
+   final isReady =  await AppleSignInAvailable.check();
+   print(isReady.isAvailable);
+   
+    if(isReady.isAvailable){
+      final result = await AppleSignIn.performRequests(
         [AppleIdRequest(requestedScopes: scopes)]);
     // 2. check the result
     switch (result.status) {
@@ -41,6 +55,8 @@ class AuthService {
           accessToken:
               String.fromCharCodes(appleIdCredential.authorizationCode),
         );
+        print('Credential is this >>>>>>>>>');
+        print(credential);
         final authResult = await _firebaseAuth.signInWithCredential(credential);
         final firebaseUser = authResult.user;
         
@@ -64,7 +80,12 @@ class AuthService {
           message: 'Sign in aborted by user',
         );
     }
-    return null;
+    }else{
+      print(isReady.isAvailable);
+      // print(isReady.)
+      print('IOS AUTH NOT AVATILABLE');
+    }
+    //return null;
   }
 }
 
