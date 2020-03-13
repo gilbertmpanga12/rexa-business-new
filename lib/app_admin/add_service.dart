@@ -27,7 +27,8 @@ class Premium {
   }
 }
 
-class _Categories {
+
+class _Categories{
   final String categoryName;
   final String categoryId;
 
