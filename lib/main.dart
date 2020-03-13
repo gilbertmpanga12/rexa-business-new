@@ -17,7 +17,7 @@ import 'app_services/auth_service.dart';
 Future<void>main() async {
    // IOS -> 043cf2de-40cc-4010-b431-4e02a950f75f
   // Android -> 0a2fc101-4f5a-44c2-97b9-c8eb8f420e08
-  
+
   WidgetsFlutterBinding.ensureInitialized();
   
   OneSignal.shared.init(
@@ -30,8 +30,8 @@ Future<void>main() async {
 
 OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
 OneSignal.shared.promptUserForPushNotificationPermission(fallbackToSettings: true);
-var status = await OneSignal.shared.getPermissionSubscriptionState();
-var playerId = status.subscriptionStatus.userId;
+// var status = await OneSignal.shared.getPermissionSubscriptionState();
+// var playerId = status.subscriptionStatus.userId;
 
 /*
 OneSignal.shared.setPermissionObserver((OSPermissionStateChanges changes) {
@@ -154,10 +154,6 @@ super.initState();
   @override
   Widget build(BuildContext context){
     return StreamBuilder(stream: authService.user,builder: (context,snapshot){
-
-      print('checking user status');
-      print(isNew);
-      print(snapshot.hasData);
       if (snapshot.hasData && isNew == true) {
         return  AdminHome();
       }else if(snapshot.hasData && isNewUser == true){
