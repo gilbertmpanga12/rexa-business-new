@@ -15,6 +15,9 @@ import 'app_services/auth_service.dart';
 
 
 Future<void>main() async {
+   // IOS -> 043cf2de-40cc-4010-b431-4e02a950f75f
+  // Android -> 0a2fc101-4f5a-44c2-97b9-c8eb8f420e08
+  
   WidgetsFlutterBinding.ensureInitialized();
   
   OneSignal.shared.init(
@@ -162,9 +165,6 @@ super.initState();
       }else {
         return SignIn();
       }
-      // return WelcomeAdmin();
-
-
     },);
   }
 
