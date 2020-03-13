@@ -1,6 +1,6 @@
 
-import 'package:apple_sign_in/apple_sign_in.dart';
-import 'package:apple_sign_in/apple_sign_in_button.dart';
+// import 'package:apple_sign_in/apple_sign_in.dart';
+// import 'package:apple_sign_in/apple_sign_in_button.dart';
 import 'package:apple_sign_in/scope.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:esalonbusiness/terms_and_conditions.dart';
@@ -115,7 +115,6 @@ GoogleSignInAccount googleUser = await _googleSignIn.signIn();
       if(newuser.exists){
         prefs.setBool('isNewUser', false);
         prefs.setBool('isSignedIn', true);
-
         prefs.setString('countryCode', newuser.data['countryCode']);
         prefs.setString('currencyCode', newuser.data['countryCode']);
         prefs.setString('fullName', newuser.data['fullName']); // profilePicture
@@ -219,9 +218,9 @@ errorDialog('Oops something went wrong. Try again');
 
 
   void initState(){
-    AppleSignIn.onCredentialRevoked.listen((_) {
-    print("Credentials revoked -------------------------------------------------");
-  });
+  //   AppleSignIn.onCredentialRevoked.listen((_) {
+  //   print("Credentials revoked -------------------------------------------------");
+  // });
     _getLocation();
     super.initState();
   }
@@ -336,14 +335,14 @@ InkWell(
       ),
     ),
               
-SizedBox(height: 3,),
-Theme.of(context).platform == TargetPlatform.iOS ?_divider(): SizedBox.shrink(),
-SizedBox(height: 3,),
-    Theme.of(context).platform == TargetPlatform.iOS ? Container(child: AppleSignInButton( 
-  style: ButtonStyle.black,
-  type: ButtonType.signIn,
-  onPressed: () => _signInWithApple(context),
-),width: MediaQuery.of(context).size.width -51,): SizedBox.shrink(),
+// SizedBox(height: 3,),
+// Theme.of(context).platform == TargetPlatform.iOS ?_divider(): SizedBox.shrink(),
+// SizedBox(height: 3,),
+//     Theme.of(context).platform == TargetPlatform.iOS ? Container(child: AppleSignInButton( 
+//   style: ButtonStyle.black,
+//   type: ButtonType.signIn,
+//   onPressed: () => _signInWithApple(context),
+// ),width: MediaQuery.of(context).size.width -51,): SizedBox.shrink(),
 
               Container(child: Column(
                 // crossAxisAlignment: CrossAxisAlignment.end,
