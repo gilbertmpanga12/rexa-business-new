@@ -117,7 +117,7 @@ class ViewSwitcherState extends State<ViewSwitcher>{
   Future<bool> getAllowsNotifications() async {
 	final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  	return prefs.getBool('uid');
+  	return prefs.getBool('isSignedIn');
   }
 
   @override

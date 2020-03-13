@@ -86,8 +86,9 @@ setState(() {
 
 
 
-    googleSignIn() async {
+    googleSignIn() async{
       SharedPreferences prefs = await SharedPreferences.getInstance();
+     
     if(mounted){
    setState(() {
   showSpinner = true;
@@ -100,10 +101,7 @@ setState(() {
      accessToken: googleAuth.accessToken,
      idToken: googleAuth.idToken,
    );
-   
-   
     _auth.signInWithCredential(userCreadentialize).then((user){
-      print('USer iDDD is ${user.user.uid}');
     prefs.setString('token', '${googleAuth.idToken}');
     prefs.setString('email', '${user.user.email}');
     prefs.setString('uid', '${user.user.uid}');
@@ -121,17 +119,14 @@ setState(() {
         prefs.setString('phoneNumber', newuser.data['phoneNumber']); //customNumber
         prefs.setDouble('long', newuser.data['longitude']);
         prefs.setDouble('lat', newuser.data['latitude']);
-
         prefs.setString('serviceCategoryName', newuser.data['serviceCategoryName']);
         prefs.setString('subCategory', newuser.data['subCategory']);
         prefs.setString('countryCode', newuser.data['countryCode']);// countryCode
         prefs.setString('currencyCode', newuser.data['currencyCode']);
         prefs.setString('businessName', newuser.data['businessName']);
-        
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminHome()));
       }else{
         // prefs.setString('fcm_token', _playerId);
-        
         prefs.setBool('isNewUser', true);
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TermsWid()));
       }
@@ -143,7 +138,7 @@ setState(() {
       showSpinner = false;
       });
    }
-   // dialog to be used here
+  
    errorDialog(onError.message);
     });
  
