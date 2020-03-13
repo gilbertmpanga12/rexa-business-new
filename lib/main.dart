@@ -20,12 +20,10 @@ Future<void>main() async {
   // IOS -> 043cf2de-40cc-4010-b431-4e02a950f75f
   // Android -> 0a2fc101-4f5a-44c2-97b9-c8eb8f420e08
 
-
-
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences.setMockInitialValues({});
   OneSignal.shared.init(
-  "043cf2de-40cc-4010-b431-4e02a950f75f",
+  "0a2fc101-4f5a-44c2-97b9-c8eb8f420e08",
   iOSSettings: {
     OSiOSSettings.autoPrompt: false,
     OSiOSSettings.inAppLaunchUrl: true
@@ -37,9 +35,8 @@ OneSignal.shared.promptUserForPushNotificationPermission(fallbackToSettings: tru
 var status = await OneSignal.shared.getPermissionSubscriptionState();
 var playerId = status.subscriptionStatus.userId;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //  var status = await OneSignal.shared.getPermissionSubscriptionState();
-  //  var playerId = status.subscriptionStatus.userId;
      prefs.setString('fcm_token', playerId);
+
 
 
 
@@ -107,7 +104,6 @@ builder: (BuildContext context, Widget widget) {
 }
 
 class ViewSwitcher extends StatefulWidget {
-
   @override
   ViewSwitcherState createState() => ViewSwitcherState();
 
@@ -118,9 +114,18 @@ class ViewSwitcherState extends State<ViewSwitcher>{
   bool isNew;
   bool isNewUser;
   
+  Future<bool> getAllowsNotifications() async {
+	final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  	return prefs.getBool('uid');
+  }
+
   @override
   void initState(){
-  
+    getAllowsNotifications().then((onValue){
+      print('I acked');
+      print(onValue);
+    });
   super.initState();
   }
 

@@ -87,17 +87,15 @@ setState(() {
 
 
     googleSignIn() async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
     if(mounted){
    setState(() {
   showSpinner = true;
   });
   }
-                    
-    try{
-GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+    GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
+    
     final AuthCredential userCreadentialize = GoogleAuthProvider.getCredential(
      accessToken: googleAuth.accessToken,
      idToken: googleAuth.idToken,
@@ -113,8 +111,8 @@ GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     prefs.setString('fullName', '${user.user.displayName}');
     Firestore.instance.collection('saloonServiceProvider').document(user.user.uid).get().then((newuser){
       if(newuser.exists){
-        // prefs.setBool('isNewUser', false);
-        // prefs.setBool('isSignedIn', true);
+        prefs.setBool('isNewUser', false);
+        prefs.setBool('isSignedIn', true);
         prefs.setString('countryCode', newuser.data['countryCode']);
         prefs.setString('currencyCode', newuser.data['countryCode']);
         prefs.setString('fullName', newuser.data['fullName']); // profilePicture
@@ -129,12 +127,12 @@ GoogleSignInAccount googleUser = await _googleSignIn.signIn();
         prefs.setString('countryCode', newuser.data['countryCode']);// countryCode
         prefs.setString('currencyCode', newuser.data['currencyCode']);
         prefs.setString('businessName', newuser.data['businessName']);
-
+        
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminHome()));
       }else{
         // prefs.setString('fcm_token', _playerId);
         
-        // prefs.setBool('isNewUser', true);
+        prefs.setBool('isNewUser', true);
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TermsWid()));
       }
     });
@@ -148,9 +146,6 @@ GoogleSignInAccount googleUser = await _googleSignIn.signIn();
    // dialog to be used here
    errorDialog(onError.message);
     });
-    }catch(e){
-errorDialog('Oops something went wrong. Try again');
-    }
  
   }
 
@@ -211,7 +206,11 @@ errorDialog('Oops something went wrong. Try again');
       currentLocation  = await location.getLocation();
       prefs.setDouble('lat', currentLocation.latitude);
       prefs.setDouble('long', currentLocation.longitude);
+
+
       isNew = prefs.getBool('isNew');
+
+     
     } catch (e) {
       print('Failed to get location');
     }
@@ -315,8 +314,9 @@ SizedBox(height: 260.0,),
           Column(
             children: <Widget>[
 InkWell(
-      onTap: () {
-       googleSignIn();
+      onTap: () async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+   googleSignIn();
       },
       child: Container(
         margin: EdgeInsets.only(top: 20),
