@@ -157,7 +157,7 @@ if(snapshot.hasError){
   return Center(child: Center(child: Text('Check your internet connection'),),);
 }
   switch(snapshot.connectionState){
-    case ConnectionState.waiting: return new CircularProgressIndicator();
+    case ConnectionState.waiting: return new Center(child: CircularProgressIndicator(),);
     default:
       return snapshot.data['isAccountVerified'] ? TabBarView(
             children: <Widget>[CreateServiceWidget(),

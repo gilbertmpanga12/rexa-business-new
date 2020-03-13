@@ -52,13 +52,9 @@ OneSignal.shared.setEmailSubscriptionObserver((OSEmailSubscriptionStateChanges e
 
 OneSignal.shared.setNotificationReceivedHandler((OSNotification notification) {
 //  Feedback.forTap(context);
-FlutterRingtonePlayer.play(
-  android: AndroidSounds.alarm,
-  ios: IosSounds.glass,
-  looping: true,
-  volume:100,
-);
+FlutterRingtonePlayer.playAlarm(volume: 0.5, looping: true,);
 });
+
   runApp(MyApp());
 }
 
@@ -137,6 +133,9 @@ class ViewSwitcherState extends State<ViewSwitcher>{
     isNew = prefs.getBool('isSignedIn');
     isNewUser = prefs.getBool('isNewUser');
     });
+    var status = await OneSignal.shared.getPermissionSubscriptionState();
+var playerId = status.subscriptionStatus.userId;
+prefs.setString('fcm_token', playerId);
   }
 
   
