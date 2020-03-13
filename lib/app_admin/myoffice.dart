@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -129,7 +128,7 @@ void _settingModalBottomSheet(context) {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try{
       final response = await http
-          .get('https://viking-250012.appspot.com/api/get-provider-total/${prefs.get('uid')}');
+          .get('https://young-tor-95342.herokuapp.com/api/get-provider-total/${prefs.get('uid')}');
       if (response.statusCode == 200 || response.statusCode == 201) {
         var payload = json.decode(response.body);
         if(mounted){
@@ -173,11 +172,7 @@ void _settingModalBottomSheet(context) {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try{
       final response = await http.get(
-          'https://viking-250012.appspot.com/api/get-provider-history/${prefs.getString('uid')}');
-      print('https://viking-250012.appspot.com/api/get-provider-history/${prefs.getString('uid')}');
-
-
-
+          'https://young-tor-95342.herokuapp.com/api/get-provider-history/${prefs.getString('uid')}');
       if (response.statusCode == 200 || response.statusCode == 201) {
         print('response for transaction');
         print(response.body);
@@ -236,7 +231,7 @@ Widget placeholder(context){
                )
               ],
             ),
-            color: Colors.blue,
+            color: Colors.black,
           );
 }
  
@@ -280,10 +275,14 @@ Fluttertoast.showToast(
       body: Column(crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           StreamBuilder(builder: (context, snapshot){
-            if(!snapshot.hasData){
-              return placeholder(context);
-            }
-            return Container(
+            if(snapshot.hasError) return SizedBox.shrink();
+
+            switch(snapshot.connectionState){
+              case ConnectionState.waiting:
+                  return placeholder(context);
+                  break;
+              default:
+                  return Container(
             height: 170.0,
             child: Column(
               children: <Widget>[
@@ -321,17 +320,20 @@ Fluttertoast.showToast(
             ),
             color: Colors.black87,
           );
+            }
+            
 
           },stream: Firestore.instance.collection('paymentplan').document('${_uid}').snapshots(),),
 
        StreamBuilder(stream: Firestore.instance.collection('providerTransations')
        .where('serviceProviderId',isEqualTo: '${_uid}').where('transactionPassed',isEqualTo: true).snapshots(),builder: (context,snapshot){
-         if(! snapshot.hasData){
-          
-           return   Padding(child:Center(child: CircularProgressIndicator()) ,padding: EdgeInsets.only(top: 150.0),);
-         }
-         // snapshot.data.documents.length
-         return snapshot.data.documents.length >  0 ? new Expanded(
+        if(snapshot.hasError) return Center(child: Align(child: Text('Oops something went wrong.Try again'),alignment: Alignment.center,heightFactor: 16,),);
+        switch(snapshot.connectionState){
+          case ConnectionState.waiting:
+              return CircularProgressIndicator();
+              break;
+          default:
+              return snapshot.data.documents.length >  0 ? new Expanded(
             child: ListView.separated(itemBuilder: (BuildContext context, int index){
               return Column(
                 children: <Widget>[
@@ -363,6 +365,7 @@ Fluttertoast.showToast(
           ): Center(
         child: Padding(child: Text('You have not made any transactions'),padding: EdgeInsets.only(top: 150.0),),
     );
+        }
        },)
           
         ],
