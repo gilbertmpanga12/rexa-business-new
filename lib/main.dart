@@ -118,30 +118,18 @@ class ViewSwitcherState extends State<ViewSwitcher>{
   bool isNew;
   bool isNewUser;
   
-  void checkIfDeviceRegistered() async {
-    SharedPreferences prefs =  await SharedPreferences.getInstance();
-    setState(() {
-    isNew = prefs.getBool('isSignedIn');
-    isNewUser = prefs.getBool('isNewUser');
-    });
-  }
-
-  
-
-
-
-
   @override
   void initState(){
-  checkIfDeviceRegistered();
-super.initState();
+  
+  super.initState();
   }
 
 
   @override
   Widget build(BuildContext context){ // bug on login process
-    return StreamBuilder(stream: authService.user,builder: (context,snapshot){
-     switch(snapshot.connectionState){
+    return StreamBuilder(stream: authService.user, builder: (context,snapshot){
+     switch(snapshot.connectionState){ 
+       
        case ConnectionState.waiting: 
        return DefaultHome();
        break;

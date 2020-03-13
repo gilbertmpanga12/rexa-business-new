@@ -17,6 +17,8 @@ class AppleSignInAvailable {
 class AuthService {
   final _firebaseAuth = FirebaseAuth.instance;
   Observable<FirebaseUser> user;
+  // PublishSubject isNewUser = PublishSubject();
+  // PublishSubject isSignedIn = PublishSubject();
 
   AuthService(){
     user = Observable(_firebaseAuth.onAuthStateChanged);

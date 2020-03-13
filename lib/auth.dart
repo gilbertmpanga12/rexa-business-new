@@ -44,13 +44,11 @@ class _SignInPageState extends State<SignIn> {
   var location = new Location();
   bool isNew;
   String _playerId;
-
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   Observable<FirebaseUser> user;
-
-
-
+  
+      
 Future<dynamic> errorDialog(String  errorMessage) async{
      try {
         await showDialog(
@@ -105,7 +103,9 @@ GoogleSignInAccount googleUser = await _googleSignIn.signIn();
      idToken: googleAuth.idToken,
    );
    
+   
     _auth.signInWithCredential(userCreadentialize).then((user){
+      print('USer iDDD is ${user.user.uid}');
     prefs.setString('token', '${googleAuth.idToken}');
     prefs.setString('email', '${user.user.email}');
     prefs.setString('uid', '${user.user.uid}');
@@ -113,8 +113,8 @@ GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     prefs.setString('fullName', '${user.user.displayName}');
     Firestore.instance.collection('saloonServiceProvider').document(user.user.uid).get().then((newuser){
       if(newuser.exists){
-        prefs.setBool('isNewUser', false);
-        prefs.setBool('isSignedIn', true);
+        // prefs.setBool('isNewUser', false);
+        // prefs.setBool('isSignedIn', true);
         prefs.setString('countryCode', newuser.data['countryCode']);
         prefs.setString('currencyCode', newuser.data['countryCode']);
         prefs.setString('fullName', newuser.data['fullName']); // profilePicture
@@ -129,10 +129,12 @@ GoogleSignInAccount googleUser = await _googleSignIn.signIn();
         prefs.setString('countryCode', newuser.data['countryCode']);// countryCode
         prefs.setString('currencyCode', newuser.data['currencyCode']);
         prefs.setString('businessName', newuser.data['businessName']);
+
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminHome()));
       }else{
         // prefs.setString('fcm_token', _playerId);
-        prefs.setBool('isNewUser', true);
+        
+        // prefs.setBool('isNewUser', true);
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TermsWid()));
       }
     });
