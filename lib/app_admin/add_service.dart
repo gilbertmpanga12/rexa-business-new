@@ -17,7 +17,7 @@ import 'package:url_launcher/url_launcher.dart';
 import './myoffice.dart';
 import '../mainOps/create_service.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
+
 
 class Premium {
   final bool account_upgrade;
@@ -88,6 +88,7 @@ class _CreateServiceWidgetState extends State<CreateServiceWidget> {
 
   List<_Categories> categoriesFetched = List();
   List<_Services> servicesFetched = List();
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   fetchTotal() async {
@@ -201,10 +202,31 @@ docID
           'isBusiness': true
    };
   if(val == 1){
-    Navigator.of(context, rootNavigator: true).pop('dialog');
+    // Fluttertoast.cancel();
+    
+     Navigator.of(context, rootNavigator: true).pop('dialog');
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminSuccessWidget()));
+//     http.post('http://35.246.43.91/crucken-transcord',
+//             body: json.encode(transcoderPayload),
+//             headers: {
+//               "accept": "application/json",
+//               "content-type": "application/json"
+//    }).then((onValue){
+// // sendToUsersSegment();
+//             }).catchError((onError){
+// print('failed to transcord image');
+//             });
   }else if(val == 443){
-  
+//     http.post('http://35.246.43.91/crucken-transcord',
+//             body: json.encode(transcoderPayload),
+//             headers: {
+//               "accept": "application/json",
+//               "content-type": "application/json"
+//    }).then((onValue){
+// // sendToUsersSegment();
+//             }).catchError((onError){
+// print('failed to transcord image');
+//             });
    Navigator.of(context, rootNavigator: true).pop('dialog');
           showDialog(context: context,builder: (BuildContext context){
                   return AlertDialog(
@@ -495,7 +517,7 @@ Container(margin: EdgeInsets.all(8.0),
                 ],
         textCapitalization: TextCapitalization.words,
         maxLines: 2,
-        decoration: InputDecoration(labelText: 'Time Taken'),
+        decoration: InputDecoration(labelText: 'Time Taken / Number of items'),
         onSaved: (String value) {
           _timeTaken = value;
         });
@@ -560,6 +582,7 @@ if(value.length > 1000){
 
 
   void initState() {
+   
     var initializationSettingsAndroid =
     new AndroidInitializationSettings('@mipmap/ic_launcher');
     var initializationSettingsIOS = new IOSInitializationSettings();
@@ -611,10 +634,9 @@ if(value.length > 1000){
                   if(snapshot.data['isPremium'] == true){
                   var lastActivatedTime = DateTime.fromMillisecondsSinceEpoch(int.parse(snapshot.data['timeStamp']));
                   var date1 = DateTime.utc(lastActivatedTime.year,lastActivatedTime.month,lastActivatedTime.day);
-                  var now = DateTime.now();
+                  var now = Timestamp.now().toDate();
                   var diff = now.difference(date1);
                   var days = diff.inDays;
-                
                     return days < 31 ? Column(children: <Widget>[
                       _buildWebsite(),
                       _buildLink()
@@ -644,8 +666,7 @@ if(value.length > 1000){
              ),
             ),
           ),),floatingActionButton:  FloatingActionButton(child:Icon(EvaIcons.cloudUploadOutline, color: Colors.white,), onPressed: (){
-                _settingModalBottomSheet(context); //  _settingModalBottomSheet(context);
-               // FlutterRingtonePlayer.playNotification(volume: 0.5, looping: true,);
+     _settingModalBottomSheet(context);
               },backgroundColor: Colors.blueAccent,),),
 
       onTap: () {
