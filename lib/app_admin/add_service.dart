@@ -87,6 +87,11 @@ class _CreateServiceWidgetState extends State<CreateServiceWidget> {
   String _website;
   bool hasExceeded = false;
 
+  String countryCode;
+  String currencyCode;
+  String email;
+  String fullName;
+
   List<_Categories> categoriesFetched = List();
   List<_Services> servicesFetched = List();
     var scaffoldKey = GlobalKey<ScaffoldState>();
@@ -98,37 +103,84 @@ class _CreateServiceWidgetState extends State<CreateServiceWidget> {
     setState(() {
 isUid = prefs.getString('uid');
     });
-  }
+countryCode = prefs.getString('countryCode');
+currencyCode = prefs.getString('currencyCode');
+email= prefs.getString('email');
+fullName = prefs.getString('fullName');
+}
 
 
-_launchURL(String activityType) async {
+void payWithMpesa() async {
+Navigator.pop(context);
     var initializer = RavePayInitializer(
         amount: 500, publicKey: 'FLWPUBK-fd13744184c7c4ec3fb622ababef95a5-X', 
-        encryptionKey: 'FLWSECK-fb7f8d35b0b235c849198c0ab613e230-X')
-      ..country = "KE"
-      ..currency = "KES"
-      ..email = "gilbertmpanga.gm@gmail.com"
-      ..fName = "Ciroma"
-      ..lName = "Adekunle"
-      ..narration = 'narration' ?? ''
+        encryptionKey: 'fb7f8d35b0b249431a9db2b0')
+      ..country = "$countryCode"
+      ..currency = "$currencyCode"
+      ..email = "$email"
+      ..fName = "$fullName"
+      ..narration = 'Subscribe for premium' ?? ''
       ..txRef = 'txRef'
-      //..subAccounts = subAccounts
       ..acceptMpesaPayments = true
-      ..acceptAccountPayments = true
-      ..acceptCardPayments = true
-      ..acceptAchPayments = true
-      ..acceptGHMobileMoneyPayments = true
-      ..acceptUgMobileMoneyPayments = true
-      ..staging = true
+      ..acceptCardPayments = false
+      ..staging = false
       ..isPreAuth = true
+      ..displayFee = true;
+    RaveResult response = await RavePayManager()
+        .prompt(context: context, initializer: initializer);
+}
+
+void payWithMobileMoney() async {
+Navigator.pop(context);
+ var initializer = RavePayInitializer(
+       amount: 500, publicKey: 'FLWPUBK-fd13744184c7c4ec3fb622ababef95a5-X', 
+        encryptionKey: 'fb7f8d35b0b249431a9db2b0')
+      ..country = "UG"
+      ..currency = "UGX"
+      ..email = "$email"
+      ..fName = "$fullName"
+      ..narration = 'Subscribe for premium' ?? ''
+      ..txRef = 'txRef'
+      ..companyName = Text('UNRA')
+      ..publicKey = 'FLWPUBK-fd13744184c7c4ec3fb622ababef95a5-X'
+      ..encryptionKey = 'fb7f8d35b0b249431a9db2b0'
+      ..acceptAccountPayments = true
+      ..acceptCardPayments = false
+      ..acceptUgMobileMoneyPayments = true
+      ..staging = false
+      ..isPreAuth = false
       ..displayFee = true;
 
     // Initialize and get the transaction result
     RaveResult response = await RavePayManager()
+        .prompt(context: context, initializer: initializer);
+}
+
+
+void payWithOtherMeans() async {
+    Navigator.pop(context);
+    var initializer = RavePayInitializer(
+        amount: 500, publicKey: 'FLWPUBK-fd13744184c7c4ec3fb622ababef95a5-X', 
+        encryptionKey: 'fb7f8d35b0b249431a9db2b0')
+      ..country = "$countryCode"
+      ..currency = "$currencyCode"
+      ..email = "$email"
+      ..fName = "$fullName"
+      ..narration = 'Subscribe for premium' ?? ''
+      ..txRef = 'txRef'
+      ..acceptAccountPayments = true
+      ..acceptCardPayments = true
+      ..acceptAchPayments = true
+      ..acceptGHMobileMoneyPayments = true
+      ..staging = false
+      ..isPreAuth = true
+      ..displayFee = true;
+
+    RaveResult response = await RavePayManager()
         .prompt(context: context, initializer: initializer).catchError((onError){
           print(onError);
         });
-       print(response?.message);
+        print(response.message);
 }
 
   Widget _buildServiceProvidedTextField() {
@@ -216,27 +268,6 @@ docID
     
      Navigator.of(context, rootNavigator: true).pop('dialog');
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminSuccessWidget()));
-//     http.post('http://35.246.43.91/crucken-transcord',
-//             body: json.encode(transcoderPayload),
-//             headers: {
-//               "accept": "application/json",
-//               "content-type": "application/json"
-//    }).then((onValue){
-// // sendToUsersSegment();
-//             }).catchError((onError){
-// print('failed to transcord image');
-//             });
-  }else if(val == 443){
-//     http.post('http://35.246.43.91/crucken-transcord',
-//             body: json.encode(transcoderPayload),
-//             headers: {
-//               "accept": "application/json",
-//               "content-type": "application/json"
-//    }).then((onValue){
-// // sendToUsersSegment();
-//             }).catchError((onError){
-// print('failed to transcord image');
-//             });
    Navigator.of(context, rootNavigator: true).pop('dialog');
           showDialog(context: context,builder: (BuildContext context){
                   return AlertDialog(
@@ -483,7 +514,13 @@ Container(margin: EdgeInsets.all(8.0),
                     mainAxisAlignment: MainAxisAlignment.center,
                   ),
                   onPressed: () {
-               _launchURL('clicks');
+               if(countryCode == 'KE'){
+                 payWithMpesa();
+               }else if(countryCode == 'UG'){
+                 payWithMobileMoney();
+               }else {
+                 payWithOtherMeans();
+               }
 
                   },
                   color: Colors.white,
@@ -665,7 +702,14 @@ if(value.length > 1000){
                         fontSize: 16.8,fontFamily: 'Comfortaa',fontWeight: FontWeight.w900)),padding: EdgeInsets.all(15.0),),
 
                   onPressed: (){
-                _launchURL('clicks');
+               if(countryCode == 'KE'){
+                 payWithMpesa();
+               }else if(countryCode == 'UG'){
+                 payWithMobileMoney();
+               }else {
+                 payWithOtherMeans();
+               }
+
                   },
                   color: Colors.red[800],
                 ), padding: EdgeInsets.all(8.6));
