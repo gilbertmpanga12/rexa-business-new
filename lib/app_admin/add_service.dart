@@ -18,6 +18,7 @@ import './myoffice.dart';
 import '../mainOps/create_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:rave_flutter/rave_flutter.dart';
+import 'package:random_string/random_string.dart';
 
 class Premium {
   final bool account_upgrade;
@@ -112,6 +113,7 @@ fullName = prefs.getString('fullName');
 
 void payWithMpesa() async {
 Navigator.pop(context);
+final String txRef = randomAlpha(5);
     var initializer = RavePayInitializer(
         amount: 500, publicKey: 'FLWPUBK-fd13744184c7c4ec3fb622ababef95a5-X', 
         encryptionKey: 'fb7f8d35b0b249431a9db2b0')
@@ -120,7 +122,7 @@ Navigator.pop(context);
       ..email = "$email"
       ..fName = "$fullName"
       ..narration = 'Subscribe for premium' ?? ''
-      ..txRef = 'txRef'
+      ..txRef = txRef 
       ..acceptMpesaPayments = true
       ..acceptCardPayments = false
       ..staging = false
@@ -132,6 +134,7 @@ Navigator.pop(context);
 
 void payWithMobileMoney() async {
 Navigator.pop(context);
+final String txRef = randomAlpha(5);
  var initializer = RavePayInitializer(
        amount: 500, publicKey: 'FLWPUBK-fd13744184c7c4ec3fb622ababef95a5-X', 
         encryptionKey: 'fb7f8d35b0b249431a9db2b0')
@@ -140,7 +143,7 @@ Navigator.pop(context);
       ..email = "$email"
       ..fName = "$fullName"
       ..narration = 'Subscribe for premium' ?? ''
-      ..txRef = 'txRef'
+      ..txRef = txRef
       ..companyName = Text('UNRA')
       ..publicKey = 'FLWPUBK-fd13744184c7c4ec3fb622ababef95a5-X'
       ..encryptionKey = 'fb7f8d35b0b249431a9db2b0'
@@ -158,6 +161,7 @@ Navigator.pop(context);
 
 
 void payWithOtherMeans() async {
+  final String txRef = randomAlpha(5);
     Navigator.pop(context);
     var initializer = RavePayInitializer(
         amount: 500, publicKey: 'FLWPUBK-fd13744184c7c4ec3fb622ababef95a5-X', 
@@ -167,7 +171,7 @@ void payWithOtherMeans() async {
       ..email = "$email"
       ..fName = "$fullName"
       ..narration = 'Subscribe for premium' ?? ''
-      ..txRef = 'txRef'
+      ..txRef = txRef
       ..acceptAccountPayments = true
       ..acceptCardPayments = true
       ..acceptAchPayments = true
