@@ -92,6 +92,7 @@ class _CreateServiceWidgetState extends State<CreateServiceWidget> {
   String currencyCode;
   String email;
   String fullName;
+  String businessName;
 
   List<_Categories> categoriesFetched = List();
   List<_Services> servicesFetched = List();
@@ -108,6 +109,7 @@ countryCode = prefs.getString('countryCode');
 currencyCode = prefs.getString('currencyCode');
 email= prefs.getString('email');
 fullName = prefs.getString('fullName');
+businessName = prefs.getString('businessName');
 }
 
 
@@ -127,6 +129,7 @@ final String txRef = randomAlpha(5);
       ..acceptCardPayments = false
       ..staging = false
       ..isPreAuth = true
+      ..companyName = Text('$businessName')
       ..displayFee = true;
     RaveResult response = await RavePayManager()
         .prompt(context: context, initializer: initializer);
@@ -144,7 +147,7 @@ final String txRef = randomAlpha(5);
       ..fName = "$fullName"
       ..narration = 'Subscribe for premium' ?? ''
       ..txRef = txRef
-      ..companyName = Text('UNRA')
+      ..companyName = Text('$businessName')
       ..publicKey = 'FLWPUBK-fd13744184c7c4ec3fb622ababef95a5-X'
       ..encryptionKey = 'fb7f8d35b0b249431a9db2b0'
       ..acceptAccountPayments = true
@@ -153,8 +156,6 @@ final String txRef = randomAlpha(5);
       ..staging = false
       ..isPreAuth = false
       ..displayFee = true;
-
-    // Initialize and get the transaction result
     RaveResult response = await RavePayManager()
         .prompt(context: context, initializer: initializer);
 }
@@ -170,6 +171,7 @@ void payWithOtherMeans() async {
       ..currency = "$currencyCode"
       ..email = "$email"
       ..fName = "$fullName"
+      ..companyName = Text('$businessName')
       ..narration = 'Subscribe for premium' ?? ''
       ..txRef = txRef
       ..acceptAccountPayments = true
@@ -181,10 +183,7 @@ void payWithOtherMeans() async {
       ..displayFee = true;
 
     RaveResult response = await RavePayManager()
-        .prompt(context: context, initializer: initializer).catchError((onError){
-          print(onError);
-        });
-        print(response.message);
+        .prompt(context: context, initializer: initializer);
 }
 
   Widget _buildServiceProvidedTextField() {
