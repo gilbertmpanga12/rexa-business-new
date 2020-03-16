@@ -17,7 +17,7 @@ import 'package:url_launcher/url_launcher.dart';
 import './myoffice.dart';
 import '../mainOps/create_service.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:rave_flutter/rave_flutter.dart';
 
 class Premium {
   final bool account_upgrade;
@@ -89,6 +89,7 @@ class _CreateServiceWidgetState extends State<CreateServiceWidget> {
 
   List<_Categories> categoriesFetched = List();
   List<_Services> servicesFetched = List();
+    var scaffoldKey = GlobalKey<ScaffoldState>();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -101,25 +102,33 @@ isUid = prefs.getString('uid');
 
 
 _launchURL(String activityType) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-  final url = 'https://rexapay.firebaseapp.com/pay/${prefs.getString('uid')}/boose/$activityType/${prefs.getString('fullName')}/${prefs.getString('countryCode')}/${prefs.getString('currencyCode')}/${prefs.getString('email')}/${prefs.getString('phoneNumber')}';
-  // pay/:uid/:token/:activityType/:fullName/:countryCode/:currencyCode/:email/:phoneNumber
-  print('${prefs.getString('currencyCode')}');
-  print('${prefs.getString('countryCode')}');
-  print(url);
-  if (await canLaunch(url)) {
-    await launch(url, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
-  } else {
-    Fluttertoast.showToast(
-        msg: "Oops!, website not listed by service provider.",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIos: 3,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0
-    );
-  }
+    var initializer = RavePayInitializer(
+        amount: 500, publicKey: 'FLWPUBK-fd13744184c7c4ec3fb622ababef95a5-X', 
+        encryptionKey: 'FLWSECK-fb7f8d35b0b235c849198c0ab613e230-X')
+      ..country = "KE"
+      ..currency = "KES"
+      ..email = "gilbertmpanga.gm@gmail.com"
+      ..fName = "Ciroma"
+      ..lName = "Adekunle"
+      ..narration = 'narration' ?? ''
+      ..txRef = 'txRef'
+      //..subAccounts = subAccounts
+      ..acceptMpesaPayments = true
+      ..acceptAccountPayments = true
+      ..acceptCardPayments = true
+      ..acceptAchPayments = true
+      ..acceptGHMobileMoneyPayments = true
+      ..acceptUgMobileMoneyPayments = true
+      ..staging = true
+      ..isPreAuth = true
+      ..displayFee = true;
+
+    // Initialize and get the transaction result
+    RaveResult response = await RavePayManager()
+        .prompt(context: context, initializer: initializer).catchError((onError){
+          print(onError);
+        });
+       print(response?.message);
 }
 
   Widget _buildServiceProvidedTextField() {
@@ -603,7 +612,9 @@ if(value.length > 1000){
     final double targetWidth = deviceWidth > 550.0 ? 500.0 : deviceWidth * 0.95;
     final double targetPadding = deviceWidth - targetWidth;
     return Theme(child: SafeArea(child: GestureDetector(
-      child: Scaffold(body:  Container(
+      child: Scaffold(
+        key: scaffoldKey,
+        body:  Container(
           margin: EdgeInsets.all(10.0),
           child: Form(
             key: _formKey,

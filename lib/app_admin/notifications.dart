@@ -237,13 +237,10 @@ requestRating(String playerId, String contents, String headings) async {
     final response = await http
         .get('https://young-tor-95342.herokuapp.com/notify/${servicesFetched.fcm_token}/${servicesFetched.serviceProviderId}/${servicesFetched.transactionalID}/${servicesFetched.requestedSaloonService}/${servicesFetched.priceRequested}/${servicesFetched.userId}/${servicesFetched.requesteeName}');
     if (response.statusCode == 200 || response.statusCode == 201) {
-      // Navigator.of(context, rootNavigator: true).pop('dialog');
-Firestore.instance.collection('users')
-    .document(servicesFetched.userId).setData({'ratingCount': 1}, merge: true).then((onValue){
+// Firestore.instance.collection('users')
+//     .document(servicesFetched.userId).setData({'ratingCount': 1}, merge: true).then((onValue){
+//     });
  requestRating(servicesFetched.fcm_token, "Ratings", "Please Rate $fullName");
-    });
-     
-
     }else{
        Fluttertoast.showToast(
         msg: "Oops!, something went wrong",
