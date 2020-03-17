@@ -9,7 +9,6 @@ import './admin_success.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:random_string/random_string.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import './notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -79,9 +78,7 @@ class _CreateServiceWidgetState extends State<CreateServiceWidget> {
   File _image;
   bool isNetworkError = false;
   String shippingAdress;
-
   String _token;
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   String _description;
   bool isPremium;
   String isUid;
@@ -430,7 +427,7 @@ sendToUsersSegment() async {
  SharedPreferences prefs = await SharedPreferences.getInstance();
 String url = 'https://onesignal.com/api/v1/notifications';
 Map<dynamic, dynamic> body = {
-'app_id': '0a2fc101-4f5a-44c2-97b9-c8eb8f420e08',
+'app_id': '01d9552f-a5c7-49a1-bf05-6886d9ccc944',
 'contents': {"en": "Stories Videos"},
 'included_segments': ["All"],
 'headings': {"en": "${prefs.getString('fullName')} shared a new style"},
@@ -614,34 +611,10 @@ if(value.length > 1000){
     Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationsWidget()));
   }
 
-  Future _showNotificationWithDefaultSound() async {
-    var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
-        'notifier_id', 'Service Request', 'your channel description',
-        importance: Importance.Max, priority: Priority.High);
-    var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
-    var platformChannelSpecifics = new NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.show(
-      0,
-      'New service request',
-      'Tap to to answer',
-      platformChannelSpecifics,
-      payload: 'Default_Sound',
-    );
-  }
+  
 
 
   void initState() {
-   
-    var initializationSettingsAndroid =
-    new AndroidInitializationSettings('@mipmap/ic_launcher');
-    var initializationSettingsIOS = new IOSInitializationSettings();
-    var initializationSettings = new InitializationSettings(
-        initializationSettingsAndroid, initializationSettingsIOS);
-    flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
-    flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: onSelectNotification);
-
     fetchTotal();
     super.initState();
   }
