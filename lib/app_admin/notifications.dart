@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:esalonbusiness/globals/configs.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
@@ -32,7 +35,7 @@ class Orders {
   final String priceRequested;
   final String timeStamp;
   final String transactionalID;
-
+  final bool isIos;
 
   Orders({
     this.isRequested,
@@ -48,7 +51,8 @@ class Orders {
     this.transactionPassed,
     this.timeStamp,
     this.priceRequested,
-    this.transactionalID
+    this.transactionalID,
+    this.isIos
   });
 
   factory Orders.fromJson(Map<String, dynamic> json) {
@@ -184,50 +188,46 @@ print(serviceProviderUid);
 
 
 requestRating(String playerId, String contents, String headings) async {
- OneSignal.shared.postNotificationWithJson({
-  "include_player_ids" : [playerId],
-  "contents" : {"en" : contents},
-  "headings": {"en": headings},
-  "small_icon": "@mipmap/ic_launcher",
-  "large_icon": "@mipmap/ic_launcher"
-}).then((onValue){
-  showDialog(context: context,builder: (BuildContext context){
-        try{
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.all(Radius.circular(20.0))
-        ),
-          title: SizedBox(width: 200.0,child: Text('Success'),),
-          content: Text('Transaction completed successfully.'),actions: <Widget>[
-          FlatButton(child: Text('OK'),onPressed: (){
-//            Navigator.of(context).pop();
-            Navigator.push(context,MaterialPageRoute(builder: (context) => AdminHome()));
-          },)
-        ],);
-        }catch(err){
-          print(err);
-        }
-      });
-}).catchError((onError){
-  print(onError);
-   showDialog(context: context,builder: (BuildContext context){
-        try{
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.all(Radius.circular(20.0))
-        ),
-          title: SizedBox(width: 200.0,child: Text('Success'),),
-          content: Text('Transaction completed successfully.'),actions: <Widget>[
-          FlatButton(child: Text('OK'),onPressed: (){
-//            Navigator.of(context).pop();
-            Navigator.push(context,MaterialPageRoute(builder: (context) => AdminHome()));
-          },)
-        ],);
-        }catch(err){
-          print(err);
-        }
-      });
-});
+ String url = 'https://onesignal.com/api/v1/notifications';
+ bool isIos =  servicesFetched.isIos;
+ if(isIos){
+   Map<dynamic, dynamic> body = {
+'app_id': Configs.appIdUserIosOneSignal,
+'contents': {"en": contents},
+'include_player_ids': [playerId],
+'headings': {"en": headings},
+'data': {"type": "new-stories"},
+ "small_icon": "@mipmap/ic_launcher",
+ "large_icon": "@mipmap/ic_launcher"
+}; 
+final response = await http.post(url,
+body: json.encode(body),
+headers: {HttpHeaders.authorizationHeader: Configs.appAuthorizationHeaderIos,
+"accept": "application/json",
+"content-type": "application/json"
+}
+);
+return;
+ }
+
+Map<dynamic, dynamic> body = {
+'app_id': Configs.appIdnewAdroidWorker,
+'contents': {"en": contents},
+'include_player_ids': [playerId],
+'headings': {"en": headings},
+'data': {"type": "new-stories"},
+ "small_icon": "@mipmap/ic_launcher",
+ "large_icon": "@mipmap/ic_launcher"
+}; 
+final response = await http.post(url,
+body: json.encode(body),
+headers: {HttpHeaders.authorizationHeader: Configs.authorizationHeadernewAdroidWorker,
+"accept": "application/json",
+"content-type": "application/json"
+}
+);
+
+
 }
 
 

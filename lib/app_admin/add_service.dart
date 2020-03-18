@@ -1,3 +1,4 @@
+import 'package:esalonbusiness/globals/configs.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
@@ -256,7 +257,7 @@ prefs.getString('subCategory'), _price, _timeTaken,prefs.getString('countryCode'
 prefs.getDouble('long'),prefs.getDouble('lat'),
 prefs.getString('profilePicture'),
 prefs.getString('fullName'),
-docID
+docID,  Theme.of(context).platform == TargetPlatform.iOS
 ).then((val){
   final Map<String, dynamic> transcoderPayload = {
           'uid': docID,
@@ -359,7 +360,8 @@ prefs.getString('location'),prefs.getString('phoneNumber'),
 prefs.getDouble('long'),prefs.getDouble('lat'),
 prefs.getString('profilePicture'),
 prefs.getString('fullName'),
-docID
+docID,
+ Theme.of(context).platform == TargetPlatform.iOS
 ).then((val){
   print('Hulk hogan');
   print(val);
@@ -427,7 +429,7 @@ sendToUsersSegment() async {
  SharedPreferences prefs = await SharedPreferences.getInstance();
 String url = 'https://onesignal.com/api/v1/notifications';
 Map<dynamic, dynamic> body = {
-'app_id': '01d9552f-a5c7-49a1-bf05-6886d9ccc944',
+'app_id': Configs.appIdnewAdroidWorker ,
 'contents': {"en": "Stories Videos"},
 'included_segments': ["All"],
 'headings': {"en": "${prefs.getString('fullName')} shared a new style"},
@@ -435,9 +437,28 @@ Map<dynamic, dynamic> body = {
  "small_icon": "@mipmap/ic_launcher",
  "large_icon": "@mipmap/ic_launcher"
 }; // 'small_icon': '' ... final response =
+
+Map<dynamic, dynamic> iosBody = {
+'app_id': Configs.appIdUserIosOneSignal ,
+'contents': {"en": "Stories Videos"},
+'included_segments': ["All"],
+'headings': {"en": "${prefs.getString('fullName')} shared a new style"},
+'data': {"type": "new-videos"},
+ "small_icon": "@mipmap/ic_launcher",
+ "large_icon": "@mipmap/ic_launcher"
+}; 
+
   await http.post(url,
 body: json.encode(body),
-headers: {HttpHeaders.authorizationHeader: "Basic OThhY2RlNTEtZTE5YS00Y2E2LWE3NWUtYTUwOWY0MTJmNzIz",
+headers: {HttpHeaders.authorizationHeader: Configs.authorizationHeadernewAdroidWorker,
+"accept": "application/json",
+"content-type": "application/json"
+}
+);
+
+ await http.post(url,
+body: json.encode(iosBody),
+headers: {HttpHeaders.authorizationHeader: Configs.authorizationHeadernewAdroidWorker,
 "accept": "application/json",
 "content-type": "application/json"
 }

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:random_string/random_string.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,10 +15,12 @@ class CreateNewService {
   String shippingAddress, String subCategory, String actualPrice, String _timeTaken, String 
   country, String collectionType, String location, String phoneNumber, double longitude, 
   double latitude, String profilePicture, String fullName,
-  String docID
+  String docID, bool isIos
   ) async {
     try {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+     var status = await OneSignal.shared.getPermissionSubscriptionState();
+     var playerId = status.subscriptionStatus.userId;
     var  currentUser =  await Firestore.instance.collection('paymentplan')
      .document(uid).get();
     if(currentUser.data['lastBalance'] > 100000 && currentUser.data['countryCode'] == 'UG') {
@@ -165,8 +168,9 @@ await Firestore.instance.collection('paymentplan').document(uid).setData({
       'latitude': latitude,
       'profilePicture': prefs.getString('profilePicture'),
       'fullName': fullName,
-      'fcm_token': prefs.getString('fcm_token'),
-      'videoDefault': 'https://firebasestorage.googleapis.com/v0/b/esalonbusiness-d3f3d.appspot.com/o/snowyscreen.gif?alt=media&token=35458d60-5e73-4e7e-ae13-aad26ff095ec'
+      'fcm_token': playerId,
+      'videoDefault': 'https://firebasestorage.googleapis.com/v0/b/esalonbusiness-d3f3d.appspot.com/o/snowyscreen.gif?alt=media&token=35458d60-5e73-4e7e-ae13-aad26ff095ec',
+      'isIos': isIos
     }).then((onValue){
       if(isVideo){
          Firestore.instance.collection('servicesvideofeed').document(docID).setData(<String, dynamic>{
@@ -193,7 +197,8 @@ await Firestore.instance.collection('paymentplan').document(uid).setData({
       'latitude': latitude,
       'profilePicture': prefs.getString('profilePicture'),// profilePicture
       'fullName': fullName,
-      'fcm_token': prefs.getString('fcm_token'),
+      'isIos': isIos,
+      'fcm_token': playerId,
       'videoDefault': 'https://firebasestorage.googleapis.com/v0/b/esalonbusiness-d3f3d.appspot.com/o/snowyscreen.gif?alt=media&token=35458d60-5e73-4e7e-ae13-aad26ff095ec'
     }).then((onValue){
       print('done');
