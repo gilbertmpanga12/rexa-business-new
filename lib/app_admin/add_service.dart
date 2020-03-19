@@ -111,7 +111,7 @@ businessName = prefs.getString('businessName');
 }
 
 
-void locals(String currencyCode) async {
+void locals(String currencyCode, String amount) async {
 Navigator.pop(context);
   SharedPreferences prefs = await SharedPreferences.getInstance();
   final url = '${Configs.paymentBaseUrl}/pay/${prefs.getString('email')}/$currencyCode/${prefs.getString('countryCode')}/${prefs.getString('phoneNumber')}/${prefs.getString('fullName')}/${prefs.getString('uid')}/available';
@@ -136,7 +136,7 @@ void cardPayments() async {
 Navigator.pop(context);
 Navigator.pop(context);
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  final url = '${Configs.paymentBaseUrl}/pay/${prefs.getString('email')}/${prefs.getString('currencyCode')}/NG/${prefs.getString('phoneNumber')}/${prefs.getString('fullName')}/${prefs.getString('uid')}/not-available';
+  final url = '${Configs.paymentBaseUrl}/pay/${prefs.getString('email')}/${prefs.getString('currencyCode')}/NG/${prefs.getString('phoneNumber')}/${prefs.getString('fullName')}/${prefs.getString('uid')}/not-available/39.32';
   if (await canLaunch(url)) {
     await launch(url, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
   } else {
@@ -151,7 +151,6 @@ Navigator.pop(context);
     );
   }
 }
-
 
 
 
@@ -507,16 +506,16 @@ Container(margin: EdgeInsets.all(8.0),
                   ),
                   onPressed: () {
                if(countryCode == 'KE'){
-                 locals('KES');
+                 locals('KES', '4143.81');
                }else if(countryCode == 'UG'){
-                 locals('UGX');
+                 locals('UGX', '150000');
                }else if(countryCode == 'GH'){
-                 locals('GHS');
+                 locals('GHS', '220.60');
                }if(countryCode == 'ZA'){
-                 locals('ZAR');
+                 locals('ZAR', '675.88');
                }if(countryCode == 'TZ'){
-                 locals('TZS');
-               }{
+                 locals('TZS', '90640.30');
+               } else {
                  cardPayments();
                }
                   },
@@ -675,17 +674,17 @@ if(value.length > 1000){
                         fontSize: 16.8,fontFamily: 'Comfortaa',fontWeight: FontWeight.w900)),padding: EdgeInsets.all(15.0),),
 
                   onPressed: (){
-              if(countryCode == 'KE'){
-                 locals('KES');
+               if(countryCode == 'KE'){
+                 locals('KES', '4143.81');
                }else if(countryCode == 'UG'){
-                 locals('UGX');
+                 locals('UGX', '150000');
                }else if(countryCode == 'GH'){
-                 locals('GHS');
+                 locals('GHS', '220.60');
                }if(countryCode == 'ZA'){
-                 locals('ZAR');
+                 locals('ZAR', '675.88');
                }if(countryCode == 'TZ'){
-                 locals('TZS');
-               }{
+                 locals('TZS', '90640.30');
+               } else {
                  cardPayments();
                }
                   },

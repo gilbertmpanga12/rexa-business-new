@@ -94,16 +94,16 @@ void _settingModalBottomSheet(context) {
                   ),
                   onPressed: (){
                 if(countryCode == 'KE'){
-                 locals('KES');
+                 locals('KES', '4143.81');
                }else if(countryCode == 'UG'){
-                 locals('UGX');
+                 locals('UGX', '150000');
                }else if(countryCode == 'GH'){
-                 locals('GHS');
+                 locals('GHS', '220.60');
                }if(countryCode == 'ZA'){
-                 locals('ZAR');
+                 locals('ZAR', '675.88');
                }if(countryCode == 'TZ'){
-                 locals('TZS');
-               }{
+                 locals('TZS', '90640.30');
+               } else{
                  cardPayments();
                }
 
@@ -180,7 +180,7 @@ void _settingModalBottomSheet(context) {
   double paddingTitle = 67.0;
 
 
-void locals(String currencyCode) async {
+void locals(String currencyCode, String amount) async {
 Navigator.pop(context);
   SharedPreferences prefs = await SharedPreferences.getInstance();
   final url = '${Configs.paymentBaseUrl}/pay/${prefs.getString('email')}/$currencyCode/${prefs.getString('countryCode')}/${prefs.getString('phoneNumber')}/${prefs.getString('fullName')}/${prefs.getString('uid')}/available';
@@ -205,7 +205,7 @@ void cardPayments() async {
 Navigator.pop(context);
 Navigator.pop(context);
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  final url = '${Configs.paymentBaseUrl}/pay/${prefs.getString('email')}/${prefs.getString('currencyCode')}/NG/${prefs.getString('phoneNumber')}/${prefs.getString('fullName')}/${prefs.getString('uid')}/not-available';
+  final url = '${Configs.paymentBaseUrl}/pay/${prefs.getString('email')}/${prefs.getString('currencyCode')}/NG/${prefs.getString('phoneNumber')}/${prefs.getString('fullName')}/${prefs.getString('uid')}/not-available/39.32';
   if (await canLaunch(url)) {
     await launch(url, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
   } else {
