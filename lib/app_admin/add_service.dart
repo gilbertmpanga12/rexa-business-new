@@ -91,6 +91,7 @@ class _CreateServiceWidgetState extends State<CreateServiceWidget> {
   String email;
   String fullName;
   String businessName;
+  String phoneNumber;
 
   List<_Categories> categoriesFetched = List();
   List<_Services> servicesFetched = List();
@@ -108,13 +109,14 @@ currencyCode = prefs.getString('currencyCode');
 email= prefs.getString('email');
 fullName = prefs.getString('fullName');
 businessName = prefs.getString('businessName');
+phoneNumber = prefs.getString('phoneNumber');
 }
 
 
 void locals(String currencyCode, String amount) async {
-Navigator.pop(context);
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  final url = '${Configs.paymentBaseUrl}/pay/${prefs.getString('email')}/$currencyCode/${prefs.getString('countryCode')}/${prefs.getString('phoneNumber')}/${prefs.getString('fullName')}/${prefs.getString('uid')}/available';
+  final buttonMessage = 'Upgrade Premium Account';
+  final url = '${Configs.paymentBaseUrl}/pay/$email/$currencyCode/$countryCode/$phoneNumber/$fullName/$isUid/available/$amount/$buttonMessage';
+
   if (await canLaunch(url)) {
     await launch(url, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
   } else {
@@ -133,10 +135,9 @@ Navigator.pop(context);
 
 
 void cardPayments() async {
-Navigator.pop(context);
-Navigator.pop(context);
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  final url = '${Configs.paymentBaseUrl}/pay/${prefs.getString('email')}/${prefs.getString('currencyCode')}/NG/${prefs.getString('phoneNumber')}/${prefs.getString('fullName')}/${prefs.getString('uid')}/not-available/39.32';
+  final buttonMessage = 'Upgrade Premium Account';
+  final url = '${Configs.paymentBaseUrl}/pay/$email/$currencyCode/$countryCode/$phoneNumber/$fullName/$isUid/not-available/39.32/$buttonMessage';
+
   if (await canLaunch(url)) {
     await launch(url, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
   } else {
@@ -508,7 +509,7 @@ Container(margin: EdgeInsets.all(8.0),
                if(countryCode == 'KE'){
                  locals('KES', '4143.81');
                }else if(countryCode == 'UG'){
-                 locals('UGX', '150000');
+                 locals('UGX', '50000');
                }else if(countryCode == 'GH'){
                  locals('GHS', '220.60');
                }if(countryCode == 'ZA'){

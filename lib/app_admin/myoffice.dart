@@ -52,6 +52,16 @@ class MyOfficeState extends State<MyOffice>{
   String _uid;
   String countryCode;
 
+  String currencyCode;
+
+  String email;
+
+  String fullName;
+
+  String businessName;
+
+  String phoneNumber;
+
 
 String numberSummerizer(int number){
   var num = number.toString();
@@ -96,7 +106,7 @@ void _settingModalBottomSheet(context) {
                 if(countryCode == 'KE'){
                  locals('KES', '4143.81');
                }else if(countryCode == 'UG'){
-                 locals('UGX', '150000');
+                 locals('UGX', '50000');
                }else if(countryCode == 'GH'){
                  locals('GHS', '220.60');
                }if(countryCode == 'ZA'){
@@ -166,6 +176,12 @@ void _settingModalBottomSheet(context) {
         _uid = prefs.getString('uid');
         countryCode = prefs.getString('countryCode');
       });
+      countryCode = prefs.getString('countryCode');
+currencyCode = prefs.getString('currencyCode');
+email= prefs.getString('email');
+fullName = prefs.getString('fullName');
+businessName = prefs.getString('businessName');
+phoneNumber = prefs.getString('phoneNumber');
     }
   }
 
@@ -181,9 +197,8 @@ void _settingModalBottomSheet(context) {
 
 
 void locals(String currencyCode, String amount) async {
-Navigator.pop(context);
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  final url = '${Configs.paymentBaseUrl}/pay/${prefs.getString('email')}/$currencyCode/${prefs.getString('countryCode')}/${prefs.getString('phoneNumber')}/${prefs.getString('fullName')}/${prefs.getString('uid')}/available';
+  final buttonMessage = 'Clear Balance';
+  final url = '${Configs.paymentBaseUrl}/pay/$email/$currencyCode/$countryCode/$phoneNumber/$fullName/$_uid/available/$amount/$buttonMessage';
   if (await canLaunch(url)) {
     await launch(url, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
   } else {
@@ -202,10 +217,9 @@ Navigator.pop(context);
 
 
 void cardPayments() async {
-Navigator.pop(context);
-Navigator.pop(context);
+  final buttonMessage = 'Clear Balance';
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  final url = '${Configs.paymentBaseUrl}/pay/${prefs.getString('email')}/${prefs.getString('currencyCode')}/NG/${prefs.getString('phoneNumber')}/${prefs.getString('fullName')}/${prefs.getString('uid')}/not-available/39.32';
+  final url = '${Configs.paymentBaseUrl}/pay/$email/$currencyCode/$countryCode/$phoneNumber/$fullName/$_uid/not-available/39.32/$buttonMessage';
   if (await canLaunch(url)) {
     await launch(url, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
   } else {
