@@ -17,7 +17,6 @@ class AppleSignInAvailable {
 class AuthService {
   final _firebaseAuth = FirebaseAuth.instance;
   Observable<FirebaseUser> user;
-
   AuthService(){
     user = Observable(_firebaseAuth.onAuthStateChanged);
 
@@ -28,7 +27,7 @@ class AuthService {
     String _uid = prefs.getString('uid');
     prefs.setBool('isSignedIn', false);
     prefs.setBool('isNewUser', false);
-  }
+}
 
  
 

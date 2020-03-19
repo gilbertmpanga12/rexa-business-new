@@ -1,6 +1,6 @@
 
-import 'package:apple_sign_in/apple_sign_in.dart';
-import 'package:apple_sign_in/apple_sign_in_button.dart';
+// import 'package:apple_sign_in/apple_sign_in.dart';
+// import 'package:apple_sign_in/apple_sign_in_button.dart';
 import 'package:apple_sign_in/scope.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:esalonbusiness/terms_and_conditions.dart';
@@ -44,13 +44,11 @@ class _SignInPageState extends State<SignIn> {
   var location = new Location();
   bool isNew;
   String _playerId;
-
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   Observable<FirebaseUser> user;
-
-
-
+  
+      
 Future<dynamic> errorDialog(String  errorMessage) async{
      try {
         await showDialog(
@@ -88,23 +86,21 @@ setState(() {
 
 
 
-    googleSignIn() async {
+    googleSignIn() async{
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+     
     if(mounted){
    setState(() {
   showSpinner = true;
   });
   }
-                    
-    try{
-GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+    GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
+    
     final AuthCredential userCreadentialize = GoogleAuthProvider.getCredential(
      accessToken: googleAuth.accessToken,
      idToken: googleAuth.idToken,
    );
-   
     _auth.signInWithCredential(userCreadentialize).then((user){
     prefs.setString('token', '${googleAuth.idToken}');
     prefs.setString('email', '${user.user.email}');
@@ -115,7 +111,6 @@ GoogleSignInAccount googleUser = await _googleSignIn.signIn();
       if(newuser.exists){
         prefs.setBool('isNewUser', false);
         prefs.setBool('isSignedIn', true);
-
         prefs.setString('countryCode', newuser.data['countryCode']);
         prefs.setString('currencyCode', newuser.data['countryCode']);
         prefs.setString('fullName', newuser.data['fullName']); // profilePicture
@@ -124,7 +119,6 @@ GoogleSignInAccount googleUser = await _googleSignIn.signIn();
         prefs.setString('phoneNumber', newuser.data['phoneNumber']); //customNumber
         prefs.setDouble('long', newuser.data['longitude']);
         prefs.setDouble('lat', newuser.data['latitude']);
-
         prefs.setString('serviceCategoryName', newuser.data['serviceCategoryName']);
         prefs.setString('subCategory', newuser.data['subCategory']);
         prefs.setString('countryCode', newuser.data['countryCode']);// countryCode
@@ -144,12 +138,9 @@ GoogleSignInAccount googleUser = await _googleSignIn.signIn();
       showSpinner = false;
       });
    }
-   // dialog to be used here
+  
    errorDialog(onError.message);
     });
-    }catch(e){
-errorDialog('Oops something went wrong. Try again');
-    }
  
   }
 
@@ -210,7 +201,11 @@ errorDialog('Oops something went wrong. Try again');
       currentLocation  = await location.getLocation();
       prefs.setDouble('lat', currentLocation.latitude);
       prefs.setDouble('long', currentLocation.longitude);
+
+
       isNew = prefs.getBool('isNew');
+
+     
     } catch (e) {
       print('Failed to get location');
     }
@@ -219,9 +214,9 @@ errorDialog('Oops something went wrong. Try again');
 
 
   void initState(){
-    AppleSignIn.onCredentialRevoked.listen((_) {
-    print("Credentials revoked -------------------------------------------------");
-  });
+  //   AppleSignIn.onCredentialRevoked.listen((_) {
+  //   print("Credentials revoked -------------------------------------------------");
+  // });
     _getLocation();
     super.initState();
   }
@@ -314,8 +309,9 @@ SizedBox(height: 260.0,),
           Column(
             children: <Widget>[
 InkWell(
-      onTap: () {
-       googleSignIn();
+      onTap: () async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+   googleSignIn();
       },
       child: Container(
         margin: EdgeInsets.only(top: 20),
@@ -336,14 +332,14 @@ InkWell(
       ),
     ),
               
-SizedBox(height: 3,),
-Theme.of(context).platform == TargetPlatform.iOS ?_divider(): SizedBox.shrink(),
-SizedBox(height: 3,),
-    Theme.of(context).platform == TargetPlatform.iOS ? Container(child: AppleSignInButton( 
-  style: ButtonStyle.black,
-  type: ButtonType.signIn,
-  onPressed: () => _signInWithApple(context),
-),width: MediaQuery.of(context).size.width -51,): SizedBox.shrink(),
+// SizedBox(height: 3,),
+// Theme.of(context).platform == TargetPlatform.iOS ?_divider(): SizedBox.shrink(),
+// SizedBox(height: 3,),
+//     Theme.of(context).platform == TargetPlatform.iOS ? Container(child: AppleSignInButton( 
+//   style: ButtonStyle.black,
+//   type: ButtonType.signIn,
+//   onPressed: () => _signInWithApple(context),
+// ),width: MediaQuery.of(context).size.width -51,): SizedBox.shrink(),
 
               Container(child: Column(
                 // crossAxisAlignment: CrossAxisAlignment.end,

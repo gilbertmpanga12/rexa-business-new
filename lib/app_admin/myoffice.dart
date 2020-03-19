@@ -162,7 +162,6 @@ void _settingModalBottomSheet(context) {
   initState(){
     localStorage();
     fetchTotal();
-    // fetchHistory();
     super.initState();
   }
 

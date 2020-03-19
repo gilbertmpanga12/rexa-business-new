@@ -11,6 +11,7 @@ import 'dart:async';
 import '../app_services/auth_service.dart';
 import './notifications.dart';
 import 'package:flutter/services.dart';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import './help.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -49,14 +50,10 @@ class AdminHomeState extends State<AdminHome> {
 
   localStorageLoader() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-   var status = await OneSignal.shared.getPermissionSubscriptionState();
-   var playerId = status.subscriptionStatus.userId;
-     prefs.setString('fcm_token', playerId);
     setState(() {
       newPhoto = prefs.getString('profilePicture');
       displayName =  prefs.getString('businessName');
       _firebaseUID  = prefs.getString('uid');
-
     });
   }
 
@@ -156,11 +153,13 @@ if(!helpshot.hasData){
 
 Widget mainviewSwap(){
   return StreamBuilder(builder: (context, snapshot){
-if(!snapshot.hasData){
-  return Center(child: CircularProgressIndicator(),);
-  
+if(snapshot.hasError){
+  return Center(child: Center(child: Text('Check your internet connection'),),);
 }
-return snapshot.data['isAccountVerified'] ? TabBarView(
+  switch(snapshot.connectionState){
+    case ConnectionState.waiting: return new Center(child: CircularProgressIndicator(),);
+    default:
+      return snapshot.data['isAccountVerified'] ? TabBarView(
             children: <Widget>[CreateServiceWidget(),
             ViewServiceWidget()
             ],
@@ -169,6 +168,9 @@ return snapshot.data['isAccountVerified'] ? TabBarView(
            helpLine()
 
           ],),);
+  }
+
+
   }, stream: Firestore.instance.
   collection('saloonServiceProvider')
   .document('$_firebaseUID').snapshots(),);
@@ -179,7 +181,7 @@ return snapshot.data['isAccountVerified'] ? TabBarView(
   void destroyUserNew() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final response =
-    await http.get('https://young-tor-95342.herokuapp.com/api/destroy-new-user/${prefs.getString('isRegistered')}');
+    await http.get('https://viking-250012.appspot.com/api/destroy-new-user/${prefs.getString('isRegistered')}');
     if(response.statusCode == 200 || response.statusCode == 201){
       return null;
     }else{
@@ -309,6 +311,27 @@ await flutterLocalNotificationsPlugin.show(
     showDialog(
       context: context,
       builder: (BuildContext context){
+        /*
+         => new CupertinoAlertDialog(
+            title: new Text(title),
+            content: new Text(body),
+            actions: [
+              CupertinoDialogAction(
+                isDefaultAction: true,
+                child: new Text('Ok'),
+                onPressed: () async {
+                  Navigator.of(context, rootNavigator: true).pop();
+                  await Navigator.push(
+                    context,
+                    new MaterialPageRoute(
+                      builder: (context) => new SecondScreen(payload),
+                    ),
+                  );
+                },
+              )
+            ],
+          ),
+        */
         return Text('Notification');
       }
 
@@ -329,10 +352,10 @@ await flutterLocalNotificationsPlugin.show(
 
 
   initState() {
-   
     OneSignal.shared.setNotificationOpenedHandler((OSNotificationOpenedResult result) {
      if(result.notification.payload.rawPayload['title'].toString().contains('requested')){
-       FlutterRingtonePlayer.stop();
+ // to handle ringtones
+   FlutterRingtonePlayer.stop();
     Navigator.push(
       context,
       new MaterialPageRoute(builder: (context) => NotificationsWidget()));
@@ -343,7 +366,7 @@ await flutterLocalNotificationsPlugin.show(
  }
 });
    localStorageLoader();
-
+   print('${_firebaseUID}');
 var initializationSettingsAndroid =
     new AndroidInitializationSettings('@mipmap/ic_launcher');
 var initializationSettingsIOS = new IOSInitializationSettings(
@@ -416,7 +439,7 @@ floatingActionButton: StreamBuilder(
                     onPressed: () => Scaffold.of(context).openDrawer(),
                   )),
               title:  Text('Rexa Business',style: TextStyle(color: Colors.black87,
-              fontFamily: 'NunitoSans',
+              fontFamily: 'Meriada',
               fontWeight: FontWeight.w800,fontSize: 18.5),),
               bottom: TabBar(indicatorColor: Colors.blueAccent,
               unselectedLabelColor: Colors.black87,labelColor: Colors.blueAccent,indicatorWeight: 3,
@@ -438,18 +461,16 @@ floatingActionButton: StreamBuilder(
             collection('saloonServiceProvider').document(_firebaseUID).snapshots() ,
             builder: (context, snapshot){
               if(!snapshot.hasData){
-                FlutterRingtonePlayer.stop();
                 return  IconButton(icon: Icon(EvaIcons.bell,color: Color(0xFF383838),), onPressed: () {
                   Navigator.push(context,MaterialPageRoute(builder: (context) => NotificationsWidget()));
                 });
   
               }
               try{
-               
-
                 return snapshot.data['status_notifier'] ? Stack(
               children: <Widget>[
                 new IconButton(icon: Icon(Icons.notifications_active,color: Colors.black87,size: 30.0), onPressed: () {
+                  FlutterRingtonePlayer.stop();
                   Navigator.push(context,MaterialPageRoute(builder: (context) => NotificationsWidget()));
                 }),
                 Positioned(
@@ -474,13 +495,13 @@ floatingActionButton: StreamBuilder(
                       textAlign: TextAlign.center,
                     )
                   ),onTap: (){
-                     FlutterRingtonePlayer.stop();
+                    FlutterRingtonePlayer.stop();
                       Navigator.push(context,MaterialPageRoute(builder: (context) => NotificationsWidget()));
                   },),
                 )
               ],
             ): IconButton(icon: Icon(Icons.notifications,color:  Color(0xFF383838),size: 30.0), onPressed: () {
-                  FlutterRingtonePlayer.stop();
+                 FlutterRingtonePlayer.stop();
                   Navigator.push(context,MaterialPageRoute(builder: (context) => NotificationsWidget()));
                 });
               }catch(e){

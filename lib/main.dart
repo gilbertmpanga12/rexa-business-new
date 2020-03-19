@@ -1,6 +1,7 @@
 import 'package:esalonbusiness/app_admin/help.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import './auth.dart';
 import 'package:flutter/services.dart';
@@ -10,22 +11,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 import './terms_and_conditions.dart';
 import './app_admin/admin_profile.dart';
 import 'app_admin/admin_settings.dart';
-import 'app_admin/default_shell.dart';
 import 'app_services/auth_service.dart';
-import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
-
 
 
 Future<void>main() async {
-  // IOS -> 043cf2de-40cc-4010-b431-4e02a950f75f
+   // IOS -> 043cf2de-40cc-4010-b431-4e02a950f75f
   // Android -> 0a2fc101-4f5a-44c2-97b9-c8eb8f420e08
 
-
-
   WidgetsFlutterBinding.ensureInitialized();
-  SharedPreferences.setMockInitialValues({});
+  
   OneSignal.shared.init(
-  "043cf2de-40cc-4010-b431-4e02a950f75f",
+  "0a2fc101-4f5a-44c2-97b9-c8eb8f420e08",
   iOSSettings: {
     OSiOSSettings.autoPrompt: false,
     OSiOSSettings.inAppLaunchUrl: true
@@ -34,18 +30,31 @@ Future<void>main() async {
 
 OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
 OneSignal.shared.promptUserForPushNotificationPermission(fallbackToSettings: true);
-var status = await OneSignal.shared.getPermissionSubscriptionState();
-var playerId = status.subscriptionStatus.userId;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-  //  var status = await OneSignal.shared.getPermissionSubscriptionState();
-  //  var playerId = status.subscriptionStatus.userId;
-     prefs.setString('fcm_token', playerId);
+// var status = await OneSignal.shared.getPermissionSubscriptionState();
+// var playerId = status.subscriptionStatus.userId;
+
+/*
+OneSignal.shared.setPermissionObserver((OSPermissionStateChanges changes) {
+	// will be called whenever the permission changes
+	// (ie. user taps Allow on the permission prompt in iOS)
+});
+OneSignal.shared.setSubscriptionObserver((OSSubscriptionStateChanges changes) {
+	// will be called whenever the subscription changes 
+	//(ie. user gets registered with OneSignal and gets a user ID)
+});
+OneSignal.shared.setEmailSubscriptionObserver((OSEmailSubscriptionStateChanges emailChanges) {
+	// will be called whenever then user's email subscription changes
+	// (ie. OneSignal.setEmail(email) is called and the user gets registered
+});
+*/
 
 
 
 OneSignal.shared.setNotificationReceivedHandler((OSNotification notification) {
-  FlutterRingtonePlayer.playAlarm(volume: 0.5, looping: true,);
+//  Feedback.forTap(context);
+FlutterRingtonePlayer.playAlarm(volume: 0.5, looping: true,);
 });
+
   runApp(MyApp());
 }
 
@@ -124,6 +133,9 @@ class ViewSwitcherState extends State<ViewSwitcher>{
     isNew = prefs.getBool('isSignedIn');
     isNewUser = prefs.getBool('isNewUser');
     });
+    var status = await OneSignal.shared.getPermissionSubscriptionState();
+var playerId = status.subscriptionStatus.userId;
+prefs.setString('fcm_token', playerId);
   }
 
   
@@ -139,22 +151,15 @@ super.initState();
 
 
   @override
-  Widget build(BuildContext context){ // bug on login process
+  Widget build(BuildContext context){
     return StreamBuilder(stream: authService.user,builder: (context,snapshot){
-     switch(snapshot.connectionState){
-       case ConnectionState.waiting: 
-       return DefaultHome();
-       break;
-       default:
-       if (snapshot.hasData && isNew == true) {
+      if (snapshot.hasData && isNew == true) {
         return  AdminHome();
       }else if(snapshot.hasData && isNewUser == true){
         return  TermsWid();
       }else {
         return SignIn();
       }
-     }
-
     },);
   }
 

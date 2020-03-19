@@ -30,7 +30,7 @@ dependencies:
   rxdart: ^0.20.0
   google_sign_in: 
   transparent_image: 
-  shared_preferences: 
+  shared_preferences: ^0.5.6+3
   firebase_storage: 
   image_picker: 
   random_string: 
@@ -52,6 +52,7 @@ dependencies:
   cloud_functions:  
   flutter_ringtone_player: 
   apple_sign_in: ^0.1.0
+  rave_flutter: ^0.0.9-alpha+1
 
 dev_dependencies:
   flutter_test:
