@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -260,10 +261,42 @@ print(err);
     }
   }
 
+
+buildPostHeader({String serviceName, String price, String docID, 
+String servicePhotoUrl, String serviceOffered}) {
+    return ListTile(
+              // leading: CircleAvatar(
+              //   backgroundImage: CachedNetworkImageProvider('https://www.denofgeek.com/wp-content/uploads/2019/10/header_main_image_2.jpg?resize=768%2C432'),
+              //   backgroundColor: Colors.grey,
+              // ),
+              title: GestureDetector(
+                child: Text('$serviceName', style: TextStyle(fontWeight: FontWeight.w500,fontSize: 17.0,fontFamily: 'NunitoSans')),
+                onTap: () {
+                 _settingModalBottomSheet(
+                        context,
+                        docID,
+                        servicePhotoUrl,
+                        serviceOffered);
+                },
+              ),
+              subtitle: Text('$price',style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16.0,color: Colors.yellow[800])),
+              trailing: InkWell(child: const Icon(Icons.more_vert),onTap: (){
+                _settingModalBottomSheet(
+                        context,
+                        docID,
+                        servicePhotoUrl,
+                       serviceOffered);
+              },),
+            );
+  }
+
+    
   initState() {
     fetchCategories();
     super.initState();
   }
+
+
 
   @override
   dispose(){
@@ -288,7 +321,7 @@ print(err);
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
   padding: new EdgeInsets.all(0.0),
-  child: Card(child: Column(
+  child:  Card(child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -311,46 +344,11 @@ print(err);
                   },
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top:1.0,left: 16.0,right: 16.0,bottom: 0.5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-
-                      new Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          SizedBox(height: 8.0,),
-                          Text('${ stringChopper(resultsFetched[index].serviceOffered)}',
-                          style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17.0,fontFamily: 'NunitoSans')
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 0.1),
-                  child: Text(
-                    "${resultsFetched[index].price}",
-                    style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16.0,color: Colors.yellow[800]),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 5.0),
-                  child: Row(children: <Widget>[
-  Icon(Icons.access_time,color: Colors.grey[500],size: 15.8,),
-  Text(
-  '${resultsFetched[index].time}',
-  maxLines: 1,style: TextStyle(fontSize: 13.8,fontWeight: FontWeight.w300,fontFamily: 'foo',
-
-  ),
- 
-  )
-  ]) // ,mainAxisAlignment: MainAxisAlignment.left,
-                ,
-                ),
-                SizedBox(height: 5.0,)
+                buildPostHeader(price: '${resultsFetched[index].price}',
+                serviceName: '${ stringChopper(resultsFetched[index].serviceOffered)}',
+                docID: resultsFetched[index].docID,serviceOffered: resultsFetched[index].serviceOffered,
+                servicePhotoUrl: resultsFetched[index].servicePhotoUrl
+                )
               ],
             ),)
   );

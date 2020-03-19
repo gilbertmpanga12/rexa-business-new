@@ -1,3 +1,4 @@
+import 'package:esalonbusiness/globals/configs.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -49,6 +50,17 @@ class MyOfficeState extends State<MyOffice>{
   Total _total ;
   Total _percentile;
   String _uid;
+  String countryCode;
+
+  String currencyCode;
+
+  String email;
+
+  String fullName;
+
+  String businessName;
+
+  String phoneNumber;
 
 
 String numberSummerizer(int number){
@@ -91,7 +103,19 @@ void _settingModalBottomSheet(context) {
                     mainAxisAlignment: MainAxisAlignment.start,
                   ),
                   onPressed: (){
-                 _launchURL('clicks');
+                if(countryCode == 'KE'){
+                 locals('KES', '4143.81');
+               }else if(countryCode == 'UG'){
+                 locals('UGX', '50000');
+               }else if(countryCode == 'GH'){
+                 locals('GHS', '220.60');
+               }if(countryCode == 'ZA'){
+                 locals('ZAR', '675.88');
+               }if(countryCode == 'TZ'){
+                 locals('TZS', '90640.30');
+               } else{
+                 cardPayments();
+               }
 
                   },
                   color: Colors.white,
@@ -111,7 +135,7 @@ void _settingModalBottomSheet(context) {
                     mainAxisAlignment: MainAxisAlignment.start,
                   ),
                   onPressed: () {
-                  _launchURL('other');
+                cardPayments();
                   },
                   color: Colors.white,
                   padding: EdgeInsets.all(15.0),
@@ -146,14 +170,18 @@ void _settingModalBottomSheet(context) {
 
   localStorage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    print('currencyCode ?>>>>>>>>>>>>>>>>>>>>>>************************');
-    print('${prefs.getString('currencyCode')}');
-    print('${prefs.getString('countryCode')}');
     if(mounted){
       setState(() {
         codeUnit = prefs.getString('currencyCode');
         _uid = prefs.getString('uid');
+        countryCode = prefs.getString('countryCode');
       });
+      countryCode = prefs.getString('countryCode');
+currencyCode = prefs.getString('currencyCode');
+email= prefs.getString('email');
+fullName = prefs.getString('fullName');
+businessName = prefs.getString('businessName');
+phoneNumber = prefs.getString('phoneNumber');
     }
   }
 
@@ -167,6 +195,45 @@ void _settingModalBottomSheet(context) {
 
   double paddingTitle = 67.0;
 
+
+void locals(String currencyCode, String amount) async {
+  final buttonMessage = 'Clear Balance';
+  final url = '${Configs.paymentBaseUrl}/pay/$email/$currencyCode/$countryCode/$phoneNumber/$fullName/$_uid/available/$amount/$buttonMessage';
+  if (await canLaunch(url)) {
+    await launch(url, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
+  } else {
+    Fluttertoast.showToast(
+        msg: "Oops!, website not listed by service provider.",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIos: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
+  }
+
+}
+
+
+void cardPayments() async {
+  final buttonMessage = 'Clear Balance';
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  final url = '${Configs.paymentBaseUrl}/pay/$email/$currencyCode/$countryCode/$phoneNumber/$fullName/$_uid/not-available/39.32/$buttonMessage';
+  if (await canLaunch(url)) {
+    await launch(url, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
+  } else {
+    Fluttertoast.showToast(
+        msg: "Oops!, website not listed by service provider.",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIos: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
+  }
+}
   fetchHistory() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try{
@@ -235,23 +302,6 @@ Widget placeholder(context){
 }
  
 
- _launchURL(String activityType) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-  final url = 'https://rexapay.firebaseapp.com/pay/${prefs.getString('uid')}/${prefs.getString('token')}/$activityType/${prefs.getString('fullName')}/${prefs.getString('countryCode')}/${prefs.getString('currencyCode')}/${prefs.getString('email')}/${prefs.getString('phoneNumber')}';
-  if (await canLaunch(url)) {
-    await launch(url, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
-  } else {
-Fluttertoast.showToast(
-        msg: "Oops!, website not listed by service provider.",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIos: 3,
-        backgroundColor: Colors.redAccent,
-        textColor: Colors.white,
-        fontSize: 16.0
-    );
-  }
-}
 
   Widget build(BuildContext context){
     return Scaffold(

@@ -1,3 +1,4 @@
+import 'package:esalonbusiness/globals/configs.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
@@ -9,7 +10,6 @@ import './admin_success.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:random_string/random_string.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import './notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -17,7 +17,8 @@ import 'package:url_launcher/url_launcher.dart';
 import './myoffice.dart';
 import '../mainOps/create_service.dart';
 import 'package:http/http.dart' as http;
-import 'package:rave_flutter/rave_flutter.dart';
+// import 'package:rave_flutter/rave_flutter.dart';
+import 'package:random_string/random_string.dart';
 
 class Premium {
   final bool account_upgrade;
@@ -78,14 +79,19 @@ class _CreateServiceWidgetState extends State<CreateServiceWidget> {
   File _image;
   bool isNetworkError = false;
   String shippingAdress;
-
   String _token;
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   String _description;
   bool isPremium;
   String isUid;
   String _website;
   bool hasExceeded = false;
+
+  String countryCode;
+  String currencyCode;
+  String email;
+  String fullName;
+  String businessName;
+  String phoneNumber;
 
   List<_Categories> categoriesFetched = List();
   List<_Services> servicesFetched = List();
@@ -98,38 +104,56 @@ class _CreateServiceWidgetState extends State<CreateServiceWidget> {
     setState(() {
 isUid = prefs.getString('uid');
     });
+countryCode = prefs.getString('countryCode');
+currencyCode = prefs.getString('currencyCode');
+email= prefs.getString('email');
+fullName = prefs.getString('fullName');
+businessName = prefs.getString('businessName');
+phoneNumber = prefs.getString('phoneNumber');
+}
+
+
+void locals(String currencyCode, String amount) async {
+  final buttonMessage = 'Upgrade Premium Account';
+  final url = '${Configs.paymentBaseUrl}/pay/$email/$currencyCode/$countryCode/$phoneNumber/$fullName/$isUid/available/$amount/$buttonMessage';
+
+  if (await canLaunch(url)) {
+    await launch(url, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
+  } else {
+    Fluttertoast.showToast(
+        msg: "Oops!, website not listed by service provider.",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIos: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
   }
 
-
-_launchURL(String activityType) async {
-    var initializer = RavePayInitializer(
-        amount: 500, publicKey: 'FLWPUBK-fd13744184c7c4ec3fb622ababef95a5-X', 
-        encryptionKey: 'FLWSECK-fb7f8d35b0b235c849198c0ab613e230-X')
-      ..country = "KE"
-      ..currency = "KES"
-      ..email = "gilbertmpanga.gm@gmail.com"
-      ..fName = "Ciroma"
-      ..lName = "Adekunle"
-      ..narration = 'narration' ?? ''
-      ..txRef = 'txRef'
-      //..subAccounts = subAccounts
-      ..acceptMpesaPayments = true
-      ..acceptAccountPayments = true
-      ..acceptCardPayments = true
-      ..acceptAchPayments = true
-      ..acceptGHMobileMoneyPayments = true
-      ..acceptUgMobileMoneyPayments = true
-      ..staging = true
-      ..isPreAuth = true
-      ..displayFee = true;
-
-    // Initialize and get the transaction result
-    RaveResult response = await RavePayManager()
-        .prompt(context: context, initializer: initializer).catchError((onError){
-          print(onError);
-        });
-       print(response?.message);
 }
+
+
+void cardPayments() async {
+  final buttonMessage = 'Upgrade Premium Account';
+  final url = '${Configs.paymentBaseUrl}/pay/$email/$currencyCode/$countryCode/$phoneNumber/$fullName/$isUid/not-available/39.32/$buttonMessage';
+
+  if (await canLaunch(url)) {
+    await launch(url, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
+  } else {
+    Fluttertoast.showToast(
+        msg: "Oops!, website not listed by service provider.",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIos: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
+  }
+}
+
+
 
   Widget _buildServiceProvidedTextField() {
     return TextFormField(
@@ -204,7 +228,7 @@ prefs.getString('subCategory'), _price, _timeTaken,prefs.getString('countryCode'
 prefs.getDouble('long'),prefs.getDouble('lat'),
 prefs.getString('profilePicture'),
 prefs.getString('fullName'),
-docID
+docID,  Theme.of(context).platform == TargetPlatform.iOS
 ).then((val){
   final Map<String, dynamic> transcoderPayload = {
           'uid': docID,
@@ -216,27 +240,6 @@ docID
     
      Navigator.of(context, rootNavigator: true).pop('dialog');
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminSuccessWidget()));
-//     http.post('http://35.246.43.91/crucken-transcord',
-//             body: json.encode(transcoderPayload),
-//             headers: {
-//               "accept": "application/json",
-//               "content-type": "application/json"
-//    }).then((onValue){
-// // sendToUsersSegment();
-//             }).catchError((onError){
-// print('failed to transcord image');
-//             });
-  }else if(val == 443){
-//     http.post('http://35.246.43.91/crucken-transcord',
-//             body: json.encode(transcoderPayload),
-//             headers: {
-//               "accept": "application/json",
-//               "content-type": "application/json"
-//    }).then((onValue){
-// // sendToUsersSegment();
-//             }).catchError((onError){
-// print('failed to transcord image');
-//             });
    Navigator.of(context, rootNavigator: true).pop('dialog');
           showDialog(context: context,builder: (BuildContext context){
                   return AlertDialog(
@@ -328,7 +331,8 @@ prefs.getString('location'),prefs.getString('phoneNumber'),
 prefs.getDouble('long'),prefs.getDouble('lat'),
 prefs.getString('profilePicture'),
 prefs.getString('fullName'),
-docID
+docID,
+ Theme.of(context).platform == TargetPlatform.iOS
 ).then((val){
   print('Hulk hogan');
   print(val);
@@ -396,7 +400,7 @@ sendToUsersSegment() async {
  SharedPreferences prefs = await SharedPreferences.getInstance();
 String url = 'https://onesignal.com/api/v1/notifications';
 Map<dynamic, dynamic> body = {
-'app_id': '0a2fc101-4f5a-44c2-97b9-c8eb8f420e08',
+'app_id': Configs.appIdnewAdroidWorker ,
 'contents': {"en": "Stories Videos"},
 'included_segments': ["All"],
 'headings': {"en": "${prefs.getString('fullName')} shared a new style"},
@@ -404,9 +408,28 @@ Map<dynamic, dynamic> body = {
  "small_icon": "@mipmap/ic_launcher",
  "large_icon": "@mipmap/ic_launcher"
 }; // 'small_icon': '' ... final response =
+
+Map<dynamic, dynamic> iosBody = {
+'app_id': Configs.appIdUserIosOneSignal ,
+'contents': {"en": "Stories Videos"},
+'included_segments': ["All"],
+'headings': {"en": "${prefs.getString('fullName')} shared a new style"},
+'data': {"type": "new-videos"},
+ "small_icon": "@mipmap/ic_launcher",
+ "large_icon": "@mipmap/ic_launcher"
+}; 
+
   await http.post(url,
 body: json.encode(body),
-headers: {HttpHeaders.authorizationHeader: "Basic OThhY2RlNTEtZTE5YS00Y2E2LWE3NWUtYTUwOWY0MTJmNzIz",
+headers: {HttpHeaders.authorizationHeader: Configs.authorizationHeadernewAdroidWorker,
+"accept": "application/json",
+"content-type": "application/json"
+}
+);
+
+ await http.post(url,
+body: json.encode(iosBody),
+headers: {HttpHeaders.authorizationHeader: Configs.authorizationHeadernewAdroidWorker,
 "accept": "application/json",
 "content-type": "application/json"
 }
@@ -483,8 +506,19 @@ Container(margin: EdgeInsets.all(8.0),
                     mainAxisAlignment: MainAxisAlignment.center,
                   ),
                   onPressed: () {
-               _launchURL('clicks');
-
+               if(countryCode == 'KE'){
+                 locals('KES', '4143.81');
+               }else if(countryCode == 'UG'){
+                 locals('UGX', '50000');
+               }else if(countryCode == 'GH'){
+                 locals('GHS', '220.60');
+               }if(countryCode == 'ZA'){
+                 locals('ZAR', '675.88');
+               }if(countryCode == 'TZ'){
+                 locals('TZS', '90640.30');
+               } else {
+                 cardPayments();
+               }
                   },
                   color: Colors.white,
                   padding: EdgeInsets.all(9.0),
@@ -574,34 +608,10 @@ if(value.length > 1000){
     Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationsWidget()));
   }
 
-  Future _showNotificationWithDefaultSound() async {
-    var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
-        'notifier_id', 'Service Request', 'your channel description',
-        importance: Importance.Max, priority: Priority.High);
-    var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
-    var platformChannelSpecifics = new NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.show(
-      0,
-      'New service request',
-      'Tap to to answer',
-      platformChannelSpecifics,
-      payload: 'Default_Sound',
-    );
-  }
+  
 
 
   void initState() {
-   
-    var initializationSettingsAndroid =
-    new AndroidInitializationSettings('@mipmap/ic_launcher');
-    var initializationSettingsIOS = new IOSInitializationSettings();
-    var initializationSettings = new InitializationSettings(
-        initializationSettingsAndroid, initializationSettingsIOS);
-    flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
-    flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: onSelectNotification);
-
     fetchTotal();
     super.initState();
   }
@@ -665,7 +675,19 @@ if(value.length > 1000){
                         fontSize: 16.8,fontFamily: 'Comfortaa',fontWeight: FontWeight.w900)),padding: EdgeInsets.all(15.0),),
 
                   onPressed: (){
-                _launchURL('clicks');
+               if(countryCode == 'KE'){
+                 locals('KES', '4143.81');
+               }else if(countryCode == 'UG'){
+                 locals('UGX', '150000');
+               }else if(countryCode == 'GH'){
+                 locals('GHS', '220.60');
+               }if(countryCode == 'ZA'){
+                 locals('ZAR', '675.88');
+               }if(countryCode == 'TZ'){
+                 locals('TZS', '90640.30');
+               } else {
+                 cardPayments();
+               }
                   },
                   color: Colors.red[800],
                 ), padding: EdgeInsets.all(8.6));

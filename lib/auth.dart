@@ -145,49 +145,49 @@ setState(() {
   }
 
 
- Future<void> _signInWithApple(BuildContext context) async {
-   SharedPreferences prefs = await SharedPreferences.getInstance();
+//  Future<void> _signInWithApple(BuildContext context) async {
+//    SharedPreferences prefs = await SharedPreferences.getInstance();
    
-  try {
+//   try {
     
-    final user = await authService.signInWithApple(
-        scopes: [Scope.email, Scope.fullName]);
-    prefs.setString('token', '${user.getIdToken()}');
-    prefs.setString('email', '${user.email}');
-    prefs.setString('uid', '${user.uid}');
-    prefs.setString('profilePicture', '${user.photoUrl}');
-    prefs.setString('fullName', '${user.displayName}');
-    Firestore.instance.collection('saloonServiceProvider').document(user.uid).get().then((newuser){
-      if(newuser.exists){
-        prefs.setBool('isNewUser', false);
-        prefs.setBool('isSignedIn', true);
-        prefs.setString('countryCode', newuser.data['countryCode']);
-        prefs.setString('currencyCode', newuser.data['countryCode']);
-        prefs.setString('fullName', newuser.data['fullName']); // profilePicture
-        prefs.setString('profilePicture', newuser.data['ProfilePicture']);
-        prefs.setString('location', newuser.data['location']);//location
-        prefs.setString('phoneNumber', newuser.data['phoneNumber']); //customNumber
-        prefs.setDouble('long', newuser.data['longitude']);
-        prefs.setDouble('lat', newuser.data['latitude']);
+//     final user = await authService.signInWithApple(
+//         scopes: [Scope.email, Scope.fullName]);
+//     prefs.setString('token', '${user.getIdToken()}');
+//     prefs.setString('email', '${user.email}');
+//     prefs.setString('uid', '${user.uid}');
+//     prefs.setString('profilePicture', '${user.photoUrl}');
+//     prefs.setString('fullName', '${user.displayName}');
+//     Firestore.instance.collection('saloonServiceProvider').document(user.uid).get().then((newuser){
+//       if(newuser.exists){
+//         prefs.setBool('isNewUser', false);
+//         prefs.setBool('isSignedIn', true);
+//         prefs.setString('countryCode', newuser.data['countryCode']);
+//         prefs.setString('currencyCode', newuser.data['countryCode']);
+//         prefs.setString('fullName', newuser.data['fullName']); // profilePicture
+//         prefs.setString('profilePicture', newuser.data['ProfilePicture']);
+//         prefs.setString('location', newuser.data['location']);//location
+//         prefs.setString('phoneNumber', newuser.data['phoneNumber']); //customNumber
+//         prefs.setDouble('long', newuser.data['longitude']);
+//         prefs.setDouble('lat', newuser.data['latitude']);
 
-        prefs.setString('serviceCategoryName', newuser.data['serviceCategoryName']);
-        prefs.setString('subCategory', newuser.data['subCategory']);
-        prefs.setString('countryCode', newuser.data['countryCode']);// countryCode
-        prefs.setString('currencyCode', newuser.data['currencyCode']);
-        prefs.setString('businessName', newuser.data['businessName']);
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminHome()));
-      }else {
-        // prefs.setString('fcm_token', _playerId);
-        prefs.setBool('isNewUser', true);
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TermsWid()));
-      }
+//         prefs.setString('serviceCategoryName', newuser.data['serviceCategoryName']);
+//         prefs.setString('subCategory', newuser.data['subCategory']);
+//         prefs.setString('countryCode', newuser.data['countryCode']);// countryCode
+//         prefs.setString('currencyCode', newuser.data['currencyCode']);
+//         prefs.setString('businessName', newuser.data['businessName']);
+//         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminHome()));
+//       }else {
+//         // prefs.setString('fcm_token', _playerId);
+//         prefs.setBool('isNewUser', true);
+//         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TermsWid()));
+//       }
       
-      });
+//       });
   
-  } catch (e) {
-    errorDialog(e.toString());
-  }
-}
+//   } catch (e) {
+//     errorDialog(e.toString());
+//   }
+// }
 
 
 
