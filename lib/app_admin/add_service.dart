@@ -111,78 +111,49 @@ businessName = prefs.getString('businessName');
 }
 
 
-void payWithMpesa() async {
+void locals(String currencyCode) async {
 Navigator.pop(context);
-final String txRef = randomAlpha(5);
-    var initializer = RavePayInitializer(
-        amount: 500, publicKey: 'FLWPUBK-fd13744184c7c4ec3fb622ababef95a5-X', 
-        encryptionKey: 'fb7f8d35b0b249431a9db2b0')
-      ..country = "$countryCode"
-      ..currency = "$currencyCode"
-      ..email = "$email"
-      ..fName = "$fullName"
-      ..narration = 'Subscribe for premium' ?? ''
-      ..txRef = txRef 
-      ..acceptMpesaPayments = true
-      ..acceptCardPayments = false
-      ..staging = false
-      ..isPreAuth = true
-      ..companyName = Text('$businessName')
-      ..displayFee = true;
-    RaveResult response = await RavePayManager()
-        .prompt(context: context, initializer: initializer);
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  final url = '/pay/${prefs.getString('email')}/$currencyCode/${prefs.getString('countryCode')}/${prefs.getString('phoneNumber')}/${prefs.getString('fullName')}/${prefs.getString('uid')}/available';
+  if (await canLaunch(url)) {
+    await launch(url, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
+  } else {
+    Fluttertoast.showToast(
+        msg: "Oops!, website not listed by service provider.",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIos: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
+  }
+
 }
 
-void payWithMobileMoney() async {
+
+void cardPayments() async {
 Navigator.pop(context);
-final String txRef = randomAlpha(5);
- var initializer = RavePayInitializer(
-       amount: 500, publicKey: 'FLWPUBK-fd13744184c7c4ec3fb622ababef95a5-X', 
-        encryptionKey: 'fb7f8d35b0b249431a9db2b0')
-      ..country = "UG"
-      ..currency = "UGX"
-      ..email = "$email"
-      ..fName = "$fullName"
-      ..narration = 'Subscribe for premium' ?? ''
-      ..txRef = txRef
-      ..companyName = Text('$businessName')
-      ..publicKey = 'FLWPUBK-fd13744184c7c4ec3fb622ababef95a5-X'
-      ..encryptionKey = 'fb7f8d35b0b249431a9db2b0'
-      ..acceptAccountPayments = true
-      ..acceptCardPayments = false
-      ..acceptUgMobileMoneyPayments = true
-      ..staging = false
-      ..isPreAuth = false
-      ..displayFee = true;
-    RaveResult response = await RavePayManager()
-        .prompt(context: context, initializer: initializer);
+Navigator.pop(context);
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  final url = '/pay/${prefs.getString('email')}/${prefs.getString('currencyCode')}/NG/${prefs.getString('phoneNumber')}/${prefs.getString('fullName')}/${prefs.getString('uid')}/not-available';
+  if (await canLaunch(url)) {
+    await launch(url, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
+  } else {
+    Fluttertoast.showToast(
+        msg: "Oops!, website not listed by service provider.",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIos: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
+  }
 }
 
 
-void payWithOtherMeans() async {
-  final String txRef = randomAlpha(5);
-    Navigator.pop(context);
-    var initializer = RavePayInitializer(
-        amount: 500, publicKey: 'FLWPUBK-fd13744184c7c4ec3fb622ababef95a5-X', 
-        encryptionKey: 'fb7f8d35b0b249431a9db2b0')
-      ..country = "$countryCode"
-      ..currency = "$currencyCode"
-      ..email = "$email"
-      ..fName = "$fullName"
-      ..companyName = Text('$businessName')
-      ..narration = 'Subscribe for premium' ?? ''
-      ..txRef = txRef
-      ..acceptAccountPayments = true
-      ..acceptCardPayments = true
-      ..acceptAchPayments = true
-      ..acceptGHMobileMoneyPayments = true
-      ..staging = false
-      ..isPreAuth = true
-      ..displayFee = true;
 
-    RaveResult response = await RavePayManager()
-        .prompt(context: context, initializer: initializer);
-}
 
   Widget _buildServiceProvidedTextField() {
     return TextFormField(
@@ -536,11 +507,17 @@ Container(margin: EdgeInsets.all(8.0),
                   ),
                   onPressed: () {
                if(countryCode == 'KE'){
-                 payWithMpesa();
+                 locals('KES');
                }else if(countryCode == 'UG'){
-                 payWithMobileMoney();
-               }else {
-                 payWithOtherMeans();
+                 locals('UGX');
+               }else if(countryCode == 'GH'){
+                 locals('GHS');
+               }if(countryCode == 'ZA'){
+                 locals('ZAR');
+               }if(countryCode == 'TZ'){
+                 locals('TZS');
+               }{
+                 cardPayments();
                }
 
                   },
