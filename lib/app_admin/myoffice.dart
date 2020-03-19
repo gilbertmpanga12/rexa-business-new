@@ -302,23 +302,6 @@ Widget placeholder(context){
 }
  
 
- _launchURL(String activityType) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-  final url = 'https://rexapay.firebaseapp.com/pay/${prefs.getString('uid')}/${prefs.getString('token')}/$activityType/${prefs.getString('fullName')}/${prefs.getString('countryCode')}/${prefs.getString('currencyCode')}/${prefs.getString('email')}/${prefs.getString('phoneNumber')}';
-  if (await canLaunch(url)) {
-    await launch(url, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
-  } else {
-Fluttertoast.showToast(
-        msg: "Oops!, website not listed by service provider.",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIos: 3,
-        backgroundColor: Colors.redAccent,
-        textColor: Colors.white,
-        fontSize: 16.0
-    );
-  }
-}
 
   Widget build(BuildContext context){
     return Scaffold(
