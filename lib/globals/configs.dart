@@ -6,4 +6,5 @@ class Configs {
   static const appIdIosOnesignal = '043cf2de-40cc-4010-b431-4e02a950f75f';
   static const appIdnewAdroidWorker = '306a55a3-92f5-4aac-9cb5-21fff19320e5';
   static const authorizationHeadernewAdroidWorker = 'MGM2NGU4MWQtNmZkMS00NmU3LTlhNDgtYjQzNjBhOWM2NWQy';
+  static const paymentBaseUrl = '';
 }

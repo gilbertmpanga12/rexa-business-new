@@ -114,7 +114,7 @@ businessName = prefs.getString('businessName');
 void locals(String currencyCode) async {
 Navigator.pop(context);
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  final url = '/pay/${prefs.getString('email')}/$currencyCode/${prefs.getString('countryCode')}/${prefs.getString('phoneNumber')}/${prefs.getString('fullName')}/${prefs.getString('uid')}/available';
+  final url = '${Configs.paymentBaseUrl}/pay/${prefs.getString('email')}/$currencyCode/${prefs.getString('countryCode')}/${prefs.getString('phoneNumber')}/${prefs.getString('fullName')}/${prefs.getString('uid')}/available';
   if (await canLaunch(url)) {
     await launch(url, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
   } else {
@@ -136,7 +136,7 @@ void cardPayments() async {
 Navigator.pop(context);
 Navigator.pop(context);
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  final url = '/pay/${prefs.getString('email')}/${prefs.getString('currencyCode')}/NG/${prefs.getString('phoneNumber')}/${prefs.getString('fullName')}/${prefs.getString('uid')}/not-available';
+  final url = '${Configs.paymentBaseUrl}/pay/${prefs.getString('email')}/${prefs.getString('currencyCode')}/NG/${prefs.getString('phoneNumber')}/${prefs.getString('fullName')}/${prefs.getString('uid')}/not-available';
   if (await canLaunch(url)) {
     await launch(url, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
   } else {
@@ -519,7 +519,6 @@ Container(margin: EdgeInsets.all(8.0),
                }{
                  cardPayments();
                }
-
                   },
                   color: Colors.white,
                   padding: EdgeInsets.all(9.0),
@@ -676,14 +675,19 @@ if(value.length > 1000){
                         fontSize: 16.8,fontFamily: 'Comfortaa',fontWeight: FontWeight.w900)),padding: EdgeInsets.all(15.0),),
 
                   onPressed: (){
-               if(countryCode == 'KE'){
-                 payWithMpesa();
+              if(countryCode == 'KE'){
+                 locals('KES');
                }else if(countryCode == 'UG'){
-                 payWithMobileMoney();
-               }else {
-                 payWithOtherMeans();
+                 locals('UGX');
+               }else if(countryCode == 'GH'){
+                 locals('GHS');
+               }if(countryCode == 'ZA'){
+                 locals('ZAR');
+               }if(countryCode == 'TZ'){
+                 locals('TZS');
+               }{
+                 cardPayments();
                }
-
                   },
                   color: Colors.red[800],
                 ), padding: EdgeInsets.all(8.6));
