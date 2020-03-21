@@ -157,20 +157,25 @@ print('$_firebaseUID');
             padding: EdgeInsets.only(top: 20.0, left: 0, right: 20.0),
             child: Column(
               children: <Widget>[
-                Container(
+                Stack(children: <Widget>[
+                  Container(
                   child: InkWell(
                     child: CircleAvatar(
                       foregroundColor: Theme.of(context).primaryColor,
                       backgroundColor: Colors.yellow[700],
                       backgroundImage: new NetworkImage(
                           '${snapshot.data['profilePicture']}'),
-                      radius: 75.0,
+                      radius: 66.0,
                     ),onTap: (){
                     uploadPhoto();
                   },
                   ),
                   margin: EdgeInsets.only(left: 18.0, bottom: 25.0),
                 ),
+                 Positioned(bottom: 12.6,child: IconButton(
+                   onPressed: () => null,
+                   icon: Icon(Icons.add_circle,color: Colors.yellow[900],size: 30),),right: 6,)
+                ],),
                 ListTile(
                   leading: Icon(
                       Icons.person,

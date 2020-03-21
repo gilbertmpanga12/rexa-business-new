@@ -1,4 +1,5 @@
 import 'package:esalonbusiness/app_admin/help.dart';
+import 'package:esalonbusiness/app_admin/myoffice.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
@@ -108,7 +109,8 @@ builder: (BuildContext context, Widget widget) {
         '/welcome': (BuildContext context) => WelcomeAdmin(),
         '/settings': (BuildContext context) => ProfileWidget(),
         'settings-2':(BuildContext context) => AdminSettings(),
-        '/help':(BuildContext context) => HelpWid()
+        '/help':(BuildContext context) => HelpWid(),
+        '/my-office': (BuildContext context) => MyOffice()
         // '/success': (BuildContext context) => AdminSuccessWidget(),
         // '/error': (BuildContext context) => AdminSuccessWidget()
     },

@@ -17,7 +17,6 @@ import 'package:url_launcher/url_launcher.dart';
 import './myoffice.dart';
 import '../mainOps/create_service.dart';
 import 'package:http/http.dart' as http;
-// import 'package:rave_flutter/rave_flutter.dart';
 import 'package:random_string/random_string.dart';
 
 class Premium {
@@ -76,7 +75,7 @@ class _CreateServiceWidgetState extends State<CreateServiceWidget> {
   String _serviceProvided;
   String _timeTaken;
   String _price;
-  File _image;
+  // File _image;
   bool isNetworkError = false;
   String shippingAdress;
   String _token;
@@ -137,6 +136,25 @@ void locals(String currencyCode, String amount) async {
 void cardPayments() async {
   final buttonMessage = 'Upgrade Premium Account';
   final url = '${Configs.paymentBaseUrl}/pay/$email/$currencyCode/$countryCode/$phoneNumber/$fullName/$isUid/not-available/39.32/$buttonMessage';
+
+  if (await canLaunch(url)) {
+    await launch(url, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
+  } else {
+    Fluttertoast.showToast(
+        msg: "Oops!, website not listed by service provider.",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIos: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
+  }
+}
+
+void enableLinks() async {
+  final buttonMessage = 'Re-enable adding links';
+  final url = '${Configs.paymentBaseUrl}/pay/$email/$currencyCode/$countryCode/$phoneNumber/$fullName/$isUid/not-available/15.0/$buttonMessage';
 
   if (await canLaunch(url)) {
     await launch(url, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
@@ -334,8 +352,7 @@ prefs.getString('fullName'),
 docID,
  Theme.of(context).platform == TargetPlatform.iOS
 ).then((val){
-  print('Hulk hogan');
-  print(val);
+  
   if(val == 1){
     Navigator.of(context, rootNavigator: true).pop('dialog');
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminSuccessWidget()));
@@ -485,6 +502,9 @@ headers: {HttpHeaders.authorizationHeader: Configs.authorizationHeadernewAdroidW
                     mainAxisAlignment: MainAxisAlignment.center,
                   ),
                   onPressed: () async {
+                    if(!_formKey.currentState.validate()){
+             return null;
+             }
       _formKey.currentState.save();
       uploadVideo(true);
       },
@@ -647,14 +667,10 @@ if(value.length > 1000){
                 StreamBuilder(stream: Firestore.instance.
                 collection('referalEngine').
                 document('${isUid}').snapshots(),builder: (context, snapshot){
-
-                  
                   if(!snapshot.hasData){
                     return Container(child: Text(''));
                   }
-
-                  if(snapshot.data['isPremium'] == true){
-                  var lastActivatedTime = DateTime.fromMillisecondsSinceEpoch(int.parse(snapshot.data['timeStamp']));
+                   var lastActivatedTime = DateTime.fromMillisecondsSinceEpoch(int.parse(snapshot.data['timeStamp']));
                   var date1 = DateTime.utc(lastActivatedTime.year,lastActivatedTime.month,lastActivatedTime.day);
                   var now = Timestamp.now().toDate();
                   var diff = now.difference(date1);
@@ -662,36 +678,12 @@ if(value.length > 1000){
                     return days < 31 ? Column(children: <Widget>[
                       _buildWebsite(),
                       _buildLink()
-                    ],) : Center(child: Text('Subscribe to re-enable adding links'),);
-                  }else{
-                    return Padding(child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.all(Radius.circular(5.0))
-),
-            elevation: 0.0,
-            
-                  child: Padding(child: Text('ACCOUNT DISABLED',
-                    style: TextStyle(color: Colors.white,
-                        fontSize: 16.8,fontFamily: 'Comfortaa',fontWeight: FontWeight.w900)),padding: EdgeInsets.all(15.0),),
-
-                  onPressed: (){
-               if(countryCode == 'KE'){
-                 locals('KES', '4143.81');
-               }else if(countryCode == 'UG'){
-                 locals('UGX', '150000');
-               }else if(countryCode == 'GH'){
-                 locals('GHS', '220.60');
-               }if(countryCode == 'ZA'){
-                 locals('ZAR', '675.88');
-               }if(countryCode == 'TZ'){
-                 locals('TZS', '90640.30');
-               } else {
-                 cardPayments();
-               }
-                  },
-                  color: Colors.red[800],
-                ), padding: EdgeInsets.all(8.6));
-                  }
+                    ],) : Center(child: InkWell(child: Text('Tap to re-enable adding links',
+                    style: TextStyle(color: Colors.indigo),
+                    ),onTap: (){
+                      enableLinks();
+                    },),);
+                 
                 },),
                  SizedBox(
                   height: 10.0,
@@ -699,9 +691,44 @@ if(value.length > 1000){
                ],
              ),
             ),
-          ),),floatingActionButton:  FloatingActionButton(child:Icon(EvaIcons.cloudUploadOutline, color: Colors.white,), onPressed: (){
+          ),),floatingActionButton:  StreamBuilder(builder: (BuildContext context, snapshot){
+            if(!snapshot.hasData){
+              return FloatingActionButton(child:
+          Icon(EvaIcons.cloudUploadOutline, color: Colors.white,), 
+          onPressed: (){
      _settingModalBottomSheet(context);
-              },backgroundColor: Colors.blueAccent,),),
+              },backgroundColor: Colors.blueAccent,);
+            }
+            print(snapshot.data['isPremium']);
+            return snapshot.data['isPremium'] == true ? FloatingActionButton(child:
+          Icon(EvaIcons.cloudUploadOutline, color: Colors.white,), 
+          onPressed: (){
+     _settingModalBottomSheet(context);
+              },backgroundColor: Colors.blueAccent,): FloatingActionButton(child:
+          Icon(EvaIcons.cloudUploadOutline, color: Colors.white,), 
+          onPressed: (){
+    showDialog(context: context,builder: (BuildContext context){
+                  return AlertDialog(
+                    shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(Radius.circular(20.0))
+),
+                    title: Text('Account Expired'),
+                    content: Text('Proceed to MyOffice to clear payments'),actions: <Widget>[
+                      FlatButton(child: Text('CANCEL',style: TextStyle(color: Colors.black87),),onPressed: (){
+                        Navigator.of(context, rootNavigator: true).pop('dialog');
+                      }),
+                    FlatButton(child: Text('REACTIVATE'),onPressed: (){
+                    //  Navigator.pushNamed(context, '/my-office');
+                     Navigator.popAndPushNamed(context, '/my-office');
+                    },),
+
+                  ],);
+                });
+              },backgroundColor: Colors.blueAccent,);
+
+          },stream: Firestore.instance.
+                collection('referalEngine').
+                document('${isUid}').snapshots(),),),
 
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
