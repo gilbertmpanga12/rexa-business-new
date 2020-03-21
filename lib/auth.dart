@@ -291,7 +291,7 @@ Widget _divider() {
                     style: TextStyle(
                         fontSize: 35.0,
                         color: Colors.black87,
-                        fontWeight: FontWeight.w600,fontFamily: 'Meriada')),
+                        fontFamily: 'Monoton')),
                 padding: EdgeInsets.only(top: 18.0),
               )),
           Center(

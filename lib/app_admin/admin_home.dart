@@ -439,8 +439,9 @@ floatingActionButton: StreamBuilder(
                     onPressed: () => Scaffold.of(context).openDrawer(),
                   )),
               title:  Text('Rexa Business',style: TextStyle(color: Colors.black87,
-              fontFamily: 'Meriada',
-              fontWeight: FontWeight.w800,fontSize: 18.5),),
+              fontFamily: 'Monoton',
+              fontWeight: FontWeight.w500,
+              fontSize: 18.5),),
               bottom: TabBar(indicatorColor: Colors.blueAccent,
               unselectedLabelColor: Colors.black87,labelColor: Colors.blueAccent,indicatorWeight: 3,
                 tabs: <Widget>[
