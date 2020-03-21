@@ -17,8 +17,6 @@ import 'package:url_launcher/url_launcher.dart';
 import './myoffice.dart';
 import '../mainOps/create_service.dart';
 import 'package:http/http.dart' as http;
-// import 'package:rave_flutter/rave_flutter.dart';
-// XXXXX
 import 'package:random_string/random_string.dart';
 
 class Premium {
@@ -138,6 +136,25 @@ void locals(String currencyCode, String amount) async {
 void cardPayments() async {
   final buttonMessage = 'Upgrade Premium Account';
   final url = '${Configs.paymentBaseUrl}/pay/$email/$currencyCode/$countryCode/$phoneNumber/$fullName/$isUid/not-available/39.32/$buttonMessage';
+
+  if (await canLaunch(url)) {
+    await launch(url, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
+  } else {
+    Fluttertoast.showToast(
+        msg: "Oops!, website not listed by service provider.",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIos: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
+  }
+}
+
+void enableLinks() async {
+  final buttonMessage = 'Re-enable adding links';
+  final url = '${Configs.paymentBaseUrl}/pay/$email/$currencyCode/$countryCode/$phoneNumber/$fullName/$isUid/not-available/15.0/$buttonMessage';
 
   if (await canLaunch(url)) {
     await launch(url, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
@@ -661,7 +678,11 @@ if(value.length > 1000){
                     return days < 31 ? Column(children: <Widget>[
                       _buildWebsite(),
                       _buildLink()
-                    ],) : Center(child: Text('Subscribe to re-enable adding links'),);
+                    ],) : Center(child: InkWell(child: Text('Tap to re-enable adding links',
+                    style: TextStyle(color: Colors.indigo),
+                    ),onTap: (){
+                      enableLinks();
+                    },),);
                  
                 },),
                  SizedBox(
