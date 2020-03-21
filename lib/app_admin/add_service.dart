@@ -677,6 +677,7 @@ if(value.length > 1000){
      _settingModalBottomSheet(context);
               },backgroundColor: Colors.blueAccent,);
             }
+            print(snapshot.data['isPremium']);
             return snapshot.data['isPremium'] == true ? FloatingActionButton(child:
           Icon(EvaIcons.cloudUploadOutline, color: Colors.white,), 
           onPressed: (){
@@ -691,7 +692,10 @@ if(value.length > 1000){
 ),
                     title: Text('Account Expired'),
                     content: Text('Please subscribe to reactivate'),actions: <Widget>[
-                    FlatButton(child: Text('OK'),onPressed: (){
+                      FlatButton(child: Text('CANCEL',style: TextStyle(color: Colors.black87),),onPressed: (){
+                        Navigator.of(context, rootNavigator: true).pop('dialog');
+                      }),
+                    FlatButton(child: Text('REACTIVATE'),onPressed: (){
                       Navigator.of(context, rootNavigator: true).pop('dialog');
                       if(countryCode == 'KE'){
                  locals('KES', '4143.81');
@@ -706,7 +710,8 @@ if(value.length > 1000){
                } else {
                  cardPayments();
                }
-                    },)
+                    },),
+
                   ],);
                 });
               },backgroundColor: Colors.blueAccent,);
