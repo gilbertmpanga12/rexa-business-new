@@ -172,7 +172,9 @@ print('$_firebaseUID');
                   ),
                   margin: EdgeInsets.only(left: 18.0, bottom: 25.0),
                 ),
-                 Positioned(bottom: 19.6,child: Icon(Icons.add_circle,color: Colors.yellow[800],size: 30),right: 8,)
+                 Positioned(bottom: 12.6,child: IconButton(
+                   onPressed: () => null,
+                   icon: Icon(Icons.add_circle,color: Colors.yellow[900],size: 30),),right: 6,)
                 ],),
                 ListTile(
                   leading: Icon(
