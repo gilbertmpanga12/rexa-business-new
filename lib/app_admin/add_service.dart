@@ -76,7 +76,7 @@ class _CreateServiceWidgetState extends State<CreateServiceWidget> {
   String _serviceProvided;
   String _timeTaken;
   String _price;
-  File _image;
+  // File _image;
   bool isNetworkError = false;
   String shippingAdress;
   String _token;
@@ -334,8 +334,7 @@ prefs.getString('fullName'),
 docID,
  Theme.of(context).platform == TargetPlatform.iOS
 ).then((val){
-  print('Hulk hogan');
-  print(val);
+  
   if(val == 1){
     Navigator.of(context, rootNavigator: true).pop('dialog');
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminSuccessWidget()));
@@ -485,6 +484,9 @@ headers: {HttpHeaders.authorizationHeader: Configs.authorizationHeadernewAdroidW
                     mainAxisAlignment: MainAxisAlignment.center,
                   ),
                   onPressed: () async {
+                    if(!_formKey.currentState.validate()){
+             return null;
+             }
       _formKey.currentState.save();
       uploadVideo(true);
       },
@@ -647,14 +649,10 @@ if(value.length > 1000){
                 StreamBuilder(stream: Firestore.instance.
                 collection('referalEngine').
                 document('${isUid}').snapshots(),builder: (context, snapshot){
-
-                  
                   if(!snapshot.hasData){
                     return Container(child: Text(''));
                   }
-
-                  if(snapshot.data['isPremium'] == true){
-                  var lastActivatedTime = DateTime.fromMillisecondsSinceEpoch(int.parse(snapshot.data['timeStamp']));
+                   var lastActivatedTime = DateTime.fromMillisecondsSinceEpoch(int.parse(snapshot.data['timeStamp']));
                   var date1 = DateTime.utc(lastActivatedTime.year,lastActivatedTime.month,lastActivatedTime.day);
                   var now = Timestamp.now().toDate();
                   var diff = now.difference(date1);
@@ -663,19 +661,39 @@ if(value.length > 1000){
                       _buildWebsite(),
                       _buildLink()
                     ],) : Center(child: Text('Subscribe to re-enable adding links'),);
-                  }else{
-                    return Padding(child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.all(Radius.circular(5.0))
+                 
+                },),
+                 SizedBox(
+                  height: 10.0,
+                )
+               ],
+             ),
+            ),
+          ),),floatingActionButton:  StreamBuilder(builder: (BuildContext context, snapshot){
+            if(!snapshot.hasData){
+              return FloatingActionButton(child:
+          Icon(EvaIcons.cloudUploadOutline, color: Colors.white,), 
+          onPressed: (){
+     _settingModalBottomSheet(context);
+              },backgroundColor: Colors.blueAccent,);
+            }
+            return snapshot.data['isPremium'] == true ? FloatingActionButton(child:
+          Icon(EvaIcons.cloudUploadOutline, color: Colors.white,), 
+          onPressed: (){
+     _settingModalBottomSheet(context);
+              },backgroundColor: Colors.blueAccent,): FloatingActionButton(child:
+          Icon(EvaIcons.cloudUploadOutline, color: Colors.white,), 
+          onPressed: (){
+    showDialog(context: context,builder: (BuildContext context){
+                  return AlertDialog(
+                    shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(Radius.circular(20.0))
 ),
-            elevation: 0.0,
-            
-                  child: Padding(child: Text('ACCOUNT DISABLED',
-                    style: TextStyle(color: Colors.white,
-                        fontSize: 16.8,fontFamily: 'Comfortaa',fontWeight: FontWeight.w900)),padding: EdgeInsets.all(15.0),),
-
-                  onPressed: (){
-               if(countryCode == 'KE'){
+                    title: Text('Account Expired'),
+                    content: Text('Please subscribe to reactivate'),actions: <Widget>[
+                    FlatButton(child: Text('OK'),onPressed: (){
+                      Navigator.of(context, rootNavigator: true).pop('dialog');
+                      if(countryCode == 'KE'){
                  locals('KES', '4143.81');
                }else if(countryCode == 'UG'){
                  locals('UGX', '150000');
@@ -688,20 +706,14 @@ if(value.length > 1000){
                } else {
                  cardPayments();
                }
-                  },
-                  color: Colors.red[800],
-                ), padding: EdgeInsets.all(8.6));
-                  }
-                },),
-                 SizedBox(
-                  height: 10.0,
-                )
-               ],
-             ),
-            ),
-          ),),floatingActionButton:  FloatingActionButton(child:Icon(EvaIcons.cloudUploadOutline, color: Colors.white,), onPressed: (){
-     _settingModalBottomSheet(context);
-              },backgroundColor: Colors.blueAccent,),),
+                    },)
+                  ],);
+                });
+              },backgroundColor: Colors.blueAccent,);
+
+          },stream: Firestore.instance.
+                collection('referalEngine').
+                document('${isUid}').snapshots(),),),
 
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
