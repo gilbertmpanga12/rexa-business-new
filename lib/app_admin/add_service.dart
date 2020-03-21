@@ -713,25 +713,13 @@ if(value.length > 1000){
     borderRadius: BorderRadius.all(Radius.circular(20.0))
 ),
                     title: Text('Account Expired'),
-                    content: Text('Please subscribe to reactivate'),actions: <Widget>[
+                    content: Text('Proceed to MyOffice to clear payments'),actions: <Widget>[
                       FlatButton(child: Text('CANCEL',style: TextStyle(color: Colors.black87),),onPressed: (){
                         Navigator.of(context, rootNavigator: true).pop('dialog');
                       }),
                     FlatButton(child: Text('REACTIVATE'),onPressed: (){
-                      Navigator.of(context, rootNavigator: true).pop('dialog');
-                      if(countryCode == 'KE'){
-                 locals('KES', '4143.81');
-               }else if(countryCode == 'UG'){
-                 locals('UGX', '150000');
-               }else if(countryCode == 'GH'){
-                 locals('GHS', '220.60');
-               }if(countryCode == 'ZA'){
-                 locals('ZAR', '675.88');
-               }if(countryCode == 'TZ'){
-                 locals('TZS', '90640.30');
-               } else {
-                 cardPayments();
-               }
+                    //  Navigator.pushNamed(context, '/my-office');
+                     Navigator.popAndPushNamed(context, '/my-office');
                     },),
 
                   ],);

@@ -358,8 +358,10 @@ Widget placeholder(context){
                    
                    Column(
                      children: <Widget>[
-                       Text('To be paid', style: TextStyle(color: Colors.white,fontSize: 17.0,fontWeight: FontWeight.w300),),
-                       Text('${numberSummerizer(snapshot.data['lastBalance'])}${codeUnit}',style: TextStyle(color: Colors.white,fontSize: 22.0,
+                       Text('To be paid', style: TextStyle(color: Colors.white,fontSize: 17.0,fontWeight: FontWeight.w300,
+                       
+                       ),),
+                       Text('${numberSummerizer(snapshot.data['lastBalance'])}${codeUnit}',style: TextStyle(color: Colors.red[400],fontSize: 22.0,
                        fontWeight: FontWeight.w700))
                      ],
                    )
