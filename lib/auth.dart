@@ -314,7 +314,7 @@ InkWell(
    googleSignIn();
       },
       child: Container(
-        margin: EdgeInsets.only(top: 20),
+        margin: EdgeInsets.only(top: 1,bottom: 12),
         width: MediaQuery.of(context).size.width -51,
         padding: EdgeInsets.symmetric(vertical: 13),
         alignment: Alignment.center,
@@ -341,22 +341,23 @@ InkWell(
 //   onPressed: () => _signInWithApple(context),
 // ),width: MediaQuery.of(context).size.width -51,): SizedBox.shrink(),
 
-              Container(child: Column(
-                // crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  SizedBox(height: 20.0,width: 64.0,),
-                  Padding(
-                    child: Text('©2019 elyfez Technologies  All rights reserved. "Katumba"',
-                      style: TextStyle(color:Colors.black87,
-                      fontWeight: FontWeight.w600,fontSize: 13
-                      ),textAlign: TextAlign.center,
+              Padding(
+                    child: RichText(
+                      textAlign: TextAlign.center,
+  text: TextSpan(
+    text: '©2019 elyfez Technologies  All rights reserved.',
+    style: TextStyle(color:Colors.black87,
+                      fontWeight: FontWeight.w400,fontSize: 13,fontFamily: 'NunitoSans'
                       ),
+    children: <TextSpan>[
+      TextSpan(text: 'Katumba', style: TextStyle(fontWeight: FontWeight.bold))
+    ],
+  ),
+)
+,
                    //  SizedBox(height: 8.0,),
                     padding: EdgeInsets.only(left: 36.5,right: 39.0,bottom: 3.0,top:5.0),
-                  ),
-                ],
-              ))
+                  )
 
             ],
           ),

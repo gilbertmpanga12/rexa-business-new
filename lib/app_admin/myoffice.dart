@@ -103,6 +103,7 @@ void _settingModalBottomSheet(context) {
                     mainAxisAlignment: MainAxisAlignment.start,
                   ),
                   onPressed: (){
+                    print(countryCode);
                 if(countryCode == 'KE'){
                  locals('KES', '4143.81');
                }else if(countryCode == 'UG'){
@@ -199,6 +200,7 @@ phoneNumber = prefs.getString('phoneNumber');
 void locals(String currencyCode, String amount) async {
   final buttonMessage = 'Clear Balance';
   final url = '${Configs.paymentBaseUrl}/pay/$email/$currencyCode/$countryCode/$phoneNumber/$fullName/$_uid/available/$amount/$buttonMessage';
+
   if (await canLaunch(url)) {
     await launch(url, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
   } else {
