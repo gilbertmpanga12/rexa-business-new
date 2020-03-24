@@ -52,6 +52,7 @@ dependencies:
   cloud_functions:  
   flutter_ringtone_player: 
   apple_sign_in: ^0.1.0
+  # flutter_webview_plugin: ^0.3.10+1
 
 dev_dependencies:
   flutter_test:

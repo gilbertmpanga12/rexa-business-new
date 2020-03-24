@@ -200,9 +200,9 @@ phoneNumber = prefs.getString('phoneNumber');
 void locals(String currencyCode, String amount) async {
   final buttonMessage = 'Clear Balance';
   final url = '${Configs.paymentBaseUrl}/pay/$email/$currencyCode/$countryCode/$phoneNumber/$fullName/$_uid/available/$amount/$buttonMessage';
-
-  if (await canLaunch(url)) {
-    await launch(url, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
+  var encoded = Uri.encodeFull(url);
+  if (await canLaunch(encoded)) {
+    await launch(encoded, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
   } else {
     Fluttertoast.showToast(
         msg: "Oops!, website not listed by service provider.",
@@ -222,8 +222,9 @@ void cardPayments() async {
   final buttonMessage = 'Clear Balance';
   SharedPreferences prefs = await SharedPreferences.getInstance();
   final url = '${Configs.paymentBaseUrl}/pay/$email/$currencyCode/$countryCode/$phoneNumber/$fullName/$_uid/not-available/39.32/$buttonMessage';
-  if (await canLaunch(url)) {
-    await launch(url, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
+  var encoded = Uri.encodeFull(url);
+ if (await canLaunch(encoded)) {
+    await launch(encoded, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
   } else {
     Fluttertoast.showToast(
         msg: "Oops!, website not listed by service provider.",

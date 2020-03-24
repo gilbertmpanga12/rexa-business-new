@@ -115,9 +115,9 @@ phoneNumber = prefs.getString('phoneNumber');
 void locals(String currencyCode, String amount) async {
   final buttonMessage = 'Upgrade Premium Account';
   final url = '${Configs.paymentBaseUrl}/pay/$email/$currencyCode/$countryCode/$phoneNumber/$fullName/$isUid/available/$amount/$buttonMessage';
-
-  if (await canLaunch(url)) {
-    await launch(url, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
+  var encoded = Uri.encodeFull(url);
+  if (await canLaunch( encoded)) {
+    await launch( encoded, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
   } else {
     Fluttertoast.showToast(
         msg: "Oops!, website not listed by service provider.",
@@ -136,9 +136,9 @@ void locals(String currencyCode, String amount) async {
 void cardPayments() async {
   final buttonMessage = 'Upgrade Premium Account';
   final url = '${Configs.paymentBaseUrl}/pay/$email/$currencyCode/$countryCode/$phoneNumber/$fullName/$isUid/not-available/39.32/$buttonMessage';
-
+ var encoded = Uri.encodeFull(url);
   if (await canLaunch(url)) {
-    await launch(url, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
+    await launch( encoded, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
   } else {
     Fluttertoast.showToast(
         msg: "Oops!, website not listed by service provider.",
@@ -155,9 +155,9 @@ void cardPayments() async {
 void enableLinks() async {
   final buttonMessage = 'Re-enable adding links';
   final url = '${Configs.paymentBaseUrl}/pay/$email/$currencyCode/$countryCode/$phoneNumber/$fullName/$isUid/not-available/15.0/$buttonMessage';
-
+  var encoded = Uri.encodeFull(url);
   if (await canLaunch(url)) {
-    await launch(url, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
+    await launch(encoded, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
   } else {
     Fluttertoast.showToast(
         msg: "Oops!, website not listed by service provider.",
