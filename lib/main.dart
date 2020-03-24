@@ -13,6 +13,7 @@ import './terms_and_conditions.dart';
 import './app_admin/admin_profile.dart';
 import 'app_admin/admin_settings.dart';
 import 'app_services/auth_service.dart';
+import 'globals/configs.dart';
 
 
 Future<void>main() async {
@@ -23,7 +24,7 @@ Future<void>main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
   OneSignal.shared.init(
-  "043cf2de-40cc-4010-b431-4e02a950f75f",
+  Configs.appIdBusinessAndroidOnesignal,
   iOSSettings: {
     OSiOSSettings.autoPrompt: false,
     OSiOSSettings.inAppLaunchUrl: true

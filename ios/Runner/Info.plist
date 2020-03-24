@@ -91,5 +91,16 @@
 	<false/>
 	<key>io.flutter.embedded_views_preview</key>
 	<true/>
+	<key>LSApplicationQueriesSchemes</key>
+<array>
+    <string>youtube</string>
+    <string>whatsapp</string>
+    <string>instagram</string>
+    <string>fb</string>
+    <string>tel</string>
+        <string>mailto</string>
+		<string>http</string>
+		<string>https</string>
+</array>
 </dict>
 </plist>
