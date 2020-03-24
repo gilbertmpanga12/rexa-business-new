@@ -151,7 +151,7 @@ void cardPayments() async {
     );
   }
 }
-
+// universalLinks false
 void enableLinks() async {
   final buttonMessage = 'Re-enable adding links';
   final url = '${Configs.paymentBaseUrl}/pay/$email/$currencyCode/$countryCode/$phoneNumber/$fullName/$isUid/not-available/15.0/$buttonMessage';

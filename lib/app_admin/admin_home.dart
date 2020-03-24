@@ -353,6 +353,7 @@ await flutterLocalNotificationsPlugin.show(
 
   initState() {
     OneSignal.shared.setNotificationOpenedHandler((OSNotificationOpenedResult result) {
+       FlutterRingtonePlayer.stop(); // disable any ringtone
      if(result.notification.payload.rawPayload['title'].toString().contains('requested')){
  // to handle ringtones
    FlutterRingtonePlayer.stop();
