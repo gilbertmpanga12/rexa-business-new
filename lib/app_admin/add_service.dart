@@ -117,7 +117,7 @@ void locals(String currencyCode, String amount) async {
   final url = '${Configs.paymentBaseUrl}/pay/$email/$currencyCode/$countryCode/$phoneNumber/$fullName/$isUid/available/$amount/$buttonMessage';
   var encoded = Uri.encodeFull(url);
   if (await canLaunch( encoded)) {
-    await launch( encoded, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
+    await launch( encoded, universalLinksOnly: false); // ,forceWebView: true,enableJavaScript: true
   } else {
     Fluttertoast.showToast(
         msg: "Oops!, website not listed by service provider.",
@@ -138,7 +138,7 @@ void cardPayments() async {
   final url = '${Configs.paymentBaseUrl}/pay/$email/$currencyCode/$countryCode/$phoneNumber/$fullName/$isUid/not-available/39.32/$buttonMessage';
  var encoded = Uri.encodeFull(url);
   if (await canLaunch(url)) {
-    await launch( encoded, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
+    await launch( encoded, universalLinksOnly: false); // ,forceWebView: true,enableJavaScript: true
   } else {
     Fluttertoast.showToast(
         msg: "Oops!, website not listed by service provider.",
@@ -157,7 +157,7 @@ void enableLinks() async {
   final url = '${Configs.paymentBaseUrl}/pay/$email/$currencyCode/$countryCode/$phoneNumber/$fullName/$isUid/not-available/15.0/$buttonMessage';
   var encoded = Uri.encodeFull(url);
   if (await canLaunch(url)) {
-    await launch(encoded, universalLinksOnly: true); // ,forceWebView: true,enableJavaScript: true
+    await launch(encoded, universalLinksOnly: false); // ,forceWebView: true,enableJavaScript: true
   } else {
     Fluttertoast.showToast(
         msg: "Oops!, website not listed by service provider.",
