@@ -7,4 +7,5 @@ class Configs {
   static const appIdnewAdroidWorker = '306a55a3-92f5-4aac-9cb5-21fff19320e5';
   static const authorizationHeadernewAdroidWorker = 'MGM2NGU4MWQtNmZkMS00NmU3LTlhNDgtYjQzNjBhOWM2NWQy';
   static const paymentBaseUrl = 'https://rexa-upgrade.firebaseapp.com';
+  static const androidBusinessPlaystore = 'https://play.google.com/store/apps/details?id=com.business.esalonbusiness';
 }

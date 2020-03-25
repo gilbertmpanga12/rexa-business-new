@@ -51,8 +51,11 @@ String _firebaseUID;
 
   uploadPhoto() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
+  
     ImagePicker.pickImage(source: ImageSource.gallery).then((image){
+      if(image == null){
+    return;
+  }
       final url = randomAlpha(10);
       final StorageReference firebaseStorageRef =
       FirebaseStorage.instance.ref().child('${url}');

@@ -130,6 +130,14 @@ setState(() {
         prefs.setBool('isNewUser', true);
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TermsWid()));
       }
+    }).catchError((onError){
+      if(mounted){
+       setState(() {
+      showSpinner = false;
+      });
+   }
+  
+   errorDialog(onError.message);
     });
 
     }).catchError((onError){
@@ -182,7 +190,15 @@ setState(() {
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TermsWid()));
       }
       
+      }).catchError((onError){
+      if(mounted){
+       setState(() {
+      showSpinner = false;
       });
+   }
+  
+   errorDialog(onError.message);
+    });
   
   } catch (e) {
     errorDialog(e.toString());

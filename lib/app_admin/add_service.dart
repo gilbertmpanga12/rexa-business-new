@@ -213,8 +213,12 @@ Widget _buildLink() {
 }
 
 void uploadVideo(bool isVideo) async {
+  
 SharedPreferences prefs = await SharedPreferences.getInstance();
 ImagePicker.pickVideo(source: ImageSource.gallery).then((image){
+  if(image == null){
+    return ;
+  }
         final url = randomAlpha(10);
         final StorageReference firebaseStorageRef =
         FirebaseStorage.instance.ref().child('${url}');
@@ -317,6 +321,10 @@ void uploadPhoto(bool isVideo) async {
   final docID = randomAlpha(12);
 SharedPreferences prefs = await SharedPreferences.getInstance();
 ImagePicker.pickImage(source: ImageSource.gallery).then((image){
+
+  if(image == null){
+    return ;
+  }
         final url = randomAlpha(10);
         final StorageReference firebaseStorageRef =
         FirebaseStorage.instance.ref().child('${url}');
@@ -324,7 +332,6 @@ ImagePicker.pickImage(source: ImageSource.gallery).then((image){
         firebaseStorageRef.putFile(image);
 
          showDialog(
-        
         context: context,builder: (BuildContext context){
         return AlertDialog(
           shape: RoundedRectangleBorder(
@@ -668,14 +675,21 @@ if(value.length > 1000){
                 collection('referalEngine').
                 document('${isUid}').snapshots(),builder: (context, snapshot){
                   if(!snapshot.hasData){
-                    return Container(child: Text(''));
+                    return SizedBox.shrink();
                   }
-                   var lastActivatedTime = DateTime.fromMillisecondsSinceEpoch(int.parse(snapshot.data['timeStamp']));
+                  
+
+                  switch(snapshot.connectionState){
+                    case ConnectionState.waiting:
+                         return SizedBox.shrink();
+                    default:
+                  var lastActivatedTime = DateTime.fromMillisecondsSinceEpoch(int.parse(snapshot.data['timeStamp']));
+                  print(lastActivatedTime );
                   var date1 = DateTime.utc(lastActivatedTime.year,lastActivatedTime.month,lastActivatedTime.day);
                   var now = Timestamp.now().toDate();
                   var diff = now.difference(date1);
                   var days = diff.inDays;
-                    return days < 31 ? Column(children: <Widget>[
+                       return days < 31 ? Column(children: <Widget>[
                       _buildWebsite(),
                       _buildLink()
                     ],) : Center(child: InkWell(child: Text('Tap to re-enable adding links',
@@ -683,6 +697,8 @@ if(value.length > 1000){
                     ),onTap: (){
                       enableLinks();
                     },),);
+                  }
+                    
                  
                 },),
                  SizedBox(
@@ -699,21 +715,28 @@ if(value.length > 1000){
      _settingModalBottomSheet(context);
               },backgroundColor: Colors.blueAccent,);
             }
-            print(snapshot.data['isPremium']);
-            return snapshot.data['isPremium'] == true ? FloatingActionButton(child:
+           switch(snapshot.connectionState){
+             case ConnectionState.waiting:
+                return SizedBox.shrink();
+              default:
+           
+                   return snapshot.data['isPremium'] == true ? FloatingActionButton(child:
           Icon(EvaIcons.cloudUploadOutline, color: Colors.white,), 
           onPressed: (){
+
      _settingModalBottomSheet(context);
+    
               },backgroundColor: Colors.blueAccent,): FloatingActionButton(child:
           Icon(EvaIcons.cloudUploadOutline, color: Colors.white,), 
           onPressed: (){
-    showDialog(context: context,builder: (BuildContext context){
+     showDialog(context: context,builder: (BuildContext context){
                   return AlertDialog(
                     shape: RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(20.0))
 ),
                     title: Text('Account Expired'),
-                    content: Text('Proceed to MyOffice to clear payments'),actions: <Widget>[
+                    content: Text('Proceed to MyOffice to clear payments, contact support in case of any issues at +256706073735 or +256774629181'),
+                    actions: <Widget>[
                       FlatButton(child: Text('CANCEL',style: TextStyle(color: Colors.black87),),onPressed: (){
                         Navigator.of(context, rootNavigator: true).pop('dialog');
                       }),
@@ -725,6 +748,7 @@ if(value.length > 1000){
                   ],);
                 });
               },backgroundColor: Colors.blueAccent,);
+           }
 
           },stream: Firestore.instance.
                 collection('referalEngine').

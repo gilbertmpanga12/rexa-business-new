@@ -20,7 +20,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import './globals/configs.dart';
 
 
 class Photo{
@@ -59,7 +59,7 @@ class AdminHomeState extends State<AdminHome> {
 
 
 _launchURL() async {
-  final url = 'https://play.google.com/store/apps/details?id=esalonuser.esalonuser.esalonuser';
+  final url = '${Configs.androidBusinessPlaystore}';
   Clipboard.setData(ClipboardData(text: '$url'));
   print(url);
   if (await canLaunch(url)) {
@@ -442,7 +442,7 @@ floatingActionButton: StreamBuilder(
               title:  Text('Rexa Business',style: TextStyle(color: Colors.black87,
               fontFamily: 'Monoton',
               fontWeight: FontWeight.w500,
-              fontSize: 18.5),),
+              fontSize: 17.5),),
               bottom: TabBar(indicatorColor: Colors.blueAccent,
               unselectedLabelColor: Colors.black87,labelColor: Colors.blueAccent,indicatorWeight: 3,
                 tabs: <Widget>[
