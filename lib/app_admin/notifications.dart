@@ -163,8 +163,6 @@ print(serviceProviderUid);
     if (response.statusCode == 200 || response.statusCode == 201) {
       setState(() {
         servicesFetched =  Orders.fromJson(json.decode(response.body));
-        print('>>>>>>>');
-    print( shouldShow = servicesFetched.phoneNumber == null);
         setState(() {
           renderCard = servicesFetched.transactionPassed == false;
           shouldShow = servicesFetched.phoneNumber == null;
@@ -189,7 +187,7 @@ print(serviceProviderUid);
 
 requestRating(String playerId, String contents, String headings) async {
  String url = 'https://onesignal.com/api/v1/notifications';
- bool isIos =  servicesFetched.isIos;
+ bool isIos =  servicesFetched.isIos ?? false;
  if(isIos){
    Map<dynamic, dynamic> body = {
 'app_id': Configs.appIdUserIosOneSignal,

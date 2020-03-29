@@ -201,6 +201,11 @@ setState(() {
     });
   
   } catch (e) {
+      if(mounted){
+       setState(() {
+      showSpinner = false;
+      });
+   }
     errorDialog(e.toString());
   }
 }
