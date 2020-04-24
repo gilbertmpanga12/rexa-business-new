@@ -205,10 +205,10 @@ headers: {HttpHeaders.authorizationHeader: Configs.appAuthorizationHeaderIos,
 "content-type": "application/json"
 }
 );
-return;
- }
+Navigator.pushNamed(context, '/home');
 
-Map<dynamic, dynamic> body = {
+ }else{
+   Map<dynamic, dynamic> body = {
 'app_id': Configs.appIdnewAdroidWorker,
 'contents': {"en": contents},
 'include_player_ids': [playerId],
@@ -224,6 +224,10 @@ headers: {HttpHeaders.authorizationHeader: Configs.authorizationHeadernewAdroidW
 "content-type": "application/json"
 }
 );
+Navigator.pushNamed(context, '/home');
+ }
+
+
 
 
 }
