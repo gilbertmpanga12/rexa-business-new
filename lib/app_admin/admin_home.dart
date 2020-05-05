@@ -198,7 +198,7 @@ if(snapshot.hasError){
 
   Widget _buildSideDrawer(BuildContext context) {
 
-    return Container(width: 260.0, child: Theme(child: Drawer(
+    return Container(width: 240.0, child: Theme(child: Drawer(
       
       child: ListView(
         padding: EdgeInsets.zero,
@@ -251,7 +251,7 @@ Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileWidget())
      
       ListTile(
         leading: Icon(EvaIcons.settings,color: Colors.white,),
-        title: Text('Settings',style: TextStyle(color: Colors.white, fontSize: 14),),
+        title: Text('Settings',style: TextStyle(color: Colors.white, fontSize: 13.5),),
         onTap: () {
         //  Navigator.pop(context);
         // _scaffoldKey.currentState.widget.
@@ -261,7 +261,7 @@ Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileWidget())
       ),
       ListTile(
         leading: Icon(EvaIcons.questionMarkCircle,color: Colors.white,),
-        title: Text('Help', style: TextStyle(color: Colors.white,fontSize: 14),),
+        title: Text('Help', style: TextStyle(color: Colors.white,fontSize:  13.5),),
         onTap: () {
           // Navigator.pop(context);
           Navigator.push(context, MaterialPageRoute(builder: (context) => HelpWid()));
@@ -269,14 +269,14 @@ Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileWidget())
       ),
        ListTile(
         leading: Icon(EvaIcons.share,color: Colors.white,),
-        title: Text('Join Rexa Users',style: TextStyle(color: Colors.white,fontSize: 14), ),
+        title: Text('Join Rexa Users',style: TextStyle(color: Colors.white,fontSize:  13.5), ),
         onTap: () {
    _launchURL();
         },
       ),
           ListTile(
             leading: Icon(EvaIcons.logOutOutline,color: Colors.white,),
-            title: Text('Log Out', style: TextStyle(color: Colors.white, fontSize: 14),),
+            title: Text('Log Out', style: TextStyle(color: Colors.white, fontSize:  13.5),),
             onTap: () {
               authService.signOut();
               Navigator.popAndPushNamed(context, '/');
