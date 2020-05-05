@@ -289,12 +289,12 @@ dispose(){
     }, child: Padding(child: Row(
       children: <Widget>[
         Text('NEXT',
-          style: TextStyle(color:Colors.white,fontSize: 29.0,fontWeight: FontWeight.w600),textAlign: TextAlign.center,),
+          style: TextStyle(color:Colors.white,fontSize: 23.0,fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
 
       ],
       mainAxisAlignment: MainAxisAlignment.center,
     ),
-      padding: EdgeInsets.only(top:11.0,bottom: 11.0),),color: Colors.blue[800]
+      padding: EdgeInsets.only(top:10.0,bottom: 10.0),),color: Colors.blue[800]
     ),)
               ],
             );

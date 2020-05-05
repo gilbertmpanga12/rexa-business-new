@@ -33,7 +33,7 @@ if(!helpshot.hasData){
               SizedBox(height: 55.0,),
             Padding(child: Text(
               'Please Contact Support for Account Activation',
-              style: TextStyle(fontSize: 19.0,fontWeight: FontWeight.w500),
+              style: TextStyle(fontSize: 16.0,fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ), padding: EdgeInsets.only(left: 25.0,right: 25.0)),
               SizedBox(height: 18.0,),

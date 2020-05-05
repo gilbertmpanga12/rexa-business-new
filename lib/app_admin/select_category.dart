@@ -272,8 +272,9 @@ Navigator.pushReplacementNamed(context, '/home');
       body: _buildCategoryTextField(),
     appBar: AppBar(
         title: Text(
+
           'Pick Category',
-          style: TextStyle(color: Colors.black,fontWeight: FontWeight.w900,fontFamily: 'Comfortaa'),
+          style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'Comfortaa',fontSize: 17),
         ),
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Colors.black),

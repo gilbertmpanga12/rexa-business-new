@@ -67,7 +67,7 @@ These Services do not address anyone under the age of 13. we do not knowingly co
       body: ListView(children: <Widget>[
        Column(
       children: <Widget>[
-      Padding(child: Text('Terms and Conditiions',style: TextStyle(fontSize: 19.5),),padding: EdgeInsets.all(26.0),),
+      Padding(child: Text('Terms and Conditiions',style: TextStyle(fontSize: 16.5,fontWeight: FontWeight.bold),),padding: EdgeInsets.all(26.0),),
 //            SizedBox(height: 60.0,),
     Padding(child: Text('$terms'),padding: EdgeInsets.all(20.0),)
     ],
@@ -80,8 +80,8 @@ These Services do not address anyone under the age of 13. we do not knowingly co
          
         }, child: Padding(child: Row(
           children: <Widget>[
-            Text('I Accept',
-              style: TextStyle(color:Colors.white,fontSize: 25.0,fontWeight: FontWeight.w600),textAlign: TextAlign.center,),
+            Text('I agree',
+              style: TextStyle(color:Colors.white,fontSize: 23.0,fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
 
           ],
           mainAxisAlignment: MainAxisAlignment.center,
