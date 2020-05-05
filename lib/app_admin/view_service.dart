@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:firebase_storage/firebase_storage.dart';
 import './view_image.dart';
 import '../video_widget.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 
 class CategoriesAll {
   final String time;
@@ -358,17 +359,23 @@ String servicePhotoUrl, String serviceOffered}) {
               itemCount: resultsFetched.length,
             )
           : isAbsent
-              ? Center(
-                  child: Text(
-                    'You haven\'t added any services yet',
-                    style: TextStyle(fontSize: 15.0),
+              ? Center(heightFactor: 12,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                    Text(
+                    'Add your services ',
+                    style: TextStyle(fontSize: 15.0,fontWeight: FontWeight.bold),
                   ),
+                  Icon(EvaIcons.pricetagsOutline)
+                  ],),
                 )
               : isNetworkError
                   ? Center(
                       child: Text('Please check your network connection'),
                     )
-                  : Center(child: CircularProgressIndicator(strokeWidth: 5.0)),
+                  : Center(heightFactor: 12,child: CircularProgressIndicator(strokeWidth: 5.0)),
       backgroundColor: Colors.white,
     );
   }

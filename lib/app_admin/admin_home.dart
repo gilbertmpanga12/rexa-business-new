@@ -215,14 +215,14 @@ if(snapshot.hasError){
                         return ListView(children: <Widget>[
 Align(
                           alignment: Alignment.centerLeft,
-                          child: Container(height: 200.0,child:Column(
+                          child: Container(height: 199.0,child:Column(
                             children: <Widget>[
                           GestureDetector(child: CircleAvatar(
                           foregroundColor: Theme.of(context).primaryColor,
                           backgroundColor: Colors.grey,
                           backgroundImage:
                           CachedNetworkImageProvider('${snapshot.data['profilePicture']}'),
-                          radius: 50.0,
+                          radius: 49.0,
                         ),onTap: (){
                           // to be continued here
                           // Navigator.pop(context);
@@ -234,7 +234,7 @@ Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileWidget())
     '${snapshot.data['fullName'].toString().length > 37 ? snapshot.data['fullName'].toString().substring(0,37) + '...' : snapshot.data['fullName']}',
     // overflow: TextOverflow.ellipsis,
     // softWrap: false,
-    style: TextStyle(color: Colors.white, fontSize: 18.0,fontWeight: FontWeight.w600,height: 1.4)
+    style: TextStyle(color: Colors.white, fontSize: 16.0,fontWeight: FontWeight.bold,height: 1.4,fontFamily: 'NunitoSans')
   )
                               
                             ],
