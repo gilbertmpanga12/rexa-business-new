@@ -143,7 +143,7 @@ String _firebaseUID;
           backgroundColor: Colors.white,
           iconTheme: IconThemeData(color: Colors.black),
           centerTitle: true,
-          elevation: 1.5,
+          elevation: 0,
          
         ),
         body: StreamBuilder(
@@ -175,17 +175,21 @@ print('$_firebaseUID');
                   ),
                   margin: EdgeInsets.only(left: 18.0, bottom: 25.0),
                 ),
-                 Positioned(bottom: 12.6,child: IconButton(
-                   onPressed: () => null,
-                   icon: Icon(Icons.add_circle,color: Colors.yellow[900],size: 30),),right: 6,)
+                 Positioned(bottom: 20.6,child: SizedBox(
+                   height: 30,width: 30,
+                   child: FloatingActionButton(backgroundColor: Colors.yellow[900],
+                   mini: true,
+                   onPressed: () => uploadPhoto(),
+                   child: Icon(Icons.add,color: Colors.white,),),),right: 13,)
                 ],),
                 ListTile(
                   leading: Icon(
                       Icons.person,
                       color: Colors.yellow[800]
                   ),
-                  title: Text('Full name',style: TextStyle(fontWeight: FontWeight.w500,)),
-                  subtitle: Text('${snapshot.data['fullName']}',style: TextStyle(fontSize: 17.0,)),
+                  title: Text('Name',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14, )),
+                  subtitle: Text('${snapshot.data['fullName']}',style: TextStyle(fontSize: 15,
+                  fontWeight: FontWeight.bold, fontFamily: 'Comfortaa')),
 
                 ),
                 Container(child: Divider(indent: 57.8,),padding: EdgeInsets.only(left:12.0),),
@@ -194,16 +198,20 @@ print('$_firebaseUID');
                   leading: Icon(Icons.info, color: Colors.yellow[800]),
                   title: Text(
                     'Telephone',
-                    style: TextStyle(fontWeight: FontWeight.w500),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                   ),
-                  subtitle: Text('${snapshot.data['phoneNumber']}',style: TextStyle(fontSize: 17.0,)),
+                  subtitle: Text('${snapshot.data['phoneNumber']}',style: TextStyle(
+                    fontFamily: 'Comfortaa',
+                    fontSize: 15.0,fontWeight: FontWeight.bold)),
                 ),
                 Container(child: Divider(indent: 57.8,),padding: EdgeInsets.only(left:12.0),),
                 ListTile(
                   leading: Icon(Icons.phone, color: Colors.yellow[800]),
-                  title: Text('Business Name',
-                      style: TextStyle(fontWeight: FontWeight.w500)),
-                  subtitle: Text('${snapshot.data['businessName']}',style: TextStyle(fontSize: 17.0,)),
+                  title: Text('Business name',
+                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14)),
+                  subtitle: Text('${snapshot.data['businessName']}',style: TextStyle(
+                    fontFamily: 'Comfortaa',
+                    fontSize: 15.0,fontWeight: FontWeight.bold)),
                 ),
               ],
             ),

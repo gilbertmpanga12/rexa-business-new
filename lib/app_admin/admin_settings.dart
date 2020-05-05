@@ -233,23 +233,28 @@ getCurrencyCode(String code) async {
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Colors.black87),
         centerTitle: true,
-        elevation: 1.0,
+        elevation: 1.3,
       ),
       body: Form(
         key: _formKey,
         child: Center(
             child: Padding(
-              padding: EdgeInsets.only(top: 20.0, left: 0, right: 20.0),
-              child: Column(children: <Widget>[
+              padding: EdgeInsets.only(top: 13.0, left: 0, right: 10.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
                 InkWell(
-                  child: ListTile(trailing: Icon(Icons.edit),
+                  child: ListTile(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 5.0),
+                    trailing: Icon(Icons.edit,size: 18,),
                     leading: SizedBox(
                       width: 50.0,
                       child: Icon(
                         Icons.payment,
-                        color: Colors.yellow[800],size: 35.0,
+                        color: Colors.yellow[800],size: 29.0,
                     ),),
-                    title: Text('Update Business Category',style: TextStyle(fontWeight: FontWeight.w600,)),
+                    title: Text('Change Category',style: TextStyle(fontWeight: FontWeight.bold,)),
 
 
                   ),
@@ -257,7 +262,8 @@ getCurrencyCode(String code) async {
                   _newTaskModalBottomSheet(context);
                   },
 
-                )
+                ),
+                // Divider(indent: 10,)
 
               ],),
             )),
