@@ -177,10 +177,11 @@ void enableLinks() async {
 
   Widget _buildServiceProvidedTextField() {
     return TextFormField(
-     
+    
         textCapitalization: TextCapitalization.words,
         maxLines: 2,
-        decoration: InputDecoration(labelText: 'Service offered'),
+        decoration: InputDecoration(labelText: 'Service Offered',labelStyle: 
+        TextStyle(fontFamily: 'NunitoSans',fontWeight: FontWeight.bold,fontSize: 14.8)),
         onSaved: (String value) {
           _serviceProvided = value;
         });
@@ -193,7 +194,8 @@ Widget _buildWebsite() {
       Container(child: TextFormField(
         textCapitalization: TextCapitalization.words,
         maxLines: 2,
-        decoration: InputDecoration(labelText: '(Premium) Add a website or link'),
+        decoration: InputDecoration(labelText: '(Premium) Add a website or link',
+        labelStyle: TextStyle(fontFamily: 'NunitoSans',fontWeight: FontWeight.bold,fontSize: 14.8)),
         onSaved: (String value) {
           _website = value;
         }),width: 257.0,)
@@ -207,7 +209,8 @@ Widget _buildLink() {
       Container(child: TextFormField(
         textCapitalization: TextCapitalization.words,
         maxLines: 2,
-        decoration: InputDecoration(labelText: 'Add Shipping Address or link'),
+        decoration: InputDecoration(labelText: 'Add Shipping Address or link', 
+        labelStyle: TextStyle(fontFamily: 'NunitoSans',fontWeight: FontWeight.bold,fontSize: 14.8)),
         onSaved: (String value) {
           shippingAdress = value;
         }),width: 257.0,)
@@ -590,7 +593,7 @@ Container(margin: EdgeInsets.all(8.0),
                 ],
         textCapitalization: TextCapitalization.words,
         maxLines: 2,
-        decoration: InputDecoration(labelText: 'Time Taken / Number of items'),
+        decoration: InputDecoration(labelText: 'Time Taken / Number of items',labelStyle: TextStyle(fontFamily: 'NunitoSans',fontWeight: FontWeight.bold,fontSize: 14.8)),
         onSaved: (String value) {
           _timeTaken = value;
         });
@@ -600,7 +603,7 @@ Container(margin: EdgeInsets.all(8.0),
     return TextFormField(
         maxLines: 2,
         keyboardType: TextInputType.number,
-        decoration: InputDecoration(labelText: 'Price'),
+        decoration: InputDecoration(labelText: 'Price', labelStyle: TextStyle(fontFamily: 'NunitoSans',fontWeight: FontWeight.bold,fontSize: 14.8)),
         onSaved: (String value) {
           _price = value.toString();
         });
@@ -626,7 +629,7 @@ if(value.length > 1000){
         maxLines: null,
         decoration: InputDecoration(
           errorText: hasExceeded ? 'Description must not exceed 1002 charaters': null,
-          labelText: 'Description'),
+          labelText: 'Description', labelStyle: TextStyle(fontFamily: 'NunitoSans',fontWeight: FontWeight.bold,fontSize: 14.8)),
         onSaved: (String value) {
           _description = value;
         });
@@ -690,7 +693,7 @@ if(value.length > 1000){
           Icon(EvaIcons.cloudUploadOutline, color: Colors.white,), 
           onPressed: (){
      _settingModalBottomSheet(context);
-              },backgroundColor: Colors.blueAccent,);
+              },backgroundColor: Colors.blue[800],);
             }
            switch(snapshot.connectionState){
              case ConnectionState.waiting:
@@ -703,7 +706,7 @@ if(value.length > 1000){
 
      _settingModalBottomSheet(context);
     
-              },backgroundColor: Colors.blueAccent,): FloatingActionButton(child:
+              },backgroundColor: Colors.blue[800],): FloatingActionButton(child:
           Icon(EvaIcons.cloudUploadOutline, color: Colors.white,), 
           onPressed: (){
      showDialog(context: context,builder: (BuildContext context){
@@ -724,7 +727,7 @@ if(value.length > 1000){
 
                   ],);
                 });
-              },backgroundColor: Colors.blueAccent,);
+              },backgroundColor: Colors.blue[800],);
            }
 
           },stream: Firestore.instance.
@@ -736,7 +739,7 @@ if(value.length > 1000){
       },
     ),),data: Theme.of(context).copyWith(
        // Set the transparency here
-       primaryColor: Colors.blueAccent,
+       primaryColor: Colors.blue[800],
        //or any other color you want. e.g Colors.blue.withOpacity(0.5)
       ),);
   }

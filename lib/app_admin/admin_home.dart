@@ -119,7 +119,7 @@ if(!helpshot.hasData){
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                   Image.asset('assets/whatsapp.png'),
-                  Text('${helpshot.data['telephone1']}',style: TextStyle(fontSize: 20.0),)
+                  Text('${helpshot.data['telephone1']}',style: TextStyle(fontSize: 17.0),)
                 ]),
               ),
     SizedBox(height: 6.0,),
@@ -129,7 +129,7 @@ if(!helpshot.hasData){
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                   Icon(EvaIcons.phoneOutline),
-                  Text('${helpshot.data['telephone2']}',style: TextStyle(fontSize: 20.0),)
+                  Text('${helpshot.data['telephone2']}',style: TextStyle(fontSize: 17.0),)
                 ]),
                onTap: (){
                  launch("tel://${helpshot.data['telephone2']}");
@@ -139,7 +139,7 @@ if(!helpshot.hasData){
 
               Text('OR'),
               InkWell(
-                child: Text('${helpshot.data['email']}', style: TextStyle(fontSize: 18.0),),
+                child: Text('${helpshot.data['email']}', style: TextStyle(fontSize: 17.0),),
                 onTap: (){
                   launch("mailto:${helpshot.data['email']}");
                 },
@@ -251,7 +251,7 @@ Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileWidget())
      
       ListTile(
         leading: Icon(EvaIcons.settings,color: Colors.white,),
-        title: Text('Settings',style: TextStyle(color: Colors.white),),
+        title: Text('Settings',style: TextStyle(color: Colors.white, fontSize: 14),),
         onTap: () {
         //  Navigator.pop(context);
         // _scaffoldKey.currentState.widget.
@@ -261,7 +261,7 @@ Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileWidget())
       ),
       ListTile(
         leading: Icon(EvaIcons.questionMarkCircle,color: Colors.white,),
-        title: Text('Help', style: TextStyle(color: Colors.white),),
+        title: Text('Help', style: TextStyle(color: Colors.white,fontSize: 14),),
         onTap: () {
           // Navigator.pop(context);
           Navigator.push(context, MaterialPageRoute(builder: (context) => HelpWid()));
@@ -269,14 +269,14 @@ Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileWidget())
       ),
        ListTile(
         leading: Icon(EvaIcons.share,color: Colors.white,),
-        title: Text('Join Rexa Users App',style: TextStyle(color: Colors.white),),
+        title: Text('Join Rexa Users',style: TextStyle(color: Colors.white,fontSize: 14), ),
         onTap: () {
    _launchURL();
         },
       ),
           ListTile(
             leading: Icon(EvaIcons.logOutOutline,color: Colors.white,),
-            title: Text('Log Out', style: TextStyle(color: Colors.white),),
+            title: Text('Log Out', style: TextStyle(color: Colors.white, fontSize: 14),),
             onTap: () {
               authService.signOut();
               Navigator.popAndPushNamed(context, '/');
