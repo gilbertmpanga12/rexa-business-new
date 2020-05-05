@@ -46,8 +46,8 @@ class AdminHomeState extends State<AdminHome> {
   String  _firebaseUID;
   int stopper = 0;
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
- FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
-
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
+  final double bellIconSize = 26.0;
 
   localStorageLoader() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -446,15 +446,15 @@ floatingActionButton: StreamBuilder(
               fontSize: 17.5),),
               bottom: TabBar(indicatorColor: Colors.blueAccent,
               unselectedLabelColor: Colors.black87,labelColor: Colors.blueAccent,indicatorWeight: 3,
+              labelStyle: TextStyle(fontSize: 13.7,fontFamily: 'NunitoSans',fontWeight: FontWeight.bold),
                 tabs: <Widget>[
                   Tab(
-                    icon: Icon(EvaIcons.editOutline),
+                    icon: Icon(EvaIcons.editOutline,size: bellIconSize,),
                     text: 'Create Service',
                   ),
 
-
                   Tab(
-                    icon: Icon(EvaIcons.compassOutline),
+                    icon: Icon(EvaIcons.compassOutline ,size: bellIconSize),
                     text: 'Services',
                   )
                 ],
@@ -464,7 +464,7 @@ floatingActionButton: StreamBuilder(
             collection('saloonServiceProvider').document(_firebaseUID).snapshots() ,
             builder: (context, snapshot){
               if(!snapshot.hasData){
-                return  IconButton(icon: Icon(EvaIcons.bell,color: Color(0xFF383838),), onPressed: () {
+                return  IconButton(icon: Icon(EvaIcons.bell,color: Color(0xFF383838),size: bellIconSize), onPressed: () {
                   Navigator.push(context,MaterialPageRoute(builder: (context) => NotificationsWidget()));
                 });
   
@@ -472,7 +472,7 @@ floatingActionButton: StreamBuilder(
               try{
                 return snapshot.data['status_notifier'] ? Stack(
               children: <Widget>[
-                new IconButton(icon: Icon(Icons.notifications_active,color: Colors.black87,size: 30.0), onPressed: () {
+                new IconButton(icon: Icon(Icons.notifications_active,color: Colors.black87,size: bellIconSize), onPressed: () {
                   FlutterRingtonePlayer.stop();
                   Navigator.push(context,MaterialPageRoute(builder: (context) => NotificationsWidget()));
                 }),
@@ -503,13 +503,13 @@ floatingActionButton: StreamBuilder(
                   },),
                 )
               ],
-            ): IconButton(icon: Icon(Icons.notifications,color:  Color(0xFF383838),size: 30.0), onPressed: () {
+            ): IconButton(icon: Icon(Icons.notifications,color:  Color(0xFF383838),size: bellIconSize), onPressed: () {
                  FlutterRingtonePlayer.stop();
                   Navigator.push(context,MaterialPageRoute(builder: (context) => NotificationsWidget()));
                 });
               }catch(e){
                 FlutterRingtonePlayer.stop();
-                return IconButton(icon: Icon(Icons.notifications, color: Colors.black87,size: 30.0), onPressed: () {
+                return IconButton(icon: Icon(Icons.notifications, color: Colors.black87,size: bellIconSize), onPressed: () {
                   Navigator.push(context,MaterialPageRoute(builder: (context) => NotificationsWidget()));
                 });
               }

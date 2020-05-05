@@ -100,7 +100,8 @@ class _CreateServiceWidgetState extends State<CreateServiceWidget> {
 
   fetchTotal() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
+   if(mounted){
+      setState(() {
 isUid = prefs.getString('uid');
     });
 countryCode = prefs.getString('countryCode');
@@ -110,6 +111,7 @@ fullName = prefs.getString('fullName');
 businessName = prefs.getString('businessName');
 phoneNumber = prefs.getString('phoneNumber');
 }
+   }
 
 
 void locals(String currencyCode, String amount) async {
@@ -609,9 +611,11 @@ Container(margin: EdgeInsets.all(8.0),
   Widget _buildDescriptionTextField() {
     return TextFormField(onChanged: (value){
 if(value.length > 1000){
-            setState(() {
+            if(mounted){
+              setState(() {
               hasExceeded = true;
             });
+            }
           }
     },
  inputFormatters: [
