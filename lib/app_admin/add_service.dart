@@ -670,36 +670,10 @@ if(value.length > 1000){
                   height: 11.0,
                 ),
 
-                
-                StreamBuilder(stream: Firestore.instance.
-                collection('referalEngine').
-                document('${isUid}').snapshots(),builder: (context, snapshot){
-                  if(!snapshot.hasData){
-                    return SizedBox.shrink();
-                  }
-                  
-
-                  switch(snapshot.connectionState){
-                    case ConnectionState.waiting:
-                         return SizedBox.shrink();
-                    default:
-                  var lastActivatedTime = DateTime.fromMillisecondsSinceEpoch(int.parse(snapshot.data['timeStamp']));
-                  var date1 = DateTime.utc(lastActivatedTime.year,lastActivatedTime.month,lastActivatedTime.day);
-                  var now = Timestamp.now().toDate();
-                  var diff = now.difference(date1);
-                  var days = diff.inDays;
-                       return days < 31 ? Column(children: <Widget>[
+                Column(children: <Widget>[
                       _buildWebsite(),
                       _buildLink()
-                    ],) : Center(child: InkWell(child: Text('Tap to re-enable adding links',
-                    style: TextStyle(color: Colors.indigo),
-                    ),onTap: (){
-                      enableLinks();
-                    },),);
-                  }
-                    
-                 
-                },),
+                    ],),
                  SizedBox(
                   height: 10.0,
                 )
