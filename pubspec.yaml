@@ -41,7 +41,7 @@ dependencies:
   location: 
   cached_network_image: 
   flutter_local_notifications: 
-  image_cropper: 
+  # image_cropper: 
   photo_view: 
   url_launcher: 
   eva_icons_flutter: 

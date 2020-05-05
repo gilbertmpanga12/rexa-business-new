@@ -684,7 +684,6 @@ if(value.length > 1000){
                          return SizedBox.shrink();
                     default:
                   var lastActivatedTime = DateTime.fromMillisecondsSinceEpoch(int.parse(snapshot.data['timeStamp']));
-                  print(lastActivatedTime );
                   var date1 = DateTime.utc(lastActivatedTime.year,lastActivatedTime.month,lastActivatedTime.day);
                   var now = Timestamp.now().toDate();
                   var diff = now.difference(date1);
