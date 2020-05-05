@@ -485,7 +485,7 @@ headers: {HttpHeaders.authorizationHeader: Configs.authorizationHeadernewAdroidW
                     children: <Widget>[
                      Icon(EvaIcons.image),
                       Text('Upload Photo',
-                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600))
+                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold,fontSize: 15))
                     ],
                     mainAxisAlignment: MainAxisAlignment.center,
                   ),
@@ -509,7 +509,7 @@ headers: {HttpHeaders.authorizationHeader: Configs.authorizationHeadernewAdroidW
                     children: <Widget>[
                      Icon(EvaIcons.filmOutline),
                       Text('Upload Video',
-                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600))
+                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold,fontSize: 15))
                     ],
                     mainAxisAlignment: MainAxisAlignment.center,
                   ),
@@ -528,12 +528,12 @@ headers: {HttpHeaders.authorizationHeader: Configs.authorizationHeadernewAdroidW
             ),
 
 Container(margin: EdgeInsets.all(8.0),
-              width: 200.0,child: RaisedButton(
+              width: 150.0,child: RaisedButton(
                   child: Row(
                     children: <Widget>[
                      Icon(EvaIcons.creditCard,color: Colors.yellow[800],),
-                      Text(' Subscribe for Premium',
-                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600))
+                      Text(' Join Premium',
+                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold,fontSize: 15))
                     ],
                     mainAxisAlignment: MainAxisAlignment.center,
                   ),
@@ -564,7 +564,7 @@ Container(margin: EdgeInsets.all(8.0),
                     children: <Widget>[
                      Icon(EvaIcons.archiveOutline),
                       Text(' My Office',
-                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600))
+                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15))
                     ],
                     mainAxisAlignment: MainAxisAlignment.center,
                   ),

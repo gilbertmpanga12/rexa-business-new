@@ -86,6 +86,9 @@ return number;
 
 void _settingModalBottomSheet(context) {
     showModalBottomSheet(elevation: 3.0,backgroundColor: Colors.transparent,
+    shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0),topRight: Radius.circular(20.0))
+),
         context: context,
         builder: (BuildContext context) {
           return Container(height: 170.0,child: Column(
@@ -94,11 +97,11 @@ void _settingModalBottomSheet(context) {
             children: <Widget>[
               SizedBox(height: 30.0),
             Container(margin: EdgeInsets.all(8.0),
-              width: 120.0,child: RaisedButton(
+              width: 122.0,child: RaisedButton(
                   child: Row(
                     children: <Widget>[
                       Text('Mobile Money',
-                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600))
+                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold))
                     ],
                     mainAxisAlignment: MainAxisAlignment.start,
                   ),
@@ -120,18 +123,18 @@ void _settingModalBottomSheet(context) {
 
                   },
                   color: Colors.white,
-                  padding: EdgeInsets.all(15.0),
+                  padding: EdgeInsets.all(13.0),
                   shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(30.0)),
                 ),
             ),
             Container(margin: EdgeInsets.all(10.0),
-              width: 120.0,child: RaisedButton(
+              width: 122.0,child: RaisedButton(
                   child: Row(
                     children: <Widget>[
                       Text('Pay with Card',
                           style: TextStyle(color: Colors.black, 
-                          fontWeight: FontWeight.w600))
+                          fontWeight: FontWeight.bold))
                     ],
                     mainAxisAlignment: MainAxisAlignment.start,
                   ),
@@ -139,7 +142,7 @@ void _settingModalBottomSheet(context) {
                 cardPayments();
                   },
                   color: Colors.white,
-                  padding: EdgeInsets.all(15.0),
+                  padding: EdgeInsets.all(13.0),
                   shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(30.0)),
                 ),
@@ -275,7 +278,7 @@ Widget placeholder(context){
                     child: Padding(
                       child: Text(
                         'My Office',
-                        style: TextStyle(color: Colors.white, fontSize: 23.8,fontWeight: FontWeight.w900,fontFamily: 'Comfortaa'),
+                        style: TextStyle(color: Colors.white, fontSize: 20,fontWeight: FontWeight.w900,fontFamily: 'Comfortaa'),
                       ),padding: EdgeInsets.only(top:22.0,),
                     )),
                SizedBox(height: 20.0,),
@@ -286,14 +289,14 @@ Widget placeholder(context){
                    Column(
                      children: <Widget>[
                        Text('Income',style: TextStyle(color: Colors.white,fontSize: 17.0,fontWeight: FontWeight.w300),),
-                       Text('0${codeUnit}',style: TextStyle(color: Colors.white,fontSize: 22.0,fontWeight: FontWeight.w700))
+                       Text('0${codeUnit}',style: TextStyle(color: Colors.white,fontSize: 20.0,fontWeight: FontWeight.w700))
                      ],
                    ),
                    
                    Column(
                      children: <Widget>[
                        Text('To be paid', style: TextStyle(color: Colors.white,fontSize: 17.0,fontWeight: FontWeight.w300),),
-                       Text('0${codeUnit}',style: TextStyle(color: Colors.white,fontSize: 22.0,fontWeight: FontWeight.w700))
+                       Text('0${codeUnit}',style: TextStyle(color: Colors.white,fontSize: 20.0,fontWeight: FontWeight.w700))
                      ],
                    )
                  ],
@@ -342,7 +345,7 @@ Widget placeholder(context){
                     child: Padding(
                       child: Text(
                         'My Office',
-                        style: TextStyle(color: Colors.white, fontSize: 23.8,fontWeight: FontWeight.w900,fontFamily: 'Comfortaa'),
+                        style: TextStyle(color: Colors.white, fontSize: 20,fontWeight: FontWeight.w900,fontFamily: 'Comfortaa'),
                       ),padding: EdgeInsets.only(top:22.0,),
                     )),
                SizedBox(height: 20.0,),
@@ -354,7 +357,7 @@ Widget placeholder(context){
                      children: <Widget>[
                        Text('Income',style: TextStyle(color: Colors.white,fontSize: 17.0,fontWeight: FontWeight.w300),),
                        Text('${numberSummerizer(snapshot.data['total'])}${codeUnit}',
-                       style: TextStyle(color: Colors.white,fontSize: 22.0,
+                       style: TextStyle(color: Colors.white,fontSize: 20.0,
                        fontWeight: FontWeight.w700),)
                      ],
                    ),
@@ -364,7 +367,7 @@ Widget placeholder(context){
                        Text('To be paid', style: TextStyle(color: Colors.white,fontSize: 17.0,fontWeight: FontWeight.w300,
                        
                        ),),
-                       Text('${numberSummerizer(snapshot.data['lastBalance'])}${codeUnit}',style: TextStyle(color: Colors.red[400],fontSize: 22.0,
+                       Text('${numberSummerizer(snapshot.data['lastBalance'])}${codeUnit}',style: TextStyle(color: Colors.red[400],fontSize: 20.0,
                        fontWeight: FontWeight.w700))
                      ],
                    )
@@ -417,7 +420,7 @@ Widget placeholder(context){
               );
             },itemCount: snapshot.data.documents.length,separatorBuilder: (context, index) => Divider(),),
           ): Center(
-        child: Padding(child: Text('You have not made any transactions'),padding: EdgeInsets.only(top: 150.0),),
+        child: Padding(child: Text('You have no transactions'),padding: EdgeInsets.only(top: 150.0),),
     );
         }
        },)

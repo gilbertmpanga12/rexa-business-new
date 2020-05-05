@@ -368,7 +368,7 @@ String servicePhotoUrl, String serviceOffered}) {
                     'Add your services ',
                     style: TextStyle(fontSize: 15.0,fontWeight: FontWeight.bold),
                   ),
-                  Icon(EvaIcons.pricetagsOutline)
+                  Icon(EvaIcons.pricetagsOutline,color: Colors.yellow[800],)
                   ],),
                 )
               : isNetworkError

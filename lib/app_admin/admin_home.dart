@@ -251,7 +251,7 @@ Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileWidget())
      
       ListTile(
         leading: Icon(EvaIcons.settings,color: Colors.white,),
-        title: Text('Settings',style: TextStyle(color: Colors.white, fontSize: 13.5),),
+        title: Text('Settings',style: TextStyle(color: Colors.white, fontSize: 13.5, fontWeight: FontWeight.bold),),
         onTap: () {
         //  Navigator.pop(context);
         // _scaffoldKey.currentState.widget.
@@ -261,7 +261,7 @@ Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileWidget())
       ),
       ListTile(
         leading: Icon(EvaIcons.questionMarkCircle,color: Colors.white,),
-        title: Text('Help', style: TextStyle(color: Colors.white,fontSize:  13.5),),
+        title: Text('Help', style: TextStyle(color: Colors.white,fontSize:  13.5, fontWeight: FontWeight.bold),),
         onTap: () {
           // Navigator.pop(context);
           Navigator.push(context, MaterialPageRoute(builder: (context) => HelpWid()));
@@ -269,14 +269,14 @@ Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileWidget())
       ),
        ListTile(
         leading: Icon(EvaIcons.share,color: Colors.white,),
-        title: Text('Join Rexa Users',style: TextStyle(color: Colors.white,fontSize:  13.5), ),
+        title: Text('Join Rexa Users',style: TextStyle(color: Colors.white,fontSize:  13.5, fontWeight: FontWeight.bold), ),
         onTap: () {
    _launchURL();
         },
       ),
           ListTile(
             leading: Icon(EvaIcons.logOutOutline,color: Colors.white,),
-            title: Text('Log Out', style: TextStyle(color: Colors.white, fontSize:  13.5),),
+            title: Text('Log Out', style: TextStyle(color: Colors.white, fontSize:  13.5, fontWeight: FontWeight.bold),),
             onTap: () {
               authService.signOut();
               Navigator.popAndPushNamed(context, '/');

@@ -59,9 +59,11 @@ String subCategory;
                   return Center(child: CircularProgressIndicator(),);
                 }
                 return Column(children: <Widget>[
-                  SizedBox(height: 15.0,),
-                  Center(child: Padding(child: Text("PICK NEW CATEGORY",
-                  style: TextStyle(fontWeight: FontWeight.bold, color:Colors.white),),
+                  SizedBox(height: 18.0,),
+                  Center(child: Padding(child: Text("Pick new category",
+                  style: TextStyle(fontWeight: FontWeight.bold, color:Colors.white, 
+                  fontSize: 16.6,
+                  fontFamily: 'Comfortaa'),),
                   padding: EdgeInsets.all(8.0),),),
                   Expanded(child: ListView.separated(itemBuilder: (context,index){
                 return Padding(child: Container(height: 50.0,child: ListTile(
@@ -246,7 +248,7 @@ getCurrencyCode(String code) async {
                 children: <Widget>[
                 InkWell(
                   child: ListTile(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 5.0),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 3.0),
                     trailing: Icon(Icons.edit,size: 18,),
                     leading: SizedBox(
                       width: 50.0,
@@ -254,7 +256,7 @@ getCurrencyCode(String code) async {
                         Icons.payment,
                         color: Colors.yellow[800],size: 29.0,
                     ),),
-                    title: Text('Change Category',style: TextStyle(fontWeight: FontWeight.bold,)),
+                    title: Text('Change service category',style: TextStyle(fontWeight: FontWeight.bold,)),
 
 
                   ),
